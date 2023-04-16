@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="devices">
+    <xs:complexType>
+    <xs:sequence>
+        <xs:element name="definitions" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+            <xs:sequence>
+                <xs:element name="define-precision" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="define-dsp-block" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="define-logic"     minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="family" maxOccurs="unbounded">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="subfamily" type="subfamily" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="speed-grade" type="speed-grade" minOccurs="1" maxOccurs="unbounded" />
+                <xs:element name="memories" type="memories" minOccurs="1" maxOccurs="1" />
+                <xs:element name="logic" type="logic" minOccurs="1" maxOccurs="1" />
+                <xs:element name="dsp-block" type="dsp-block" minOccurs="1" maxOccurs="1" />
+                <xs:element name="sandwich-fifo" type="sandwich-fifo" minOccurs="0" maxOccurs="1" />
+                <xs:element name="scfifo" type="fifo" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="isUnofficial" type="xs:boolean" use="optional" default="false" />
+            <xs:attribute name="compiledUsingQuartus" type="xs:boolean" use="optional" default="true" />
+            <xs:attribute name="is-fpga" type="xs:boolean" use="optional" default="true" />
+            </xs:complexType>
+        </xs:element>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:positiveInteger" use="required"/>
+	<xs:attribute name="acds_version" type="xs:string" use="required"/>
+    </xs:complexType>
+</xs:element>
+
+<!-- Subfamilies have a name and a list of speed grades they support. Since speed grades are shared between different sub-families,
+    nothing specific should be stored here in order to reduce duplication of data. -->
+<xs:complexType name="subfamily">
+    <xs:sequence>
+    <xs:element name="speed-grade" maxOccurs="unbounded">
+        <xs:complexType>
+        <xs:attribute name="name" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+</xs:complexType>
+
+<!-- This is the description of a specific speed grade -->
+<xs:complexType name="speed-grade">
+    <xs:sequence>
+        <xs:element name="alternative-name" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="timing-model" type="timing-model" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+</xs:complexType>
+
+<!-- This is the description of a specific timing model -->
+<xs:complexType name="timing-model">
+    <xs:sequence>
+    <xs:element name="alternative-name" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:element name="core-voltage" type="xs:string" minOccurs="0"/>
+    <xs:element name="quartus-requires-voltage-setting" type="xs:boolean" minOccurs="1"/>
+    <xs:element name="source-cell-out-delay" type="xs:double" minOccurs="1"/>
+    <xs:element name="routing-delay" type="xs:double" minOccurs="1"/>
+    <xs:element name="chain-start-delay" type="xs:double" minOccurs="1"/>
+    <xs:element name="chain-end-delay" type="xs:double" minOccurs="1"/>
+    <xs:element name="per-cell-delay" type="xs:double" minOccurs="1"/>
+    <xs:element name="inter-lab-delay" type="xs:double" minOccurs="1"/>
+    <xs:element name="mid-lab-delay" type="xs:double" minOccurs="1"/>
+    <xs:element name="ternary-chain-start" type="xs:double" minOccurs="0"/>
+    <xs:element name="ternary-halflab-skip" type="xs:double" minOccurs="0"/>
+    <xs:element name="dsp-multiblock-fmax" type="xs:double" minOccurs="0"/>
+    <xs:element name="default-device" type="xs:string" minOccurs="0"/>
+    <xs:element name="LUT-delay" type="xs:double" minOccurs="1"/>
+    <xs:element name="DSP-in-delay" type="xs:nonNegativeInteger" minOccurs="1"/>
+    <xs:element name="DSP-out-delay" type="xs:nonNegativeInteger" minOccurs="1"/>
+    <xs:element name="mem-in-delay" type="xs:nonNegativeInteger" minOccurs="1"/>
+    <xs:element name="mem-out-delay" type="xs:nonNegativeInteger" minOccurs="1"/>
+    <xs:element name="mlab-delay" type="xs:nonNegativeInteger" minOccurs="1"/>
+    <xs:element name="ripple-gradient" type="xs:double" minOccurs="0"/>
+    <xs:element name="ripple-offset" type="xs:double" minOccurs="0"/>
+    <xs:element name="carrychain-gradient" type="xs:double" minOccurs="0"/>
+    <xs:element name="ripple-carrychain-boundary" type="xs:nonNegativeInteger" minOccurs="0"/>
+    <xs:element name="routing-coefficient" minOccurs="0" maxOccurs="1" />
+    <xs:element name="unregister-memory-fmax" type="xs:double" minOccurs="0" maxOccurs="1"  default="0"/>
+    <xs:element name="output-register-threshold" type="xs:nonNegativeInteger" default="2000" minOccurs="0"/>
+    <xs:element name="high-speed-adder-threshold" type="xs:double" default="2000" minOccurs="0">
+        <xs:annotation>
+            <xs:documentation>This is the threshold at which high speed adders are used for large adders in mult-add trees.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="mult-splitter" minOccurs="0" maxOccurs="1" />
+    <xs:element name="memory-speeds" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="memory-speeds">
+    <xs:sequence>
+        <xs:element name="memory-speed" type="memory-speed" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="memory-speed">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="simple-dual-port-fmax" type="xs:nonNegativeInteger" use="required" />
+    <xs:attribute name="true-dual-port-fmax" type="xs:nonNegativeInteger" use="required" />
+</xs:complexType>
+
+<xs:complexType name="memories">
+    <xs:sequence>
+    <xs:element name="memory" type="memory" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="memory-size">
+    <xs:restriction base="xs:string">
+    <xs:pattern value="([0-9])+[KkMm]?"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="dimensions">
+    <xs:attribute name="depth" type="memory-size" use="required"/>
+    <xs:attribute name="width" type="xs:nonNegativeInteger" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="memory">
+    <xs:sequence>
+    <xs:choice>
+        <xs:sequence>
+        <xs:element name="dimensions" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:sequence>
+        <xs:element name="mixable" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+            <xs:documentation>A sequence of mixables gives a list of dimensions that can be mixed togethered.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+            <xs:sequence>
+                <xs:annotation>
+                <xs:documentation>A sequence of dimensions outside a mixable indicates that none of the dimensions cannot be mixed.</xs:documentation>
+                </xs:annotation>
+                <xs:element name="dimensions" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+        </xs:sequence>
+    </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="size" type="memory-size" use="required">
+    <xs:annotation>
+        <xs:documentation>Maximum number of bits that can be stored in a memory.</xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="lut4-cost" type="xs:integer" use="optional" default="0">
+    <xs:annotation>
+        <xs:documentation>The number of LUT4 equivalents lost when using this memory.</xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="minimum-fill" type="xs:integer" use="required">
+        <xs:annotation>
+            <xs:documentation>The minimum number of bits required to use this memory in a delay line.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="supports-init-file" type="xs:boolean" use="optional" default="true">
+    <xs:annotation>
+        <xs:documentation>True if the memory supports initialisation file.</xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="supports-init-zero" type="xs:boolean" use="optional" default="true">
+    <xs:annotation>
+        <xs:documentation>True if the memory supports initialisation to zeroes (without needing an initialisation file).</xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="supports-force-to-zero" type="xs:boolean" use="optional" default="false">
+        <xs:annotation>
+            <xs:documentation>True if the memory supports the force_to_zero feature.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="supports-input-output-clock-mode" type="xs:boolean" use="optional" default="true">
+        <xs:annotation>
+            <xs:documentation>True if the memory supports input/output clock mode.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="supports-read-enable" type="xs:boolean" use="optional" default="false">
+        <xs:annotation>
+            <xs:documentation>True if the memory supports the use of read enables.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="true-dual-port-support" type="memory-support" default="none">
+        <xs:annotation>
+            <xs:documentation>Specifies whether the memory supports true dual-port mode.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="width-stitch-fanout-threshold" type="xs:integer" default="-1">
+        <xs:annotation>
+            <xs:documentation>Specifies the threshold (in memory blocks) at which width-stitched memories gain a fanout block if the memory is also depth stitched.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="read-latency" type="xs:integer" use="optional" default="2">
+        <xs:annotation>
+            <xs:documentation>The read latency assuming output registers are enabled.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="unregister-outputs" type="xs:boolean" use="optional" default="false">
+        <xs:annotation>
+            <xs:documentation>True if the memory may be used without output registers.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="can-sync-clear" type="xs:boolean" use="optional" default="false">
+        <xs:annotation>
+            <xs:documentation>True if the memory has a synchronous clear on output (e.g. Stratix 10 M20K).</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="name-sp" type="xs:string" use="optional" default="">
+    <xs:annotation>
+        <xs:documentation>The name in SP configuration - if it differs.</xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name-tdp" type="xs:string" use="optional" default="">
+    <xs:annotation>
+        <xs:documentation>The name in TDP configuration - if it differs.</xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name-in-fifo" type="xs:string" use="optional" default="">
+    <xs:annotation>
+        <xs:documentation>The name when the memory is used to instantiate a FIFO.</xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="single-port-rw-support" type="memory-support" use="optional" default="native">
+    <xs:annotation>
+        <xs:documentation>Whether a memory that offers SDP support also offers SP read/write support.</xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="threshold-group" type="threshold-group" use="required">
+    <xs:annotation>
+        <xs:documentation>Describes which of the three threshold groups apply to this memory.</xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="old-data-mode" type="xs:boolean" use="optional" default="true">
+    <xs:annotation>
+        <xs:documentation>
+        True if the block supports the OLD_DATA mode. This means that if a memory address
+        is both read and written to simultaneous by 2 independent ports then the original data will be output.
+        The alternative is DONT_CARE mode where the data will be undefined.
+        </xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+</xs:complexType>
+
+<xs:simpleType name="threshold-group">
+    <xs:restriction base="xs:string">
+    <xs:enumeration value="small"/>
+    <xs:enumeration value="medium"/>
+    <xs:enumeration value="large"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="memory-support">
+    <xs:restriction base="xs:string">
+    <xs:enumeration value="none"/>
+    <xs:enumeration value="native"/>
+    <xs:enumeration value="emulated"/>
+    </xs:restriction>
+</xs:simpleType>
+
+
+<xs:complexType name="logic">
+    <xs:all>
+    <xs:element name="LUT-type" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="adder-control-inputs"  type="xs:nonNegativeInteger" default="0" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="adder-data-inputs"     type="xs:nonNegativeInteger" default="2" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="has-fast-adder"        type="xs:boolean" default="false" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="has-hyper-registers"   type="xs:boolean" default="false" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="has-share-chain"       type="xs:boolean" default="false" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="lab-length"            type="xs:nonNegativeInteger" default="20" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="num-inputs-per-LUT"    type="xs:nonNegativeInteger" default="4" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="registers-per-LUT4"    type="xs:nonNegativeInteger" default="1" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="use-synchronous-reset" type="xs:boolean" default="false" minOccurs="0" maxOccurs="1"/>
+    </xs:all>
+    <xs:attribute name="include" type="xs:string" />
+</xs:complexType>
+
+<xs:complexType name="define-logic">
+    <xs:all>
+    <xs:element name="LUT-type" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="adder-control-inputs"  type="xs:nonNegativeInteger" default="0" maxOccurs="1"/>
+    <xs:element name="adder-data-inputs"     type="xs:nonNegativeInteger" default="2" maxOccurs="1"/>
+    <xs:element name="has-fast-adder"        type="xs:boolean" default="false" maxOccurs="1"/>
+    <xs:element name="has-hyper-registers"   type="xs:boolean" default="false" maxOccurs="1"/>
+    <xs:element name="has-share-chain"       type="xs:boolean" default="false" maxOccurs="1"/>
+    <xs:element name="lab-length"            type="xs:nonNegativeInteger" default="20" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="num-inputs-per-LUT"    type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="registers-per-LUT4"    type="xs:nonNegativeInteger" default="1" maxOccurs="1"/>
+    <xs:element name="use-synchronous-reset" type="xs:boolean" default="false" maxOccurs="1"/>
+    </xs:all>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:simpleType name="LUT-type">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="N3XS"/>
+        <xs:enumeration value="ALM2"/>
+        <xs:enumeration value="ALM3"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="dsp-block">
+    <xs:all>
+    <xs:element name="dsp-block-type" minOccurs="0" maxOccurs="1" />
+    <xs:element name="accumulators" type="xs:nonNegativeInteger" default="0" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="has-mult-add" type="xs:boolean" minOccurs="0" default="false"/>
+    <xs:element name="has-chain-mult-add" type="xs:boolean" minOccurs="0" default="false"/>
+    <xs:element name="has-mult-add-round" type="xs:boolean" minOccurs="0" default="false"/>
+    <xs:element name="has-biased-mult-round" type="xs:boolean" minOccurs="0" default="false"/>
+    <xs:element name="has-direction-port" type="xs:boolean" minOccurs="0" default="true"/>
+    <xs:element name="hybrid-threshold" type="xs:decimal" default="1.28" minOccurs="0"/>
+    <xs:element name="dsp-blocks-per-block" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+    <xs:element name="multiplier-cost-per-dsp-block" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1" />
+    <xs:element name="max-dsp-block-chain-length" type="xs:nonNegativeInteger" default="0" minOccurs="0" maxOccurs="1" />
+    <xs:element name="output-register-threshold" type="xs:nonNegativeInteger" default="2000" minOccurs="0"/>
+    <xs:element name="required-delay" type="xs:nonNegativeInteger" default="1" minOccurs="0"/>
+    <xs:element name="pipeline-threshold-percentages" minOccurs="0" maxOccurs="1" />
+    <xs:element name="supports-fp32"  type="xs:boolean" minOccurs="0" default="false"/>
+    <xs:element name="supports-fp16"  type="xs:boolean" minOccurs="0" default="false"/>
+    <xs:element name="precisions" minOccurs="0" />
+    <xs:element name="mult-splitter" minOccurs="0" />
+    </xs:all>
+    <xs:attribute name="include" type="xs:string" />
+</xs:complexType>
+
+<xs:complexType name="define-dsp-block">
+    <xs:all>
+    <xs:element name="dsp-block-type" minOccurs="1" maxOccurs="1" />
+    <xs:element name="accumulators" type="xs:nonNegativeInteger" default="0" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="has-mult-add" type="xs:boolean" default="false"/>
+    <xs:element name="has-chain-mult-add" type="xs:boolean" default="false"/>
+    <xs:element name="has-mult-add-round" type="xs:boolean" default="false"/>
+    <xs:element name="has-biased-mult-round" type="xs:boolean" default="false"/>
+    <xs:element name="has-direction-port" type="xs:boolean" default="false"/>
+    <xs:element name="hybrid-threshold" type="xs:decimal" default="1.28" minOccurs="0"/>
+    <xs:element name="dsp-blocks-per-block" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+    <xs:element name="multiplier-cost-per-dsp-block" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+    <xs:element name="max-dsp-block-chain-length" type="xs:nonNegativeInteger" default="0" minOccurs="0" maxOccurs="1" />
+    <xs:element name="output-register-threshold" type="xs:nonNegativeInteger" default="2000" minOccurs="0"/>
+    <xs:element name="required-delay" type="xs:nonNegativeInteger" default="1" minOccurs="0"/>
+    <xs:element name="supports-fp32"  type="xs:boolean" minOccurs="0" default="false"/>
+    <xs:element name="supports-fp16"  type="xs:boolean" minOccurs="0" default="false"/>
+    <xs:element name="precisions" />
+    <xs:element name="mult-splitter" />
+    </xs:all>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:simpleType name="dsp-block-type">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="synthetic"/>
+        <xs:enumeration value="vp2"/>
+        <xs:enumeration value="vp3"/>
+        <xs:enumeration value="vp4"/>
+        <xs:enumeration value="vp5"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="precisions">
+    <xs:sequence>
+        <xs:element name="precision-mode" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="precision-mode">
+    <xs:attribute name="awidth" type="xs:nonNegativeInteger" use="required">
+    </xs:attribute>
+    <xs:attribute name="bwidth" type="xs:nonNegativeInteger" use="required">
+    </xs:attribute>
+    <xs:attribute name="mult-add" type="xs:nonNegativeInteger">
+    </xs:attribute>
+    <xs:attribute name="mult-per-block" type="xs:nonNegativeInteger">
+    </xs:attribute>
+    <xs:attribute name="mult-add-per-block" type="xs:nonNegativeInteger">
+    </xs:attribute>
+    <xs:attribute name="modifier-flags" type="xs:nonNegativeInteger">
+    </xs:attribute>
+    <xs:attribute name="chain-blocks" type="xs:nonNegativeInteger">
+    </xs:attribute>
+    <xs:attribute name="chain-block-size" type="xs:nonNegativeInteger">
+    </xs:attribute>
+</xs:complexType>
+
+<xs:complexType name="define-precision">
+    <xs:attribute name="mode-name" type="xs:string" use="required">
+    </xs:attribute>
+    <xs:attribute name="awidth" type="xs:nonNegativeInteger" use="required">
+    </xs:attribute>
+    <xs:attribute name="bwidth" type="xs:nonNegativeInteger" use="required">
+    </xs:attribute>
+    <xs:attribute name="products" type="xs:integer" use="required">
+    </xs:attribute>
+    <xs:attribute name="signs" type="xs:string" use="required">
+    </xs:attribute>
+    <xs:attribute name="operation-mode" type="xs:string">
+    </xs:attribute>
+</xs:complexType>
+
+<xs:complexType name="mult-splitter">
+    <xs:sequence>
+    <xs:element name="tiling-parameter" minOccurs="0" maxOccurs="unbounded" />
+    <xs:element name="mult-add-qor" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="tiling" type="xs:string" />
+</xs:complexType>
+
+<xs:complexType name="tiling-parameter">
+    <xs:attribute name="key" type="xs:string" use="required" />
+    <xs:attribute name="value" type="xs:string" use="required" />
+</xs:complexType>
+
+<xs:complexType name="mult-add-qor">
+    <xs:attribute name="mode-name" type="xs:string" use="required">
+    </xs:attribute>
+    <xs:attribute name="fmax" type="xs:double">
+    </xs:attribute>
+    <xs:attribute name="cost-mult" type="xs:double">
+    </xs:attribute>
+    <xs:attribute name="cost-lab" type="xs:double">
+    </xs:attribute>
+    <xs:attribute name="cost-per-bit" type="xs:double">
+    </xs:attribute>
+    <xs:attribute name="mults-per-block" type="xs:nonNegativeInteger">
+    </xs:attribute>
+    <xs:attribute name="chain-blocks" type="xs:nonNegativeInteger">
+    </xs:attribute>
+    <xs:attribute name="chain-block-size" type="xs:nonNegativeInteger">
+    </xs:attribute>
+</xs:complexType>
+
+<xs:complexType name="routing-coefficient">
+    <xs:sequence>
+    <xs:element name="routing-precision" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="routing-precision">
+    <xs:attribute name="width" type="xs:nonNegativeInteger" use="required" />
+    <xs:attribute name="coefficient" type="xs:double" use="required" />
+    <xs:attribute name="extended-gradient" type="xs:double" />
+</xs:complexType>
+
+<xs:complexType name="sandwich-fifo">
+    <xs:sequence>
+    <xs:element name="through-regs" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="break-threshold" minOccurs="0" maxOccurs="1">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:pattern value="\d+(.\d+){0,1}(,\d+(.\d+){0,1})*"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="sparsity-ram" type="xs:double" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="sparsity-dsp" type="xs:double" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="break-aggressive" minOccurs="0" maxOccurs="1">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:pattern value="\d+(.\d+){0,1}(,\d+(.\d+){0,1})*"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fifo">
+    <xs:attribute name="name" type="xs:string" use="required" />
+    <xs:attribute name="default-mem-name" type="xs:string" use="optional" default="" >
+    <xs:annotation>
+        <xs:documentation>Default memory name to use if we do not choose.</xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+</xs:complexType>
+
+</xs:schema>

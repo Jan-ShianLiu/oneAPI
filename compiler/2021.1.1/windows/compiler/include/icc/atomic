@@ -1,0 +1,409 @@
+/*
+ *  Copyright (C) 2009-2018 Intel Corporation.  All Rights Reserved.
+ *
+ *  The source code contained or described herein and all documents related
+ *  to the source code ("Material") are owned by Intel Corporation or its
+ *  suppliers or licensors.  Title to the Material remains with Intel
+ *  Corporation or its suppliers and licensors.  The Material is protected
+ *  by worldwide copyright laws and treaty provisions.  No part of the
+ *  Material may be used, copied, reproduced, modified, published, uploaded,
+ *  posted, transmitted, distributed, or disclosed in any way without
+ *  Intel's prior express written permission.
+ *
+ *  No license under any patent, copyright, trade secret or other
+ *  intellectual property right is granted to or conferred upon you by
+ *  disclosure or delivery of the Materials, either expressly, by
+ *  implication, inducement, estoppel or otherwise.  Any license under such
+ *  intellectual property rights must be express and approved by Intel in
+ *  writing.
+ *
+*/
+
+#ifndef __USE_INTEL_ATOMICS
+  #if _MSC_VER > 0 && _MSC_VER < 1700
+    #define __USE_INTEL_ATOMICS 1
+  #endif
+  #if __GNUC__ > 0 && (__GNUC__ < 4 || __GNUC__ == 4 && __GNUC_MINOR__ < 5) && \
+        !defined(__INTEL_CLANG_COMPILER)
+    #define __USE_INTEL_ATOMICS 1
+  #endif
+  #if defined(__VXWORKS__)
+    #define __USE_INTEL_ATOMICS 1
+  #endif
+
+
+#if defined(__MACH__) && (__clang_major__ >= 9)
+// next clause only works in clang mode
+#if  __has_extension(c_atomic)
+#define __INTEL_USE_CLANG_ATOMICS 1
+#endif // c_atomic
+#endif // MACH && clang
+
+#if defined(__ANDROID__) && defined(__clang_major__)
+#define __INTEL_USE_CLANG_ATOMICS 1
+#endif
+
+#if __INTEL_USE_CLANG_ATOMICS && !defined(__INTEL_CLANG_ATOMIC_DEFS)
+#define __INTEL_CLANG_ATOMIC_DEFS 1
+/* Define these clang-style functions using C11. */
+
+#if __cplusplus >= 201103L
+#include <type_traits>
+#endif // C++11
+
+template<typename _Ty>
+static inline void __c11_atomic_init(_Atomic(_Ty) *dst, _Ty val) {
+    __atomic_store_explicit(
+        (_Ty *)dst,
+        val,
+        __ATOMIC_RELAXED);
+}
+
+static inline void __c11_atomic_thread_fence(int order) {
+    __atomic_thread_fence(order);
+}
+
+static inline void __c11_atomic_signal_fence(int order) {
+    __atomic_signal_fence(order);
+}
+
+template<typename _Ty>
+static inline _Ty __c11_atomic_load(_Atomic(_Ty) *obj, int order) {
+  return __atomic_load_explicit((_Ty *)obj, order);
+}
+
+template<typename _Ty>
+static inline _Ty __c11_atomic_load(volatile _Atomic(_Ty) *obj, int order) {
+    return __atomic_load_explicit((_Ty *)obj, order);
+}
+
+// C++11
+#if __cplusplus >= 201103L
+
+// 52060: icc __atomic intrinsics require integer or pointer types.
+// enum classes cannot implicitly convert to integers.
+// Create a specialized template function for enums which contains
+// an explicit cast.
+template<typename _Ty,
+         typename std::enable_if<std::is_enum<_Ty>::value,
+                                 _Ty>::type* = nullptr>
+static inline void __c11_atomic_store(_Atomic(_Ty) *dst, _Ty src, int order) {
+    __atomic_store_explicit((_Ty *)dst, (int)src, order);
+}
+
+template<typename _Ty,
+         typename std::enable_if<!std::is_enum<_Ty>::value,
+                                 _Ty>::type* = nullptr>
+static inline void __c11_atomic_store(_Atomic(_Ty) *dst, _Ty src, int order) {
+    __atomic_store_explicit((_Ty *)dst, src, order);
+}
+
+#else // !C++11
+
+template<typename _Ty>
+static inline void __c11_atomic_store(_Atomic(_Ty) *dst, _Ty src, int order) {
+    __atomic_store_explicit((_Ty *)dst, src, order);
+}
+
+#endif // C++11
+
+template<typename _Ty>
+static inline void __c11_atomic_store(volatile _Atomic(_Ty) *dst, _Ty src, int order) {
+    __atomic_store_explicit((_Ty *)dst, src, order);
+}
+
+template <typename _Ty>
+struct _ptrscale {
+    static constexpr size_t val = 1;
+};
+
+template <typename _Ty>
+struct _ptrscale<_Ty*> {
+    static constexpr size_t val = sizeof(_Ty);
+};
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_fetch_add(
+    _Atomic(_Ty) *dst,
+    _Ty2 val,
+    int order)
+{
+    return __atomic_fetch_add_explicit((_Ty *)dst,
+                                       val * _ptrscale<_Ty>::val,
+                                       order);
+}
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_fetch_add(
+    volatile _Atomic(_Ty) *dst,
+    _Ty2 val,
+    int order)
+{
+    return __atomic_fetch_add_explicit((_Ty *)dst,
+                                       val * _ptrscale<_Ty>::val,
+                                       order);
+}
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_fetch_sub(
+    _Atomic(_Ty) *dst,
+    _Ty2 val,
+    int order)
+{
+    return __atomic_fetch_sub_explicit((_Ty *)dst,
+                                       val * _ptrscale<_Ty>::val,
+                                       order);
+}
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_fetch_sub(
+    volatile _Atomic(_Ty) *dst,
+    _Ty2 val,
+    int order)
+{
+    return __atomic_fetch_sub_explicit((_Ty *)dst,
+                                       val * _ptrscale<_Ty>::val,
+                                       order);
+}
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_fetch_or(
+    _Atomic(_Ty) *dst,
+    _Ty2 val,
+    int order)
+{
+    return __atomic_fetch_or_explicit((_Ty *)dst, val, order);
+}
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_fetch_or(
+    volatile _Atomic(_Ty) *dst,
+    _Ty2 val,
+    int order)
+{
+    return __atomic_fetch_or_explicit((_Ty *)dst, val, order);
+}
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_fetch_xor(
+    _Atomic(_Ty) *dst,
+    _Ty2 val,
+    int order)
+{
+    return __atomic_fetch_xor_explicit((_Ty *)dst, val, order);
+}
+
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_fetch_xor(
+    volatile _Atomic(_Ty) *dst,
+    _Ty2 val,
+    int order)
+{
+    return __atomic_fetch_xor_explicit((_Ty *)dst, val, order);
+}
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_fetch_and(
+    _Atomic(_Ty) *dst,
+    _Ty2 val,
+    int order)
+{
+    return __atomic_fetch_and_explicit((_Ty *)dst, val, order);
+}
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_fetch_and(
+    volatile _Atomic(_Ty) *dst,
+    _Ty2 val,
+    int order)
+{
+    return __atomic_fetch_and_explicit((_Ty *)dst, val, order);
+}
+
+// C++11
+#if __cplusplus >= 201103L
+
+template<typename _Ty,
+         typename std::enable_if<std::is_enum<_Ty>::value,
+                                 _Ty>::type* = nullptr>
+static inline _Atomic(_Ty) __c11_atomic_exchange(_Atomic(_Ty) *obj, _Ty desr, int order) {
+    return __atomic_exchange_explicit((_Ty *)obj, (int)desr, order);
+}
+
+template<typename _Ty,
+         typename std::enable_if<!std::is_enum<_Ty>::value,
+                                 _Ty>::type* = nullptr>
+static inline _Atomic(_Ty) __c11_atomic_exchange(_Atomic(_Ty) *obj, _Ty desr, int order) {
+    return __atomic_exchange_explicit((_Ty *)obj, desr, order);
+}
+
+template<typename _Ty, typename _Ty2, typename _Ty3,
+         typename std::enable_if<std::is_enum<_Ty3>::value,
+                                 _Ty3>::type* = nullptr >
+static inline bool __c11_atomic_compare_exchange_strong(
+    _Atomic(_Ty) *obj,
+    _Ty2 *exp,
+    _Ty3 val,
+    int order_s,
+    int order_f)
+{
+    return (bool)__atomic_compare_exchange_strong_explicit(
+               (_Ty *)obj,
+               exp,
+               (int)val,
+               order_s,
+               order_f);
+}
+
+template<typename _Ty, typename _Ty2, typename _Ty3,
+         typename std::enable_if<!std::is_enum<_Ty3>::value,
+                                 _Ty3>::type* = nullptr >
+static inline bool __c11_atomic_compare_exchange_strong(
+    _Atomic(_Ty) *obj,
+    _Ty2 *exp,
+    _Ty3 val,
+    int order_s,
+    int order_f)
+{
+    return (bool)__atomic_compare_exchange_strong_explicit(
+               (_Ty *)obj,
+               exp,
+               val,
+               order_s,
+               order_f);
+}
+
+template<typename _Ty, typename _Ty2, typename _Ty3,
+         typename std::enable_if<std::is_enum<_Ty3>::value,
+                                 _Ty3>::type* = nullptr >
+static inline bool __c11_atomic_compare_exchange_weak(
+    _Atomic(_Ty) *obj,
+    _Ty2 *exp,
+    _Ty3 val,
+    int order_s,
+    int order_f)
+{
+    return (bool)__atomic_compare_exchange_weak_explicit(
+               (_Ty *)obj,
+               exp,
+               (int)val,
+               order_s,
+               order_f);
+}
+
+template<typename _Ty, typename _Ty2, typename _Ty3,
+         typename std::enable_if<!std::is_enum<_Ty3>::value,
+                                 _Ty3>::type* = nullptr >
+static inline bool __c11_atomic_compare_exchange_weak(
+    _Atomic(_Ty) *obj,
+    _Ty2 *exp,
+    _Ty3 val,
+    int order_s,
+    int order_f)
+{
+    return (bool)__atomic_compare_exchange_weak_explicit(
+               (_Ty *)obj,
+               exp,
+               val,
+               order_s,
+               order_f);
+}
+
+#else // !C++11
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_exchange(_Atomic(_Ty) *obj, _Ty2 desr, int order) {
+    return __atomic_exchange_explicit((_Ty *)obj, desr, order);
+}
+
+template<typename _Ty, typename _Ty2, typename _Ty3>
+static inline bool __c11_atomic_compare_exchange_strong(
+    _Atomic(_Ty) *obj,
+    _Ty2 *exp,
+    _Ty3 val,
+    int order_s,
+    int order_f)
+{
+    return (bool)__atomic_compare_exchange_strong_explicit(
+               (_Ty *)obj,
+               exp,
+               val,
+               order_s,
+               order_f);
+}
+
+template<typename _Ty, typename _Ty2, typename _Ty3>
+static inline bool __c11_atomic_compare_exchange_weak(
+    _Atomic(_Ty) *obj,
+    _Ty2 *exp,
+    _Ty3 val,
+    int order_s,
+    int order_f)
+{
+    return (bool)__atomic_compare_exchange_weak_explicit(
+               (_Ty *)obj,
+               exp,
+               val,
+               order_s,
+               order_f);
+}
+
+#endif // C++11
+
+// volatile versions of templates
+
+template<typename _Ty, typename _Ty2>
+static inline _Atomic(_Ty) __c11_atomic_exchange(volatile _Atomic(_Ty) *obj, _Ty2 desr, int order) {
+    return __atomic_exchange_explicit((_Ty *)obj, desr, order);
+}
+
+
+template<typename _Ty, typename _Ty2, typename _Ty3>
+static inline bool __c11_atomic_compare_exchange_strong(
+    volatile _Atomic(_Ty) *obj,
+    _Ty2 *exp,
+    _Ty3 val,
+    int order_s,
+    int order_f)
+{
+    return (bool)__atomic_compare_exchange_strong_explicit(
+               (_Ty *)obj,
+               exp,
+               val,
+               order_s,
+               order_f);
+}
+
+template<typename _Ty, typename _Ty2, typename _Ty3>
+static inline bool __c11_atomic_compare_exchange_weak(
+    volatile _Atomic(_Ty) *obj,
+    _Ty2 *exp,
+    _Ty3 val,
+    int order_s,
+    int order_f)
+{
+    return (bool)__atomic_compare_exchange_weak_explicit(
+               (_Ty *)obj,
+               exp,
+               val,
+               order_s,
+               order_f);
+}
+
+// end of volatile templates
+
+static inline int __c11_atomic_is_lock_free(size_t __size) {
+    return 1;
+}
+
+#endif /* __INTEL_USE_CLANG_ATOMICS && !__INTEL_CLANG_ATOMIC_DEFS */
+
+#endif /* !__USE_INTEL_ATOMICS */
+
+#if __USE_INTEL_ATOMICS
+  #include <stdatomic.h>
+#else
+  #include_next <atomic>
+#endif
+

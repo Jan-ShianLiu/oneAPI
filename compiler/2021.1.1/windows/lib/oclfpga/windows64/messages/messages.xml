@@ -1,0 +1,2573 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<messages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:noNamespaceSchemaLocation="messages.xsd" language="EN-US">
+    <message-list type="ERROR">
+        <message identifier="UNABLE_TO_FIND_CONTROL_BLOCK">
+            <message-text>Unable to find a valid Control block in the design.</message-text>
+            <suggestion>The Control block must be at the top level.</suggestion>
+        </message>
+        <message identifier="MULTIPLE_CONTROL_BLOCKS">
+            <message-text>Multiple Control blocks found in the design.</message-text>
+            <suggestion>There should only be one Control block in the design. It must be at the top level.</suggestion>
+        </message>
+        <message identifier="MULTIPLE_BUS_STIMULUS_BLOCKS">
+            <message-text>Multiple Bus Stimulus blocks found in the design.</message-text>
+            <suggestion>There should only be one Bus Stimulus block in the design. It must be at the top level.</suggestion>
+        </message>
+        <message identifier="UNABLE_TO_FIND_SIGNALS_BLOCK">
+            <message-text>Unable to find a valid Signals block in the design.</message-text>
+            <suggestion>The Signals block must be at the top level.</suggestion>
+        </message>
+        <message identifier="MULTIPLE_SIGNALS_BLOCKS">
+            <message-text>Multiple Signals blocks found in the design.</message-text>
+            <suggestion>There should only be one Signals block in the design. It must be at the top level.</suggestion>
+        </message>
+        <message identifier="ILLEGAL_DEVICE_BLOCK_COMBINATION">
+            <message-text>Illegal combination of device blocks found in '%subsystem1%' and '%subsystem2%'.</message-text>
+            <suggestion>Only one device block is permitted in each subsystem. Remove the device blocks in the lowest level subsystem.</suggestion>
+            <parameter-list>
+                <parameter name="subsystem1" description="The first subsystem containing a device block"/>
+                <parameter name="subsystem2" description="The second subsystem containing a device block"/>
+            </parameter-list>
+        </message>
+        <message identifier="DEVICE_BLOCK_NOT_IN_SUBSYSTEM">
+            <message-text>Found device block at the top level of the model.</message-text>
+            <suggestion>Device blocks must be within subsystems. Move this device block out of the top level of the model.</suggestion>
+        </message>
+        <message identifier="COULD_NOT_CONVERT_STRING_DATA">
+            <message-text>Can not convert string data.</message-text>
+            <suggestion></suggestion>
+        </message>
+        <message identifier="COULD_NOT_CONVERT_INTYPE_STRING_DATA">
+            <message-text>Cannot convert type's string data on [%path%], input port %port%.</message-text>
+            <suggestion></suggestion>
+            <parameter-list>
+                <parameter name="path" description="Simulink path of block"/>
+                <parameter name="port" description="input port index"/>
+            </parameter-list>
+        </message>
+        <message identifier="COULD_NOT_CONVERT_OUTTYPE_STRING_DATA">
+            <message-text>Cannot convert type's string data on [%path%], output port %port%.</message-text>
+            <suggestion></suggestion>
+            <parameter-list>
+                <parameter name="path" description="Simulink path of block"/>
+                <parameter name="port" description="output port index"/>
+            </parameter-list>
+        </message>
+        <message identifier="RECIPROCAL_BLOCK_NOT_SUPPORTED">
+            <message-text>The reciprocal block is no longer supported.</message-text>
+            <suggestion></suggestion>
+        </message>
+        <message identifier="DIVIDE_BLOCK_NOT_SUPPORTED">
+            <message-text>The divide block is no longer supported.</message-text>
+            <suggestion></suggestion>
+        </message>
+        <message identifier="HANDLE_FOR_BLOCK_NOT_SCALAR_DOUBLE">
+            <message-text>Handle for block '%blockname%' (%blocknumber%) is not a scalar double.</message-text>
+            <suggestion></suggestion>
+            <parameter-list>
+                <parameter name="blockname" description="The name of the block with the invalid handle"/>
+                <parameter name="blocknumber" description="The index of the block with the invalid handle"/>
+            </parameter-list>
+        </message>
+        <message identifier="NO_CHANNEL_IN_OR_GP_IN_BLOCKS">
+            <message-text>Cannot find any Channel-In or GP-In blocks in the design.</message-text>
+            <suggestion>Either add Channel-In or GP-In blocks, or disable the automatic testbench.</suggestion>
+        </message>
+        <message identifier="NO_CHANNEL_OUT_OR_GP_OUT_BLOCKS">
+            <message-text>Cannot find any Channel-Out or GP-Out blocks in the design.</message-text>
+            <suggestion>Either add Channel-Out or GP-Out blocks, or disable the automatic testbench.</suggestion>
+        </message>
+        <message identifier="NO_MATCHING_MEMORY">
+            <message-text>The read and write ports given for '%memoryname%' list a memory that is not declared.</message-text>
+            <suggestion></suggestion>
+            <parameter-list>
+               <parameter name="memoryname" description="The simulink path to the memory unit that hasnt been declared"/>
+            </parameter-list>
+        </message>
+        <message identifier="MULTIPLE_MEMORIES_WITH_SAME_ID">
+            <message-text>Multiple instances of External Memory block are assigned the same identifier</message-text>
+            <suggestion></suggestion>
+        </message>
+        <message identifier="MULTIPLE_MEMORY_PORTS_WITH_SAME_NAME">
+            <message-text>External Memory Read/Write blocks '%block1%' and '%block2%' have the same name '%name%', these blocks should be uniquely named in the design</message-text>
+            <suggestion></suggestion>
+            <parameter-list>
+                <parameter name="name" description="Name of the block"/>
+                <parameter name="block1" description="Path of the block"/>
+                <parameter name="block2" description="Path of the other block"/>
+            </parameter-list>
+        </message>
+        <message identifier="BLOCK_HAS_NO_LIBRARY_REFERENCE">
+            <message-text>Block '%blockname%' has no Library Reference - cannot synthesise it.</message-text>
+            <suggestion></suggestion>
+            <parameter-list>
+                <parameter name="blockname" description="The name of the block with no library reference"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNKNOWN_LOOP_TEST">
+            <message-text>[%block%] Unknown loop test: "%testvalue%"</message-text>
+            <suggestion></suggestion>
+            <parameter-list>
+                <parameter name="block" description="path to for-loop block"/>
+                <parameter name="testvalue" description="The test that is trying to be carried out"/>
+            </parameter-list>
+        </message>
+        <message identifier="INVALID_NUMBER_OF_FIFO_PARAMETERS">
+            <message-text>[%block%] Invalid number of Fifo vector parameters.</message-text>
+            <suggestion>Fifo needs 3 or 4 parameters in a vector eg. [32 4 16]</suggestion>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CLOCK_RATE_TOO_HIGH">
+            <message-text>Clock rate is too high.</message-text>
+            <suggestion></suggestion>
+        </message>
+        <message identifier="BUS_CLOCK_NOT_SYNCHRONOUS">
+            <message-text>The system clock frequency %sysfreq% is not a multiple of the bus clock frequency %busfreq%.</message-text>
+            <parameter-list>
+                <parameter name="sysfreq" description="The frequency of the system clock."/>
+                <parameter name="busfreq" description="The frequency of the bus clock."/>
+            </parameter-list>
+        </message>
+        <message identifier="SYS_CLOCK_NOT_VALID">
+            <message-text>The system clock frequency %sysfreq% is not a positive number.</message-text>
+            <suggestion>Specify a positive number.</suggestion>
+            <parameter-list>
+                <parameter name="sysfreq" description="The frequency of the system clock."/>
+            </parameter-list>
+        </message>
+        <message identifier="BUS_CLOCK_NOT_VALID">
+            <message-text>The bus clock frequency %busfreq% is not a positive number.</message-text>
+            <suggestion>Specify a positive number.</suggestion>
+            <parameter-list>
+                <parameter name="busfreq" description="The frequency of the bus clock."/>
+            </parameter-list>
+        </message>
+        <message identifier="REAL_IMAG_TO_COMPLEX_UNSUPPORTED_INPUT">
+            <message-text>The Real-Imag To Complex block '%blockname%' has unsupported input type.</message-text>
+            <suggestion>Use input type 'Real and imag' and create the appropriate constant zero inputs to the block.</suggestion>
+            <parameter-list>
+                <parameter name="blockname" description="The real-imag to complex block in question."/>
+            </parameter-list>
+        </message>
+        <message identifier="COMPLEX_TO_REAL_IMAG_UNSUPPORTED_INPUT">
+            <message-text>The Complex To Real-Imag block '%blockname%' has unsupported input type.</message-text>
+            <suggestion>Use input type 'Real and imag' and create the appropriate constant zero inputs to the block.</suggestion>
+            <parameter-list>
+                <parameter name="blockname" description="The complex to real-imag block in question."/>
+            </parameter-list>
+        </message>
+        <message identifier="SELECTOR_NON_INHERITED_SAMPLE_TIME">
+            <message-text>The Selector block '%blockname%' has a non-inherited 'Sample time'. Only inherited sample times are currently supported (-1).</message-text>
+            <parameter-list>
+                <parameter name="blockname" description="The selector block in question."/>
+            </parameter-list>
+        </message>
+        <message identifier="CANNOT_FIND_DEVICE_DIRECTORY">
+            <message-text>Cannot find device directory.</message-text>
+            <suggestion></suggestion>
+        </message>
+        <message identifier="ERROR_PARSING_DEVICES_FILE">
+            <message-text>Error parsing %filename%: line %line%, column %column%: %error%.</message-text>
+            <parameter-list>
+                <parameter name="filename" description="The devices file with the error."/>
+                <parameter name="line" description="The line number with the error."/>
+                <parameter name="column" description="The column number with the error."/>
+                <parameter name="error" description="The exception returned by the XML parser."/>
+            </parameter-list>
+        </message>
+        <message identifier="CANNOT_FIND_DEVICE">
+            <message-text>Cannot find device '%devicename%'.</message-text>
+            <parameter-list>
+                <parameter name="devicename" description="The device that cannot be found."/>
+            </parameter-list>
+        </message>
+        <message identifier="DEVICE_XML_VERSION_MISMATCH">
+            <message-text>The ACDS version [%device_xml_version%] in [%device_xml_path%] does not match the DSPBA version [%dspba_version%] in [%dspba_path%].</message-text>
+            <parameter-list>
+                <parameter name="device_xml_version" description="The device.xml version."/>
+                <parameter name="device_xml_path" description="The device.xml path."/>
+                <parameter name="dspba_version" description="The DSPBA version."/>
+                <parameter name="dspba_path" description="The DSPBA library path."/>
+            </parameter-list>
+        </message>
+        <message identifier="NO_DEFINITION_FOR_SPEED_GRADE_IN_FAMILY">
+            <message-text>No definition found for speed grade '%speedgrade%' in family '%familyname%'.</message-text>
+            <parameter-list>
+                <parameter name="speedgrade" description="The speed grade selected."/>
+                <parameter name="familyname" description="The device family being used."/>
+            </parameter-list>
+        </message>
+        <message identifier="NO_DEFINITION_FOR_TIMING_MODEL_IN_FAMILY">
+            <message-text>No definition found for timing model %timingmodel% in speed grade '%speedgrade%' in family '%familyname%'.</message-text>
+            <parameter-list>
+                <parameter name="timingmodel" description="The default or selected timing model."/>
+                <parameter name="speedgrade" description="The speed grade selected."/>
+                <parameter name="familyname" description="The device family being used."/>
+            </parameter-list>
+        </message>
+        <message identifier="SYMMETRY_TYPE_DID_NOT_CORRESPOND_TO_SIZE">
+            <message-text>Symmetry type (%type%) did not correspond to symmetry size (%size%).</message-text>
+            <parameter-list>
+                <parameter name="type" description="The symmetry type."/>
+                <parameter name="size" description="The symmetry size."/>
+            </parameter-list>
+        </message>
+        <message identifier="SANITISED_VERSION_IS_EMPTY">
+            <message-text>Sanitised version of '%name%' is empty. Rename to include some alphabetical characters.</message-text>
+            <parameter-list>
+                <parameter name="name" description="The name before sanitisation."/>
+            </parameter-list>
+        </message>
+        <message identifier="HDL_NAME_MAPPING_COLLISION">
+            <message-text>Irrecoverable name mapping collision "%name%". Ensure that the alphanumeric parts of block names are unique.</message-text>
+            <parameter-list>
+                <parameter name="name" description="The name causing the collision."/>
+            </parameter-list>
+        </message>
+        <message identifier="FEATURE_DOES_NOT_HAVE_A_BOOLEAN_VALUE">
+            <message-text>Feature '%feature%' does not have a boolean value.</message-text>
+            <parameter-list>
+                <parameter name="feature" description="The feature without a boolean value."/>
+            </parameter-list>
+        </message>
+        <message identifier="FEATURE_DOES_NOT_HAVE_AN_INTEGER_VALUE">
+            <message-text>Feature '%feature%' does not have an integer value.</message-text>
+            <parameter-list>
+                <parameter name="feature" description="The feature without an integer value."/>
+            </parameter-list>
+        </message>
+        <message identifier="CAST_ERROR">
+            <message-text>Cast error in %name%. Conversion from %informat% to %outformat% not found in table.</message-text>
+            <parameter-list>
+                <parameter name="name" description="Location of the cast error."/>
+                <parameter name="informat" description="Original format."/>
+                <parameter name="outformat" description="Proposed new format."/>
+            </parameter-list>
+        </message>
+        <message identifier="COEFFICIENTS_MUST_BE_FIXED_POINT">
+            <message-text>The coefficients must be a signed fixed point array.</message-text>
+            <suggestion>Try using the fi function to create the array.</suggestion>
+        </message>       
+        <message identifier="RECONFIG_OVERRATE">
+            <message-text>Reconfigurable FIRs currently do not support super sample rates.</message-text>
+            <suggestion>Ensure that the total data rate is below the clock rate.</suggestion>
+        </message>           
+        <message identifier="MODEMAPPING_FORMATTING_ERROR">
+            <message-text>The channel mapping must be a 2D array with each row containing the same number of entries as the total number of channels. Each row represents 1 mode.</message-text>
+            <suggestion>Ensure there is 1 row per mode containing 1 channel per timeslot.</suggestion>
+        </message>        
+        <message identifier="MODEMAPPING_INT_ERROR">
+            <message-text>The channels must be integers between the range 0 and Number of Channels - 1</message-text>
+            <suggestion>Ensure all entries are integers</suggestion>
+        </message>
+        <message identifier="GENERATION_STOPPED">
+            <message-text>Generation stopped.</message-text>
+        </message>
+        <message identifier="FOLDER_TWO_CHANNELIN">
+            <message-text>Folded primitive subsystems must only have one ChannelIn block, but two were found: '%blockone%' and '%blocktwo%'.</message-text>
+            <parameter-list>
+                <parameter name="blockone" description="The first ChannelIn block."/>
+                <parameter name="blocktwo" description="The second ChannelIn block."/>
+            </parameter-list>
+        </message>
+        <message identifier="FOLDER_TWO_CHANNELOUT">
+            <message-text>Folded primitive subsystems must only have one ChannelOut block, but two were found: '%blockone%' and '%blocktwo%'.</message-text>
+            <parameter-list>
+                <parameter name="blockone" description="The first ChannelOut block."/>
+                <parameter name="blocktwo" description="The second ChannelOut block."/>
+            </parameter-list>
+        </message>
+        <message identifier="FOLDER_NO_CHANNELIN">
+            <message-text>Folded primitive subsystems must have one ChannelIn block, but none were found.</message-text>
+        </message>
+        <message identifier="FOLDER_NO_CHANNELOUT">
+            <message-text>Folded primitive subsystems must have one ChannelOut block, but none were found.</message-text>
+        </message>
+        <message identifier="FOLDER_DIFFERING_TDM_SLOTS">
+            <message-text>Folding parameters must be set to the same values in the ChannelIn and the ChannelOut block of a folded primitive subsystem, but ChannelIn '%channelinblock%' has Number of Used TDM Slots set to %inslots% and ChannelOut '%channeloutblock%' has it set to %outslots%.</message-text>
+            <parameter-list>
+                <parameter name="channelinblock" description="The ChannelIn block."/>
+                <parameter name="channeloutblock" description="The ChannelOut block."/>
+                <parameter name="inslots" description="The number of TDM slots set on the ChannelIn block."/>
+                <parameter name="outslots" description="The number of TDM slots set on the ChannelOut block."/>
+            </parameter-list>
+        </message>
+        <message identifier="FOLDER_DIFFERING_SAMPLE_RATE">
+            <message-text>Folding parameters must be set to the same values in the ChannelIn and the ChannelOut block of a folded primitive subsystem, but ChannelIn '%channelinblock%' has Sample Rate set to %inrate%.2f and ChannelOut '%channeloutblock%' has it set to %outrate%.2f.</message-text>
+            <parameter-list>
+                <parameter name="channelinblock" description="The ChannelIn block."/>
+                <parameter name="channeloutblock" description="The ChannelOut block."/>
+                <parameter name="inrate" description="The sample rate set on the ChannelIn block."/>
+                <parameter name="outrate" description="The sample rate set on the ChannelOut block."/>
+            </parameter-list>
+        </message>
+        <message identifier="FOLDER_CHANNELIN_OUTPUT_CONNECTED_WRONG">
+            <message-text>Output port '%output%' of ChannelIn block '%channelin%', which has folding enabled, can only be connected to the same port of a ChannelOut block, but it was connected to input port '%input%' of block '%block%'.</message-text>
+            <parameter-list>
+                <parameter name="output" description="The ChannelIn block's output port."/>
+                <parameter name="channelin" description="The ChannelIn block."/>
+                <parameter name="input" description="The input port connected to the ChannelIn output port."/>
+                <parameter name="block" description="The block which has an input port that is connected to the ChannelIn output port."/>
+            </parameter-list>
+        </message>
+        <message identifier="FOLDER_VECTOR_TDM_SLOTS">
+            <message-text>[%block%] cannot fold vector input signal when more than one TDM slot is used</message-text>
+            <parameter-list>
+                <parameter name="block" description="Path of Channel-In block"/>
+            </parameter-list>
+        </message>
+        <message identifier="TYPE_UNSUPPORTED_ARRAY_INITIALIZE">
+            <message-text>Unsupported type for initialization parameter to block %block%</message-text>
+            <parameter-list>
+                <parameter name="block" description="Path to block with bad initialization"/>
+            </parameter-list>
+        </message>
+        <message identifier="FAIL_LATENCY_VARIABLE_SAMPDELAY">
+            <message-text>Failed to determine latency of variable SampleDelay [%block%] in post schedule. Check the equivalence group.</message-text>
+            <parameter-list>
+                <parameter name="block" description="The path to Sample Latency block"/>
+            </parameter-list>
+        </message>
+        <message identifier="MISSING_INITIALIZATION_BITEXTRACT">
+            <message-text>BitExtract missing initialization parameters [%block%]</message-text>
+            <parameter-list>
+                <parameter name="block" description="The path to BitExtract block"/>
+            </parameter-list>
+        </message>
+        <message identifier="MISSING_INITIALIZATION_CHOOSEBITS">
+            <message-text>ChooseBits missing initialization parameters [%block%]</message-text>
+            <parameter-list>
+                <parameter name="block" description="The path to ChooseBits block"/>
+            </parameter-list>
+        </message>
+        <message identifier="REINTERPRET_OUTPUT_WIDER_THAN_INPUT">
+            <message-text>[%block%] Reinterpret cast failed - output is wider than the input (%outwidth% &gt; %inwidth%)</message-text>
+            <parameter-list>
+                <parameter name="block" description="The path to Reinterpret Cast block"/>
+                <parameter name="outwidth" description="Bit width of output port"/>
+                <parameter name="inwidth" description="Bit width of input port"/>
+            </parameter-list>
+        </message>
+        <message identifier="SAMPDELAY_VECTOR_INIT_MISMATCH">
+            <message-text>Either the delay [%block%] should be a scalar, or the vector size (%vecsize%) and initialization vector length (%initlen%) must match</message-text>
+            <parameter-list>
+                <parameter name="block" description="The path to block"/>
+                <parameter name="vecsize" description="length of input signal vector"/>
+                <parameter name="initlen" description="length of vector initialization parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="COMPLEX_OUTPUT_PORT_SET_REAL">
+            <message-text>Output Port %port% is set incorrectly. Trying to set to %compset1%, but already set to %compset2%. Check and disconnect downstream for scopes and other sinks that force Real behaviour.</message-text>
+            <parameter-list>
+                <parameter name="port" description="The output port"/>
+                <parameter name="compset1" description="complex/real setting of port"/>
+                <parameter name="compset2" description="complex/real backpropagated from downstream"/>
+            </parameter-list>
+        </message>
+        <message identifier="BITEXTRACT_VECTOR_INPUT_WIDTH_MISMATCH">
+            <message-text>Input vector width mismatch: Input width is %inputlen% but initialization width is %initlen%.</message-text>
+            <parameter-list>
+                <parameter name="inputlen" description="Vector length of input signal"/>
+                <parameter name="initlen" description="Vector length of initialization parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONSTMULT_VECTOR_INPUT_WIDTH_MISMATCH">
+            <message-text>Width mismatch in vector multiply by constant: Input width is %inputlen% but scaling vector width is %initlen%.</message-text>
+            <parameter-list>
+                <parameter name="inputlen" description="Vector length of input signal"/>
+                <parameter name="initlen" description="Vector length of initialization parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="PORT_DIRECTLY_CONNECTS_ANOTHER_SUBSYSTEM">
+            <message-text>Port %port%(%element%) of block '%block%' is connected to a block in another subsystem directly. Route the signal through the intervening subsystems' ports instead.</message-text>
+            <parameter-list>
+                <parameter name="port" description="index of input port on block"/>
+                <parameter name="element" description="index of element for vector/complex signal"/>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="LATENCY_CONSTRAINT_NOT_SATISFIED">
+            <message-text>The latency for %model% is constrained to %relation% %limit%. With this, the target fMax cannot be satisfied. Relax the latency constraint by at least %relax%, or reduce the fMax requirement.</message-text>
+            <parameter-list>
+                <parameter name="model" description="primitive subsystem being scheduled"/>
+                <parameter name="relation" description="relation operator for constraint"/>
+                <parameter name="limit" description="latency limit against which the relation operator is applied"/>
+                <parameter name="relax" description="by how much the limit should be relaxed"/>
+            </parameter-list>
+        </message>
+        <message identifier="PASSTHRU_MUX_DISALLOWED">
+            <message-text>Mux [%block%] has only one data input port.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to Mux block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CANNOT_GENERATE_USING_TYPE_AUTO">
+            <message-text>[%block%] Cannot generate using type 'auto'. (This error may be because signals of different types have been fed into a Simulink mux).</message-text>
+            <parameter-list>
+                <parameter name="block" description="control block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CANNOT_GENERATE_USING_TYPE">
+            <message-text>Cannot generate using type '%type%' in [%block%]</message-text>
+            <parameter-list>
+                <parameter name="type" description="name of data type"/>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="DEMUX_VECTOR_INDEX_BELOW_ZERO">
+            <message-text>[%block%] Error in vector of output channels in demux; index %outchan% (%index%) is less than zero. Channel vector entries must be in range [0..Number of Input Channels - 1]</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="outchan" description="which output channel"/>
+                <parameter name="index" description="channel index that is less than zero"/>
+            </parameter-list>
+        </message>
+        <message identifier="DEMUX_VECTOR_INDEX_TOOBIG">
+            <message-text>[%block%] Error in vector of output channels in demux; index %outchan% (%index%) is greater than Number of Input Channels. Channel vector entries must be in range [0..Number of Input Channels - 1]</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="outchan" description="which output channel"/>
+                <parameter name="index" description="channel index that is out of range"/>
+            </parameter-list>
+        </message>
+        <message identifier="NEGATIVE_SAMPLEDELAY_LENGTH">
+            <message-text>Sample delay [%block] length is negative</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="MINIMUM_DELAY_WITHOUT_CONTROL">
+            <message-text>The minimum delay option can only be used if a Control block is present</message-text>
+            <parameter-list>
+            </parameter-list>
+        </message>
+        <message identifier="DUALMEM_INIT_DIMENSIONS_MISMATCH">
+            <message-text>[%block%] Mismatch between vector size (%vecsize%) and initialization matrix dimensions (%initcols% columns)</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="vecsize" description="vector width of dualmem/LUT"/>
+                <parameter name="initcols" description="number of columns in initialization matrix parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="INVALID_INIT_DIMENSIONS">
+            <message-text>[%block%] Invalid number of dimensions in initialization</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="ZERO_SIZE_DUALMEM_LUT">
+            <message-text>[%block%] Empty memory size</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="FOLDING_VARIABLE_STEP_SOLVER">
+            <message-text>Folded Primitive Models require Variable-step, please change your solver.</message-text>
+            <parameter-list>
+            </parameter-list>
+        </message>
+        <message identifier="SEQCOUNT_WRONG_NUMBER_INITVALUES">
+            <message-text>[%block%] Need 3 values to initialise a Sequencer or Counter</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SEQUENCER_ZERO_MODULUS">
+            <message-text>Sequencer [%block%] must have a non-zero modulus.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="COUNTER_ZERO_MODULUS">
+            <message-text>Counter [%block%] must have a non-zero modulus.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="COUNTER_INVALID_OUTPUT_TYPE">
+            <message-text>Counter [%block%] must have an integer output type.</message-text>
+            <suggestion>Set Output data type mode to Inherit via internal rule.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="ACCUMULATOR_WRONG_NUMBER_INITVALUES">
+            <message-text>[%block%] Need LSBA, MSBA and maxMSBX to initialize the application-specific accumulator. Please check the documentation for more help on setting these parameters.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="ACCUMULATOR_INITVALUES_BAD_RANGE">
+            <message-text>[%block%] Need MSBA &gt;= maxMSBX &gt; LSBA for proper accumulator initialization. Additionally, maxMSBX - LSBA should be larger than wF+1.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CHANNEL_INDEX_WRONG_ORDER">
+            <message-text>Channels must be passed in order to channel in blocks; expecting channel: %expected%, found: %channel%.</message-text>
+            <parameter-list>
+                <parameter name="expected" description="channel index that was expected"/>
+                <parameter name="channel" description="channel index that was received by Channel-In block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONSTANT_UNKNOWN_TYPE">
+            <message-text>Unknown Type for constant</message-text>
+            <parameter-list>
+            </parameter-list>
+        </message>
+        <message identifier="DSPBA_ROOTDIR_NOT_SET">
+            <message-text>DSPBA_ROOTDIR is not set</message-text>
+            <parameter-list>
+            </parameter-list>
+        </message>
+        <message identifier="OUTPUT_PORT_DIMENSIONALITY_MISMATCH">
+            <message-text>Attempted to set output port %port% dimensionality to %dim0% after it was already set to %dim1%.</message-text>
+            <parameter-list>
+                <parameter name="port" description="output port with ambiguous dimensions"/>
+                <parameter name="dim0" description="new dimension"/>
+                <parameter name="dim1" description="existing dimension"/>
+            </parameter-list>
+        </message>
+        <message identifier="FLOAT_DRIVES_BOOLEAN_PORT">
+            <message-text>Port %port% should be boolean but is floating point</message-text>
+            <parameter-list>
+                <parameter name="port" description="which input port"/>
+            </parameter-list>
+        </message>
+        <message identifier="BOOLEAN_PORT_TOO_WIDE">
+            <message-text>Port %port% should be boolean but has width %width%</message-text>
+            <parameter-list>
+                <parameter name="port" description="which input port"/>
+                <parameter name="width" description="input bit width"/>
+            </parameter-list>
+        </message>
+        <message identifier="FLOAT_DRIVES_FIXEDPOINT_PORT">
+            <message-text>Port %port% should be fixed point but is floating point</message-text>
+            <parameter-list>
+                <parameter name="port" description="which input port"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIXEDPOINT_DRIVES_DOUBLE_PORT">
+            <message-text>Port %port% should be double precision floating point but is fixed point</message-text>
+            <parameter-list>
+                <parameter name="port" description="which input port"/>
+            </parameter-list>
+        </message>
+        <message identifier="WRONG_PRECISION_DRIVES_DOUBLE_PORT">
+            <message-text>Port %port% should be double precision floating point but is %wrong% precision</message-text>
+            <parameter-list>
+                <parameter name="port" description="which input port"/>
+                <parameter name="wrong" description="incorrect float precision"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIXEDPOINT_DRIVES_SINGLE_PORT">
+            <message-text>Port %port% should be single precision floating point but is fixed point</message-text>
+            <parameter-list>
+                <parameter name="port" description="which input port"/>
+            </parameter-list>
+        </message>
+        <message identifier="WRONG_PRECISION_DRIVES_SINGLE_PORT">
+            <message-text>Port %port% should be single precision floating point but is %wrong% precision</message-text>
+            <parameter-list>
+                <parameter name="port" description="which input port"/>
+                <parameter name="wrong" description="incorrect float precision"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIXEDPOINT_DRIVES_FLOAT_PORT">
+            <message-text>Port %port% should be floating point but is fixed point</message-text>
+            <parameter-list>
+                <parameter name="port" description="which input port"/>
+            </parameter-list>
+        </message>
+        <message identifier="EMPTY_INPUT_NUMBER_PARAM">
+            <message-text>[%block%] Input number parameter must not be empty.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="NEGATIVE_INPUT_NUMBER_PARAM">
+            <message-text>[%block%] Input number parameter must not be negative.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="EMPTY_OUTPUT_NUMBER_PARAM">
+            <message-text>[%block%] Output number parameter must not be empty.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="OUTPUT_PORT_DIMENSION_ZERO">
+            <message-text>Attempted to set output port %port% dimensionality to 0</message-text>
+            <parameter-list>
+                <parameter name="port" description="which input port"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHIFTBY_FRACTION_OR_SIGNED">
+            <message-text>The shift amount (input b) must be a unsigned number with no fractional bits.</message-text>
+            <parameter-list>
+            </parameter-list>
+        </message>
+        <message identifier="BITEXTRACT_BEYOND_WORD_WIDTH">
+            <message-text>The Least Significant Bit Position from Input Word must be within the width of the word, you requested %maxpos%, Input Word Width is %width%</message-text>
+            <parameter-list>
+                <parameter name="maxpos" description="maximum bit position to extract"/>
+                <parameter name="width" description="input bit width"/>
+            </parameter-list>
+        </message>
+        <message identifier="COUNTER_NUMBER_INIT_PARAMS">
+            <message-text>Need 3 values to initialise a Sequencer or Counter</message-text>
+            <parameter-list>
+            </parameter-list>
+        </message>
+        <message identifier="COUNTER_INIT_LIMIT_SIGNED">
+            <message-text>Counter initial and limit ports must be unsigned.</message-text>
+            <parameter-list>
+            </parameter-list>
+        </message>
+        <message identifier="BACKPROP_OUTPUT_TYPE_MISMATCH">
+            <message-text>Error with mismatch type set on output %port% for %block%. Got %typegot% but was expecting %typeexp%</message-text>
+            <parameter-list>
+                <parameter name="port" description="output port"/>
+                <parameter name="block" description="path to block"/>
+                <parameter name="typegot" description="data type to set"/>
+                <parameter name="typeexp" description="expected data type"/>
+            </parameter-list>
+        </message>
+        <message identifier="MUX_SELECT_VECTOR_MISMATCH">
+            <message-text>Mux block [%block%] has a non-scalar select line with select vector width not equal to data vector width.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="MUX_SELECT_COMPLEX">
+            <message-text>Mux block [%block%] does not support complex select line.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="MEMMAP_ADDRESS_CLASH">
+            <message-text>Memory map clash at address %address% between %reg1desc% in '%path1%' and %reg2desc% in '%path2%'</message-text>
+            <parameter-list>
+                <parameter name="address" description="address where clash occurs"/>
+                <parameter name="path1" description="simulink path of the block containing the 1st register"/>
+                <parameter name="path2" description="simulink path of the block containing the 2nd register"/>
+                <parameter name="reg1desc" description="description of the 1st register involved"/>
+                <parameter name="reg2desc" description="description of the 2nd register involved"/>
+            </parameter-list>
+        </message>
+        <message identifier="SINGLE_DOUBLE_FLOAT_ONLY">
+            <message-text>port %port% is restricted to single or double precision floating point</message-text>
+            <parameter-list>
+                <parameter name="port" description="describe port"/>
+            </parameter-list>
+        </message>
+        <message identifier="MIXED_DATATYPE_DRIVES_MULTI_PORTS">
+            <message-text>Ports %ports% should be %rule%, but %violated%</message-text>
+            <parameter-list>
+                <parameter name="ports" description="ports to which type rule applies"/>
+                <parameter name="rule" description="type rule"/>
+                <parameter name="violated" description="how rule was violated"/>
+            </parameter-list>
+        </message>
+        <message identifier="MIXED_PRECISION_INPUT_PORTS">
+            <message-text>Mixing different input precisions disallowed for block: port %port0% is %prec0% precision, but port %port1% is %prec1% precision.</message-text>
+            <parameter-list>
+                <parameter name="port0" description="port0 index"/>
+                <parameter name="prec0" description="float precision of port0"/>
+                <parameter name="port1" description="port1 index"/>
+                <parameter name="prec1" description="float precision of port1"/>
+            </parameter-list>
+        </message>
+        <message identifier="MULT_FIXEDIN_FLOATOUT">
+            <message-text>Multiplier [%path%] output is floating point but inputs are not</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to Mult block"/>
+            </parameter-list>
+        </message>
+        <message identifier="MULT_FLOAT_PRECISION_MISMATCH">
+            <message-text>Floating point multiplier [%path%] input precisions do not match output precision</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to Mult block"/>
+            </parameter-list>
+        </message>
+        <message identifier="MULT_FLOATIN_FIXEDOUT">
+            <message-text>Multiplier [%path%] with floating point input is outputing fixed point</message-text>
+            <parameter-list>
+                <parameter name="path" description="describe path"/>
+            </parameter-list>
+        </message>
+        <message identifier="TYPEPROP_FIXEDIN_FLOATOUT">
+            <message-text>Port %port% inferred to be fixed point but already configured as %type%</message-text>
+            <parameter-list>
+                <parameter name="port" description="describe port"/>
+                <parameter name="type" description="describe type"/>
+            </parameter-list>
+        </message>
+        <message identifier="TYPEPROP_FLOATIN_FIXEDOUT">
+            <message-text>Port %port% inferred to be floating point but already configured as %type%</message-text>
+            <parameter-list>
+                <parameter name="port" description="describe port"/>
+                <parameter name="type" description="describe type"/>
+            </parameter-list>
+        </message>
+        <message identifier="MBITS_PASS_UNSUPPORTED_BLOCK_IN_DSDK">
+            <message-text>MGen code could not be generated as the design contains at least one block unsupported by the DSDK.</message-text>
+        </message>
+        <message identifier="MBITS_PASS_UNSUPPORTED_BLOCK_IN_MBITS">
+            <message-text>MGen code could not be generated(required for the ALU Folder) as block type '%Block_type%' is not supported in MGen.</message-text>
+            <parameter-list>
+                <parameter name="Block_type" description="block which is unsupported" />
+            </parameter-list>
+        </message>
+        <message identifier="MBITS_NO_ROOT_MODELS">
+            <message-text>No synthesizable model was found.</message-text>
+            <suggestion>Try inserting a device block in the design.</suggestion>
+        </message>
+        <message identifier="MBITS_NO_FILENAME">
+            <message-text>No filename specified for MGen code generation.</message-text>
+        </message>
+        <message identifier="MBITS_PASS_TYPE_INFRERENCE_FAILED">
+                <message-text>Failed to infer type information required for MGen code generation(required for the ALU Folder).</message-text>
+        </message>
+        <message identifier="ALUFOLDING_BLOCK_WRONG_LEVEL">
+            <message-text>The ALU Folding block has been placed at the wrong level of the hierarchy. The block must be in the same system as Channel In and Channel Out blocks.</message-text>
+        </message>
+        <message identifier="ALUFOLDING_ENHPREC_FOUND">
+            <message-text>The ALU Folder does not currently support variable precision floating point types. Please remove any of these types and any Enhanced Precision blocks affecting the system for folding.</message-text>
+        </message>
+        <message identifier="ALUFOLDING_MATLAB_AND_CPP_ERROR">
+            <message-text>Attempting to run both the MATLAB and Cpp implementations of the ALU Folder. This is unsupported.</message-text>
+        </message>
+        <message identifier="ALUFOLDING_GEN_SYS_FILENAME_INVALID">
+            <message-text>Invalid filename for ALU Folder system output.</message-text>
+        </message>
+        <message identifier="ALUFOLDING_GEN_SYS_FILENAME_EMPTY">
+            <message-text>Filename empty for ALU Folder system output.</message-text>
+        </message>
+        <message identifier="ALUFOLDING_SAMPLE_RATE_INVALID">
+            <message-text>Invalid sample rate specified in ALU Folding block.</message-text>
+        </message>
+        <message identifier="ALUFOLDING_NUM_CHANNELS_INVALID">
+            <message-text>Invalid number of channels specified in ALU Folding block.</message-text>
+        </message>
+        <message identifier="ALUFOLDING_LATENCY_CONSTRAINT_INVALID">
+            <message-text>Invalid latency constraint specified in ALU Folding block.</message-text>
+        </message>
+        <message identifier="ALUFOLDING_CLOCK_RATE_INVALID">
+            <message-text>Clock rate of system to run the ALU Folder on is invalid.</message-text>
+        </message>
+        <message identifier="ALUFOLDING_CLOCK_RATE_NOT_INT_MULTIPLE">
+            <message-text>[%block%] Clock rate(%clockRate%MHz) is not an integer multiple of the sample rate(%sampleRate%MHz) for the ALU Folder.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to Channel Out block"/>
+                <parameter name="clockRate" description="clock rate of folded system"/>
+                <parameter name="sampleRate" description="sample rate of folded system"/>
+            </parameter-list>
+        </message>
+        <message identifier="ALUFOLDING_EXCEPTION">
+            <message-text>ALU Folder error: %exceptionMessage%</message-text>
+            <parameter-list>
+                <parameter name="exceptionMessage" description="error message given by the folder"/>
+            </parameter-list>
+        </message>
+        <message identifier="ALUFOLDING_HWGENOFF_WITH_CLOCKRATE_ERROR">
+            <message-text>When using clock rate mode in the ALU Folder, simulation cannot proceed when hardware generation is off in the control block. Please turn hardware generation on to use this mode.</message-text>
+        </message>
+        <message identifier="ALUFOLDING_NO_PACKET_BEGIN">
+            <message-text>When using ALU Folding with multiple channels, the Channel In and Channel Out blocks must have a Start of Packet Signal. This can be enabled in the Mask Parameters dialog for the Channel In and Channel Out blocks.</message-text>
+        </message>
+        <message identifier="READYBLOCK_INCORRECT_USE">
+            <message-text>Error in use of Ready block '%readyBlockHumanId%'. A Ready block must have only one connection, which must be to a Channel Out block.</message-text>
+            <parameter-list>
+                <parameter name="readyBlockHumanId" description="A human readable name for a Ready block"/>
+            </parameter-list>
+        </message>
+        <message identifier="PACKETBEGIN_IN_NONFOLDING_CONTEXT">
+            <message-text>Start of Packet signals used in non-ALU Folding context. The Start of Packet signals on the Channel In and Channel Out blocks are only for the use of ALU Folding systems.</message-text>
+        </message>
+        <message identifier="POLYCOEF_BANKS_POS">
+            <message-text>[%block%] Number of coefficient banks, %banks% should be positive integer</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="banks" description="number of banks in polynomial coefficient matrix"/>
+            </parameter-list>
+        </message>
+        <message identifier="POLYCOEF_ROWS_MULTIPLE">
+            <message-text>[%block%] Number of rows in coefficient matrix (%rows%) should be a multiple of the number of banks (%banks%)</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="rows" description="number of rows in coefficient matrix"/>
+                <parameter name="banks" description="number of coefficient banks"/>
+            </parameter-list>
+        </message>
+        <message identifier="POLYCOEF_VECTOR_WIDTH_INPUT">
+            <message-text>[%block%] Number of vector components (%vwidth%) in coefficient matrix should be 1 or equal to input vector width %vinput%</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="vwidth" description="vector width of polynomial initialization"/>
+                <parameter name="vinput" description="vector width of input"/>
+            </parameter-list>
+        </message>
+        <message identifier="POLYCOEF_ORDER_TOO_LOW">
+            <message-text>[%block%] Polynomial order %ncols% is too low.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="ncols" description="number of columns in Polynomial coefficient matrix"/>
+            </parameter-list>
+        </message>
+        <message identifier="POLYCOEF_FIRSTLAST_COLUMN_ZEROS">
+            <message-text>[%block%] First and last columns of coefficient matrix must not contain zeros</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="EPS_FIXED_FUSED_MINMAX">
+            <message-text>Enhanced precision system does not yet support fixed point fused Min/Max [%block%]</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to Min/Max block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONVERT_FLOAT_CLIP_DETECT">
+            <message-text>Clip detection is not supported by %block% when converting floating point.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to Convert block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SELECT_MISSING_DATA_INPUT">
+            <message-text>%block% : select input is missing corresponding data input. Number of cases should be a positive integer.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to Select block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SELECTOR_INPUT_NOT_BOOLEAN">
+            <message-text>[%block%] input %selector% should be boolean</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to Select block"/>
+                <parameter name="selector" description="selector port"/>
+            </parameter-list>
+        </message>
+        <message identifier="SPECIFY_UNSUPPORTED_FLOAT_TYPE">
+            <message-text>[%block%] Unsupported variable precision floating point type "float%width%_m%frac%" was specified</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to Select block"/>
+                <parameter name="width" description="bit width of floating point type"/>
+                <parameter name="frac" description="mantissa field width of floating point type"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONFLICTING_FRACTIONAL_LENGTHS">
+            <message-text>Fractional length specified by type (%typeFrac%) conflicts with length from scale value (%scaleFrac%) in block '%path%'.</message-text>
+            <parameter-list>
+                <parameter name="typeFrac" description="fraction length from type"/>
+                <parameter name="scaleFrac" description="fraction length from scale"/>
+                <parameter name="path" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SPECIFIED_TYPE_UNSUPPORTED">
+            <message-text>Value supplied as a type specification is not valid or supported in block '%path%'.</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="COMPLEX_REALIMAG_INPUT_REAL">
+            <message-text>block '%path%' requires a complex input, but the signal driving it is real. To generate hardware, remove this block, or create an imaginary signal component</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to custom complex-to-real/imag block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SEQCOUNT_PARAMETER_RANGE_VIOLATION">
+            <message-text>[%block%] %ptype% configuration parameter [%pname% = %val%] is outside of supported range [%min%, %max%]</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to sequence/counter block"/>
+                <parameter name="ptype" description="primitive block type (Sequencer or Counter)"/>
+                <parameter name="pname" description="parameter name (init, step, modulo, or period)"/>
+                <parameter name="val" description="value of parameter setting"/>
+                <parameter name="min" description="minimum allowed value for parameter"/>
+                <parameter name="max" description="maximum allowed value for parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIXDIV_SIGNED_MISMATCH">
+            <message-text>Input ports of fixed point divide [%path%] should be both signed or both unsigned.</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to divide block"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIXDIV_PRECISION_TOO_HIGH">
+            <message-text>Unable to synthesize fixed point divide [%path%] with excessively high output precision of %bitwidth% bits.</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to divide block"/>
+                <parameter name="bitwidth" description="bitwidth of output precision"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIXDIV_TYPESPEC_SIGN_MISMATCH">
+            <message-text>Output type specified for fixed point divide [%path%] should be %sign%.</message-text>
+            <parameter-list>
+                <parameter name="path" description="divide block path"/>
+                <parameter name="sign" description="signed/unsigned"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIXDIV_TYPESPEC_BITWIDTH_VIOLATION">
+            <message-text>Output type specified for fixed point divide [%path%] is only allowed to drop least significant bits. e.g. fixdt(%sign%,%width%-n,%frac%-n) drops n bits, </message-text>
+            <parameter-list>
+                <parameter name="path" description="divide block path"/>
+                <parameter name="sign" description="output signedness"/>
+                <parameter name="width" description="output bit width"/>
+                <parameter name="frac" description="output fraction length"/>
+            </parameter-list>
+        </message>
+        <message identifier="BITEXTRACT_OUT_OF_RANGE">
+            <message-text>BitExtract [%block%] LSB position %pos% should not be higher than %msb% (MSB of input)</message-text>
+            <parameter-list>
+                <parameter name="block" description="block path"/> 
+                <parameter name="pos" description="position of LSB extracted"/>
+                <parameter name="msb" description="MSB position of input"/>
+            </parameter-list>
+        </message>
+        <message identifier="CHOOSEBITS_OUT_OF_RANGE">
+            <message-text>ChooseBits [%block%] LSB position %pos% should not be higher than %msb% (MSB of input)</message-text>
+            <parameter-list>
+                <parameter name="block" description="block path"/> 
+                <parameter name="pos" description="position of LSB extracted"/>
+                <parameter name="msb" description="MSB position of input"/>
+            </parameter-list>
+        </message>
+        <message identifier="EMPTY_SCALE_PARAM">
+            <message-text>Scale parameter must not be empty.</message-text>
+            <parameter-list>
+            </parameter-list>
+        </message>
+        <message identifier="EMPTY_TYPE_PARAM">
+            <message-text>Type parameter must not be empty.</message-text>
+            <parameter-list>
+            </parameter-list>
+        </message>
+        <message identifier="FIFO_CTRL_VECTOR_MISMATCH">
+            <message-text>Vector width, %vecsize%, of control input (port %port%) to FIFO mismatches the number of rows in initialization matrix (rows = %rows%)</message-text>
+            <parameter-list>
+                <parameter name="vecsize" description="vector size of control input signal"/>
+                <parameter name="port" description="which control port"/>
+                <parameter name="rows" description="number of rows in 2D initialization parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIFO_DATA_VECTOR_MISMATCH">
+            <message-text>Vector width, %vecsize%, of data input to FIFO mismatches the number of rows in initialization matrix (rows = %rows%)</message-text>
+            <parameter-list>
+                <parameter name="vecsize" description="vector size of control input signal"/>
+                <parameter name="rows" description="number of rows in 2D initialization parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="LDEXP_INPUTB_HAS_FRACTION">
+            <message-text>The b-input of LdExp [%path%] cannot have a fractional part (%fracpart% bits)</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to block"/>
+                <parameter name="fracpart" description="size of fractional part"/>
+            </parameter-list>
+        </message>
+        <message identifier="NONSYNTH_BLOCK_IN_SYNTHSYS">
+            <message-text>Found non-synthesizable block '%block%' in synthesizable part of system [%model%].</message-text>
+            <parameter-list>
+                <parameter name="block" description="name of block"/>
+                <parameter name="model" description="name of model"/>
+            </parameter-list>
+        </message>
+        <message identifier="BITEXTRACT_OFFSET_TOO_LOW">
+            <message-text>BitExtract [%block%] LSB offset cannot be lower than %lowest%</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to bitextract block"/>
+                <parameter name="lowest" description="lowest offset allowed"/>
+            </parameter-list>
+        </message>
+        <message identifier="CHOOSEBITS_OFFSET_TOO_LOW">
+            <message-text>ChooseBits [%block%] LSB offset cannot be lower than %lowest%</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to choosebits block"/>
+                <parameter name="lowest" description="lowest offset allowed"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIXEDPOINT_MATH_PRECISION_RESTRICTION">
+            <message-text>The bit width of input port %port% on block [%block%] is %width%, but the fixed point %math% block is restricted to %limit% bits. Change the bit width of the specified input port on the specified block to be %limit% bits or less.</message-text>
+            <parameter-list>
+                <parameter name="port" description="input port index"/>
+                <parameter name="block" description="path to block"/>
+                <parameter name="width" description="bit width of input port"/>
+                <parameter name="math" description="name of math function"/>
+                <parameter name="limit" description="precision limit"/>
+            </parameter-list>
+        </message>
+        <message identifier="unVecInvalidPortType">
+            <message-text>Port '%port%' on block '%block%' was found to have an invalid type while decomposing vectors.</message-text>
+            <parameter-list>
+                <parameter name="port" description="DSDK port"/>
+                <parameter name="block" description="DSDK block"/>
+            </parameter-list>
+        </message>
+        <message identifier="unVecInvalidWireType">
+            <message-text>Wire '%wire%' was found to have an invalid type while decomposing vectors.</message-text>
+            <parameter-list>
+                <parameter name="wire" description="DSDK wire"/>
+            </parameter-list>
+        </message>
+        <message identifier="FAILURE_TO_REDISTRIBUTE_DELAY">
+            <message-text>Failure to redistribute delay in [%path%] - %reason%&#xD;%cycle%</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to scheduled subsystem"/>
+                <parameter name="reason" description="reason for failure"/>
+                <parameter name="cycle" description="list of blocks in negative constraint cycle"/>
+            </parameter-list>
+        </message>
+        <message identifier="CTRLFLOW_INVALID_INPUT_CONNECTION">
+            <message-text>Invalid block type found between StallEnter and StallExit blocks. Input, output, bus blocks and enabled subsystems are currently unsupported within stallable sections.</message-text>
+        </message>
+        <message identifier="CTRLFLOW_FU_HAS_NO_ENABLE">
+            <message-text>Function unit %block% of type %type% has no enable but a latency of %latency%.</message-text>
+            <parameter-list>
+                <parameter name="block" description="unique path to FU"/>
+                <parameter name="type" description="type of FU"/>
+                <parameter name="latency" description="latency of FU"/>
+            </parameter-list>
+        </message>
+        <message identifier="ENABLE_NOT_FOUND_ON_INPUT_BLOCK">
+            <message-text>Enable input %name% was not found on the input block of model %model%.</message-text>
+            <parameter-list>
+                <parameter name="name" description="name of enable input"/>
+                <parameter name="model" description="path to subsystem"/>
+            </parameter-list>
+        </message>
+        <message identifier="ENABLE_AND_STALLVALID_ERROR">
+            <message-text>Model %model% specifies both enable and stall valid ports.</message-text>
+            <suggestion>Specify either an enable port or stall valid ports.</suggestion>
+            <parameter-list>
+                <parameter name="model" description="path to subsystem"/>
+            </parameter-list>
+        </message>
+        <message identifier="ENABLE_AND_NONS_ERROR">
+            <message-text>NONS model %model% specifies an enable parameter.</message-text>
+            <suggestion>Explicitly connect enable signals and remove A_SYNTH_ENABLE_NAME (synthEnableName) parameter.</suggestion>
+            <parameter-list>
+                <parameter name="model" description="path to subsystem"/>
+            </parameter-list>
+        </message>
+        <message identifier="ENABLE_NOT_CONNECTED_TO_SIGNALIN">
+            <message-text>Enable input %name% was not connected to a signal in block of model %model%.</message-text>
+            <parameter-list>
+                <parameter name="name" description="name of enable input"/>
+                <parameter name="model" description="path to subsystem"/>
+            </parameter-list>
+        </message>
+        <message identifier="TOO_MANY_ENABLE_SINK_BLOCKS">
+            <message-text>Enable input %name% is connected to $numBlocks% enableSinkBlocks in model %model%.</message-text>
+            <suggestion>Connect enable input %name% to a single enableSinkBlock.</suggestion>
+            <parameter-list>
+                <parameter name="name" description="name of enable input"/>
+                <parameter name="numBlocks" description="number of enableSinkBlocks"/>
+                <parameter name="model" description="path to subsystem"/>
+            </parameter-list>
+        </message>
+        <message identifier="RESSHARE_FOLDER_USED">
+            <message-text>Resource Sharing Folder has been used on a Channel In/Channel Out block (%block_path%). The Resource Sharing Folder has been removed from DSP Builder in 14.1.</message-text>
+            <suggestion>Consider either using the ALU Folder or removing folding altogether.</suggestion>
+            <parameter-list>
+                <parameter name="block_path" description="simulink path of the channel in or channel out block"/>
+            </parameter-list>
+        </message>
+        <message identifier="REAL_ONLY_PORT_IS_COMPLEX">
+            <message-text>Port %port% on block '%block%' is complex. This port does not support complex data types.</message-text>
+            <parameter-list>
+                <parameter name="port" description="name of real-only port"/>
+                <parameter name="block" description="unique path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="DUAL_MEM_WEN_NOT_BOOLEAN">
+            <message-text>Dualmem port w%portno% requires a boolean input, but found %wrongtype%.</message-text>
+            <parameter-list>
+                <parameter name="portno" description="either 1 or 2, depending on which write enable has the wrong type"/>
+                <parameter name="wrongtype" description="the incorrect type which is connected"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXTERNAL_MEM_COMPLEX_INIT">
+            <message-text>External Memory ID: %id%, Complex data is not supported for initialization</message-text>
+            <parameter-list>
+                <parameter name="id" description="memory id"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXTERNAL_MEM_UNSUPPORTED_TYPE_INIT">
+            <message-text>External Memory ID: %memId%, Unsupported type (id=%classId%) for initialization</message-text>
+            <parameter-list>
+                <parameter name="memId" description="memory id"/>
+                <parameter name="classId" description="class id"/>
+            </parameter-list>
+        </message>
+        <message identifier="FILE_NOT_MODEL_XML">
+            <message-text>Input file %file% does not appear to contain a DSPBA model. Please enter a valid XML file into %simpath%</message-text>
+            <parameter-list>
+                <parameter name="file" description="model XML file"/>
+                <parameter name="simpath" description="path to modelIP block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CORDIC_XY_INEQUAL_WIDTH">
+            <message-text>Cordic block '%path%' inputs x &amp; y do not have the same input data width.</message-text>
+            <parameter-list>
+                <parameter name="path" description="path locating the cordic block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CORDIC_XY_INEQUAL_FRACTION">
+            <message-text>Cordic block '%path%' inputs x &amp; y do not have the same fractional width.</message-text>
+            <parameter-list>
+                <parameter name="path" description="path locating the cordic block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CORDIC_XY_UNSIGNED_DATA">
+            <message-text>Cordic block '%path%' inputs x &amp; y need to be signed.</message-text>
+            <parameter-list>
+                <parameter name="path" description="path locating the cordic block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CORDIC_P_SIGNED_AND_3INTBITS">
+            <message-text>Cordic block '%path%' input P is required to be signed and have exactly 3 integer bits for representing the allowed input range [-PI, PI].</message-text>
+            <parameter-list>
+                <parameter name="path" description="path locating the cordic block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CORDIC_M_NOT_UNSIGNED_1BIT">
+            <message-text>Cordic block '%path%' mode input (v) is not unsigned 1 bit wide fixed point integer.</message-text>
+            <parameter-list>
+                <parameter name="path" description="path locating the cordic block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHIFT_FRACTIONAL_INPUT_B">
+            <message-text>Shift block '%path%' cannot be driven by fractional data type on input b.</message-text>
+            <parameter-list>
+                <parameter name="path" description="path locating the shift block"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNEQUAL_PORT_VECTOR_WIDTHS_MIXING">
+            <message-text>Port %port% on block '%block%' is a vector of size (%actual%) and not of the expected size (%expected%). Only combinations of scalar inputs and/or vector inputs of equal size are supported</message-text>
+            <parameter-list>
+                <parameter name="port" description="input port index"/>
+                <parameter name="block" description="path to block"/>
+                <parameter name="actual" description="actual vector size"/>
+                <parameter name="expected" description="expected vector size"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNEQUAL_PORT_VECTOR_WIDTHS">
+            <message-text>Port %port% on block '%block%' is not of the expected vector size (%width%). Only scalar inputs or vector inputs of equal size are supported</message-text>
+            <parameter-list>
+                <parameter name="port" description="input port index"/>
+                <parameter name="block" description="path toblock"/>
+                <parameter name="width" description="vector width"/>
+            </parameter-list>
+        </message>
+        <message identifier="BLOCK_DOES_NOT_SUPPORT_COMPLEX">
+            <message-text>Block '%block%' does not support complex input on port %port%.</message-text>
+            <parameter-list>
+                <parameter name="port" description="input port index"/>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="COEFFICIENT_TYPE_FAILURE">
+            <message-text>Failure to understand data type (classID=%category%) of coefficients specified for [%path%].</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to model IP"/>
+                <parameter name="category" description="mxClassID"/>
+            </parameter-list>
+        </message>
+        <message identifier="IOBLOCKS_OUTSIDE_PRIMITIVE_SUBSYSTEM">
+            <message-text>In/Out block [%block%] in [%model%] found in an unexpected place outside of any primitive subsystem.</message-text>
+            <suggestion>Check for a missing SynthesisInfo block.</suggestion>
+            <parameter-list>
+                <parameter name="model" description="path to subsystem"/>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="BLOCK_BETWEEN_IOPIN_CHANNEL_INOUT">
+            <message-text>Unexpected block [%block%] found between an %pins% pin and GP/Channel-%GPChannel% block [%IOBlock%] in [%model%].</message-text>
+            <parameter-list>
+                <parameter name="GPChannel" description="In or Out"/>
+                <parameter name="pins" description="input or output pins"/>
+                <parameter name="model" description="path to subsystem"/>
+                <parameter name="block" description="path to block"/>
+                <parameter name="IOBlock" description="path to GP/Channel-In/Out block"/>
+            </parameter-list>
+        </message>
+        <message identifier="INVALID_BLOCK_OUTSIDE_SCHEDULED_SUBSYSTEM">
+            <message-text>Block [%block%] in [%model%] is used outside of a scheduled subsystem.</message-text>
+            <suggestion>Remove the block.</suggestion>
+            <parameter-list>
+                <parameter name="model" description="path to subsystem"/>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXPECTED_GP_CHANNEL_INOUT">
+            <message-text>Expected a GP/Channel-%GPChannel% block to be connected to an %pins% pin in [%model%], but instead found block [%block%].</message-text>
+            <parameter-list>
+                <parameter name="GPChannel" description="In or Out"/>
+                <parameter name="pins" description="input or output pins"/>
+                <parameter name="model" description="path to subsystem"/>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SYNTHINFO_ANCESTOR_MODELIP">
+            <message-text>Model-IP [%path%] found in a primitive subsystem [%synthSubsys%].</message-text>
+            <suggestion>SynthesisInfo block should not be in an ancestor subsytem to the ModelIP</suggestion>
+            <parameter-list>
+                <parameter name="path" description="path to modelIP"/>
+                <parameter name="synthSubsys" description="path to parent subsystem with SynthesisInfo block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SYNTHINFO_MODELIP_SAME_SUBSYSTEM">
+            <message-text>Model-IP [%path%] found in a primitive subsystem.</message-text>
+            <suggestion>SynthesisInfo block should not share a subsystem with a Model-IP block.</suggestion>
+            <parameter-list>
+                <parameter name="path" description="path to modelIP"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_TYPEID_WITH_BLOCK_INFO"> 
+            <message-text>Caught a bad_typeid exception relating to '%relatingTo%'. Block Name: '%blockName%'. BlockType: '%blockType%'. Exception caught: '%exception%'.</message-text>
+            <parameter-list>
+                <parameter name="relatingTo" description="part of DSP Builder the exception relates to"/>
+                <parameter name="blockName" description="name of the block this relates to"/>
+                <parameter name="blockType" description="type of the block this relates to"/>
+                <parameter name="exception" description="exception text"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_TYPEID_WITH_PASS_INFO">
+            <message-text>Caught a bad_typeid exception relating to pass '%passName%'. Exception caught: '%exception%'.</message-text>
+            <parameter-list>
+                <parameter name="passName" description="name of the pass the exception relates to"/>
+                <parameter name="exception" description="exception text"/>
+            </parameter-list>
+        </message>
+        <message identifier="FROM_NO_REFCHAIN">
+            <message-text>ElideFromGotoPass found the DSDK model '%model%', which contains a FROM block, didn't have exactly one DSDK RefChain to it.</message-text>
+            <parameter-list>
+                <parameter name="model" description="path of the model"/>
+            </parameter-list>
+        </message>
+        <message idenfifier="GOTO_NO_REFCHAIN">
+            <message-text>ElideFromGotoPass found the DSDK model '%model%', which contains a GOTO block, didn't have exactly one DSDK RefChain to it.</message-text>
+            <parameter-list>
+                <parameter name="model" description="path of the model"/>
+            </parameter-list>
+        </message>
+        <message identifier="FROM_GOTO_NO_ROUTE">
+            <message-text>No route between GOTO and FROM blocks. Containing models share no common hierarchy. Model with GOTO block is '%gotoModel%'. Model with FROM block is '%fromModel%'.</message-text>
+            <parameter-list>
+                <parameter name="fromModel" description="path of model with FROM block"/>
+                <parameter name="gotoModel" description="path of model with GOTO block"/>
+            </parameter-list>
+        </message>
+        <message identifier="GOTO_MISSING_PORT">
+            <message-text>DSDK GOTO block '%block%' missing input port.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the GOTO block"/>
+            </parameter-list>
+        </message>
+        <message identifier="GOTO_MISSING_TAG">
+            <message-text>DSDK GOTO block '%block%' has a missing tag.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the GOTO block"/>
+            </parameter-list>
+        </message>
+        <message identifier="GOTO_BAD_TAG">
+            <message-text>DSDK GOTO block '%block%' has a bad tag '%tag%'.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the GOTO block"/>
+                <parameter name="tag" description="value of the GOTO tag"/>
+            </parameter-list>
+        </message>
+        <message identifier="FROM_MISSING_WIRE">
+            <message-text>DSDK FROM block '%block%' has a missing output wire.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the FROM block"/>
+            </parameter-list>
+        </message>
+        <message identifier="FROM_MISSING_TAG">
+            <message-text>DSDK FROM block '%block%' has a missing tag.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the FROM block"/>
+            </parameter-list>
+        </message>
+        <message identifier="FROM_BAD_TAG">
+            <message-text>DSDK FROM block '%block%' has a bad tag '%tag%'.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the FROM block"/>
+                <parameter name="tag" description="value of the FROM tag"/>
+            </parameter-list>
+        </message>
+        <message identifier="FROM_UNKNOWN_TAG">
+            <message-text>DSDK ElideFromGotoPass found unknown tag '%tag%' on block '%block%'.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the FROM block"/>
+                <parameter name="tag" description="value of the tag"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNAGG_INVALID_WIRE_TYPE">
+            <message-text>Found invalid type on DSDK wire '%wire%' during aggregate unrolling.</message-text>
+            <parameter-list>
+                <parameter name="wire" description="path of the wire"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNAGG_INVALID_PORT_TYPE">
+            <message-text>Found invalid type on DSDK port '%port%' on block '%block%' during aggregate unrolling.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the block"/>
+                <parameter name="port" description="name of the port"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNCOMPLEX_INVALID_WIRE_TYPE">
+            <message-text>Found invalid type on DSDK wire '%wire%' during complex-type unrolling.</message-text>
+            <parameter-list>
+                <parameter name="wire" description="path of the wire"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNCOMPLEX_INVALID_PORT_TYPE">
+            <message-text>Found invalid type on DSDK port '%port%' on block '%block%' during complex-type unrolling.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the block"/>
+                <parameter name="port" description="name of the port"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNVEC_INVALID_WIRE_TYPE">
+            <message-text>Found invalid type on DSDK wire '%wire%' during vector unrolling.</message-text>
+            <parameter-list>
+                <parameter name="wire" description="path of the wire"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNVEC_INVALID_PORT_TYPE">
+            <message-text>Found invalid type on DSDK port '%port%' on block '%block%' during vector unrolling.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the block"/>
+                <parameter name="port" description="name of the port"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNVEC_INVALID_EXPAND_TYPE">
+            <message-text>During vector unrolling there was an error trying to merge the vector types on the ports/wires on DSDK block '%block%'.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXT_IFACE_LANGUAGE_INVALID">
+            <message-text>DSDK external IP block '%block%' in model '%model%' has an invalid value for the A_EXT_IFACE_LANGUAGE parameter. The invalid value is '%paramValue%'.</message-text>
+            <parameter-list>
+                <parameter name="block" description="name of the block"/>
+                <parameter name="model" description="name of the containing model"/>
+                <parameter name="paramValue" description="value of the A_EXT_IFACE_LANGUAGE parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXT_IFACE_WIRE_SUBCYCLE_LATENCIES_UNEQUAL">
+            <message-text>External interface subcycle latencies must (currently) be the same on all wires. Found mismatch (%value1%, %value2%) on block %block%.</message-text>
+            <parameter-list>
+                <parameter name="block" description="name of the block"/>
+                <parameter name="value1" description="first subcycle latency value"/>
+                <parameter name="value2" description="second subcycle latency value"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXT_IFACE_PORT_SUBCYCLE_LATENCIES_UNEQUAL">
+            <message-text>External interface subcycle latencies must (currently) be the same on all ports. Found mismatch (%value1%, %value2%) on block %block%.</message-text>
+            <parameter-list>
+                <parameter name="block" description="name of the block"/>
+                <parameter name="value1" description="first subcycle latency value"/>
+                <parameter name="value2" description="second subcycle latency value"/>
+            </parameter-list>
+        </message>
+        <message identifier="CHANNEL_ILLEGAL_CONTROL_PORT_TYPE">
+            <message-text>Control port %port% on ChannelIn/Out block '%block%' must be a scalar type, but it is set to Complex or Vector type</message-text>
+            <parameter-list>
+                <parameter name="port" description="describe port"/>
+                <parameter name="block" description="describe block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CHANNELIN_GPIN_INVALID_SOURCE">
+            <message-text>Input port %port% on %block_type% block '%block%' must be connected to the Simulink port with no intermediary logic</message-text>
+            <parameter-list>
+                <parameter name="block_type" description="type of port, ChannelIn or GPIn"/> 
+                <parameter name="port" description="describe port"/>
+                <parameter name="block" description="describe block"/>
+            </parameter-list>
+        </message>       
+        <message identifier="CHANNELOUT_GPOUT_INVALID_DESTINATION">
+            <message-text>Output port %port% on %block_type% block '%block%' must be connected to the Simulink port with no intermediary logic</message-text>
+            <parameter-list>
+                <parameter name="block_type" description="type of port, ChannelIn or GPIn"/> 
+                <parameter name="port" description="describe port"/>
+                <parameter name="block" description="describe block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CHANNELOUT_GPOUT_INVALID_DESTINATION_COUNT">
+            <message-text>Output port %port% on %block_type% block '%block%' cannot drive more than one destination</message-text>
+            <parameter-list>
+                <parameter name="block_type" description="type of port, ChannelIn or GPIn"/> 
+                <parameter name="port" description="describe port"/>
+                <parameter name="block" description="describe block"/>
+            </parameter-list>
+        </message>
+        <message identifier="COMMENT_THROUGH_UNSUPPORTED">
+           <message-text>Commented-through blocks [%block%] are not supported</message-text>
+           <parameter-list>
+               <parameter name="block" description="describe block"/>
+           </parameter-list>
+        </message>
+        <message identifier="MM_REG_INVALID_BIT_VALUE">
+            <message-text>Block '%block%'. The value of '%param%' parameter should be set to non-negative integer which is less than 'Avalon Data Width' specified in Avalon MM Settings</message-text>
+            <parameter-list>
+                <parameter name='block' description="block full name"/>
+                <parameter name='param' description="parameter name"/>
+            </parameter-list>
+        </message>
+        <message identifier="REGFIELD_MSB_LESS_THAN_LSB">
+            <message-text>Block '%block%'. The value of 'Least Significant Bit' parameter should not exceed the value of 'Most Significant Bit' parameter</message-text>
+            <parameter-list>
+                <parameter name='block' description="block full name"/>
+            </parameter-list>
+        </message>
+        <message identifier="REGFIELD_REGBIT_INVALID_OUTPUT_WIDTH">
+            <message-text>Block '%block%'. The output type width should be equal to 'Most Significant Bit' - 'Least Significant Bit' + 1</message-text>
+            <parameter-list>
+                <parameter name='block' description='block full name'/>
+            </parameter-list>
+        </message>
+        <message identifier="NEGATIVE_FRACLEN_FIXEDPOINT_TYPE">
+            <message-text>[%path%] fixdt(%signbit%,%width%,%fraclen%) is not supported. Fraction length must be non-negative.</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to block"/>
+                <parameter name="signbit" description="sign bit"/>
+                <parameter name="width" description="bit width of fixed-point type"/>
+                <parameter name="fraclen" description="bit width of the fractional part"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_PARAMETER_VALUE">
+            <message-text>Found bad parameter value for parameter %name%. Expecting type %type% but found value %value%.</message-text>
+            <parameter-list>
+                <parameter name="name" description="The parameter name with the invalid value"/>
+                <parameter name="value" description="The invalid value"/>
+                <parameter name="type" description="The intended type"/>
+            </parameter-list>
+        </message>
+        <message identifier="REGOUT_UNDRIVEN_INPUT">
+            <message-text>Input port '%port%' of '%block%' block must be connected.</message-text>
+            <parameter-list>
+                <parameter name="block" description="The block"/>
+                <parameter name="port" description="The inport port"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_SCHEDULE_DOMAINS">
+            <message-text>Model '%modelName%' has invalid scheduled domains(A_SYNTH_SCHEDULE_DOMAINS) parameter '%scheduledDomains%'</message-text>
+            <parameter-list>
+                <parameter name="modelName" description="Name of the model with incorrect parameter"/>
+                <parameter name="scheduledDomains" description="Value of A_SYNTH_SCHEDULE_DOMAINS parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_DOMAIN_BOUNDARY_SPEC">
+            <message-text>Model '%modelName%' has an invalid domain boundary specification on it. The incorrect specification has the DSDK value '%boundarySpec%'.</message-text>
+            <parameter-list>
+                <parameter name="modelName" description="Name of the model with incorrect domain boundary specification"/>
+                <parameter name="boundarySpec" description="DSDK value of boundary specification"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_DOMAIN_BOUNDARY_SPEC_BEGINEND">
+            <message-text>Model '%modelName%' has an invalid domain boundary specification on it. The incorrect specification has the DSDK value '%boundarySpec%'. The tag marking the beginning or ending has an invalid value '%beginOrEnd%'.</message-text>
+            <parameter-list>
+                <parameter name="modelName" description="Name of the model with incorrect domain boundary specification"/>
+                <parameter name="boundarySpec" description="DSDK value of boundary specification"/>
+                <parameter name="beginOrEnd" description="Value of the begin or end tag"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_DOMAIN_BOUNDARY_SPEC_INVALIDDOMAIN">
+            <message-text>Model '%modelName%' has an invalid domain boundary specification on it. The incorrect specification has the DSDK value '%boundarySpec%'. The domain specified on the specification is invalid.</message-text>
+            <parameter-list>
+                <parameter name="modelName" description="Name of the model with incorrect domain boundary specification"/>
+                <parameter name="boundarySpec" description="DSDK value of boundary specification"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_DOMAIN_BOUNDARY_SPEC_BADSIGNPORT">
+            <message-text>Model '%modelName%' has an invalid domain boundary specification on it. The incorrect specification has the DSDK value '%boundarySpec%'. The signpost on the specification has an invalid value '%signpost%'</message-text>
+            <parameter-list>
+                <parameter name="modelName" description="Name of the model with incorrect domain boundary specification"/>
+                <parameter name="boundarySpec" description="DSDK value of boundary specification"/>
+                <parameter name="signpost" description="DSDK value of the domain signpost"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_DOMAIN_BOUNDARY_SPEC_BADSIGNPORT_NOBLOCK">
+            <message-text>Model '%modelName%' has an invalid domain boundary specification on it. The incorrect specification has the DSDK value '%boundarySpec%'. The signpost on the specification has an invalid value '%signpost%': The block with name '%blockName%' couldn't be found in the model.</message-text>
+            <parameter-list>
+                <parameter name="modelName" description="Name of the model with incorrect domain boundary specification"/>
+                <parameter name="boundarySpec" description="DSDK value of boundary specification"/>
+                <parameter name="signpost" description="DSDK value of the domain signpost"/>
+                <parameter name="blockName" description="Name of the block not found"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_DOMAIN_BOUNDARY_SPEC_BADSIGNPORT_NOWIRE">
+            <message-text>Model '%modelName%' has an invalid domain boundary specification on it. The incorrect specification has the DSDK value '%boundarySpec%'. The signpost on the specification has an invalid value '%signpost%'. The wire with name '%wireName%' couldn't be found on the block with name '%blockName%'.</message-text>
+            <parameter-list>
+                <parameter name="modelName" description="Name of the model with incorrect domain boundary specification"/>
+                <parameter name="boundarySpec" description="DSDK value of boundary specification"/>
+                <parameter name="signpost" description="DSDK value of the domain signpost"/>
+                <parameter name="blockName" description="Name of the block with the wire that couldn't be found"/>
+                <parameter name="wireName" description="Name of the wire not found"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_DOMAIN_BOUNDARY_SPEC_BADSIGNPORT_NOPORT">
+            <message-text>Model '%modelName%' has an invalid domain boundary specification on it. The incorrect specification has the DSDK value '%boundarySpec%'. The signpost on the specification has an invalid value '%signpost%'. The port with name '%portName%' couldn't be found on the block with name '%blockName%'.</message-text>
+            <parameter-list>
+                <parameter name="modelName" description="Name of the model with incorrect domain boundary specification"/>
+                <parameter name="boundarySpec" description="DSDK value of boundary specification"/>
+                <parameter name="signpost" description="DSDK value of the domain signpost"/>
+                <parameter name="blockName" description="Name of the block with the port that couldn't be found"/>
+                <parameter name="portName" description="Name of the port not found"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_DOMAIN_MULTIPLE_SIGNPOSTS">
+            <message-text>Model '%modelName%' specifies multiple domain signposts at the same point on block '%blockName%'.</message-text>
+            <parameter-list>
+                <parameter name="modelName" description="Name of the model"/>
+                <parameter name="blockName" description="Name of the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_DOMAIN_OVERWRITING_DOMAIN_INPUT">
+            <message-text>Domain propagation error within model '%modelName%'. Attempting to overwrite an already determined domain on port '%portName%' of block '%blockName%'. The existing domain on the port is '%existingDomain%'. The domain that was trying to overwrite this is '%overwritingDomain%'.</message-text>
+            <parameter-list>
+                <parameter name="modelName" description="Name of the model"/>
+                <parameter name="blockName" description="Name of the block"/>
+                <parameter name="portName" description="Name of the port"/>
+                <parameter name="existingDomain" description="Existing domain on the port"/>
+                <parameter name="overwritingDomain" description="Domain attempting to propagate"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_DOMAIN_OVERWRITING_DOMAIN_OUTPUT">
+            <message-text>Domain propagation error within model '%modelName%'. Attempting to overwrite an already determined domain on wire '%wireName%' of block '%blockName%'. The existing domain on the wire is '%existingDomain%'. The domain that was trying to overwrite this is '%overwritingDomain%'.</message-text>
+            <parameter-list>
+                <parameter name="modelName" description="Name of the model"/>
+                <parameter name="blockName" description="Name of the block"/>
+                <parameter name="wireName" description="Name of the wire"/>
+                <parameter name="existingDomain" description="Existing domain on the wire"/>
+                <parameter name="overwritingDomain" description="Domain attempting to propagate"/>
+            </parameter-list>
+        </message>
+        <message identifier="FLATTENING_DOMAIN_INPUTOUTPUT">
+            <message-text>Attempting to flatten model '%srcModel%' into its parent, but '%srcModel%' has domain information specified on the input and/or output blocks which would be lost in the process.</message-text>
+            <parameter-list>
+                <parameter name="srcModel" description="Name of the model"/>
+            </parameter-list>
+        </message>
+        <message identifier="SENSITIVE_UNIT_WRONG_INPUT_TYPE">
+            <message-text>Attempting to propagate an invalid type to a sensitive unit block to port '%portName%'. The required type for this port is '%requiredType%', but the type being forward to it is '%forwardingType%'.</message-text>
+            <parameter-list>
+                <parameter name="portName" description="Name of port"/>
+                <parameter name="requiredType" description="Type required on the port"/>
+                <parameter name="forwardingType" description="Type being forward to the port"/>
+            </parameter-list>
+        </message>
+        <message identifier="NON_TREE_INLINED_SCHEDULE">
+            <message-text>Model [%model%] referenced by %refer% blocks but schedule inlined by %inline%. When inlining a model's schedule, the sub-hierarchy must be a tree.</message-text>
+            <parameter-list>
+                <parameter name="model" description="Name of Model"/>
+                <parameter name="inline" description="Number of model blocks configured to inline the schedule of this model"/>
+                <parameter name="refer" description="number of model blocks referencing this model"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INVALID_OUTPUT_NAME_NONTUPLE">
+            <message-text>StallValidConnector block named '%block%' has an output with a name which is not a 2-tuple ('%outputName%'). Generally the names of outputs should look like this: (A_WIRE_STALL, 0). This would indicate stall output number 0 on the StallValidConnector block. The number is required.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="outputName" description="The invalid name of an output(wire) on the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INVALID_OUTPUT_NAME_NOTSTALLVALID">
+            <message-text>StallValidConnector block named '%block%' has an output with an invalid name ('%outputName%'). This output name is correctly a 2-tuple, but the first element of the tuple needs to be either A_WIRE_VALID or A_WIRE_STALL.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="outputName" description="The invalid name of an output(wire) on the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INVALID_OUTPUT_NAME_NOTINT">
+            <message-text>StallValidConnector block named '%block%' has an output with an invalid name ('%outputName%'). The second element of the 2-tuple needs to be an integer.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="outputName" description="The invalid name of an output(wire) on the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INVALID_OUTPUT_NAME_NONPOSITIVEINT">
+            <message-text>StallValidConnector block named '%block%' has an output with an invalid name ('%outputName%'). The second element of the 2-tuple needs to be a positive integer.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="outputName" description="The invalid name of an output(wire) on the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INVALID_OUTPUT_NAMES_BADNUMBERING">
+            <message-text>StallValidConnector block named '%block%' has an invalid numbering on its output stall and/or valid wires. The numbers should be consecutive and start from 0.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INVALID_INPUT_NAME_NONTUPLE">
+            <message-text>StallValidConnector block named '%block%' has an input with a name which is not a 2-tuple ('%inputName%'). Generally the names of inputs should look like this: (A_PORT_STALL, 0). This would indicate stall input number 0 on the StallValidConnector block. The number is required.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="inputName" description="The invalid name of an input(port) on the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INVALID_INPUT_NAME_NOTSTALLVALID">
+            <message-text>StallValidConnector block named '%block%' has an input with an invalid name ('%inputName%'). This input name is correctly a 2-tuple, but the first element of the tuple needs to be either A_PORT_VALID or A_PORT_STALL.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="inputName" description="The invalid name of an input(port) on the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INVALID_INPUT_NAME_NOTINT">
+            <message-text>StallValidConnector block named '%block%' has an input with an invalid name ('%inputName%'). The second element of the 2-tuple needs to be an integer.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="inputName" description="The invalid name of an input(port) on the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INVALID_OUTPUT_NAME_NONPOSITIVEINT">
+            <message-text>StallValidConnector block named '%block%' has an input with an invalid name ('%inputName%'). The second element of the 2-tuple needs to be a positive integer.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="inputName" description="The invalid name of an input(port) on the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INVALID_INPUT_NAMES_BADNUMBERING">
+            <message-text>StallValidConnector block named '%block%' has an invalid numbering on its input stall and/or valid ports. The numbers should be consecutive and start from 0.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INPUTSTALLINTERFACES_MISMATCH">
+            <message-text>StallValidConnector block named '%block%' has a mismatch in the number of input valid and output stall signals it has. It has %numValidInputs% input valid signals and %numStallOutputs% output stall signals. It should have the same number of each.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="numValidInputs" description="Number of valid input signals"/>
+                <parameter name="numStallOutputs" description="Number of stall output signals"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_INPUT_STALL_LATENCY_INTERFACES_MISMATCH">
+            <message-text>StallValidConnector block named '%block%' has a mismatch in the number of signals it has. It has %numValidInputs% input valid, %numEmptyInputs% input empty, and %numAlmostEmptyInputs% input almost empty signals and %numStallOutputs% output stall signals. It should have the same number of each.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="numValidInputs" description="Number of valid input signals"/>
+                <parameter name="numEmptyInputs" description="Number of empty input signals"/>
+                <parameter name="numAlmostEmptyInputs" description="Number of almost empty input signals"/>
+                <parameter name="numStallOutputs" description="Number of stall output signals"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_ENABLEINTERFACES_ERROR">
+            <message-text>StallValidConnector block named '%block%' must only have stall outputs in enabled models. It has %numValidOutputs% output valid signals, %numStallInputs% input stall signals and %numValidInputs% input valid signals.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="numValidOutputs" description="Number of valid output signals"/>
+                <parameter name="numStallInputs" description="Number of stall input signals"/>
+                <parameter name="numValidInputs" description="Number of valid input signals"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_OUTPUTSTALLINTERFACES_MISMATCH">
+            <message-text>StallValidConnector block named '%block%' has a mismatch in the number of output valid and input stall signals it has. It has %numValidOutputs% output valid signals and %numStallInputs% input stall signals. It should have the same number of each.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="numValidOutputs" description="Number of valid output signals"/>
+                <parameter name="numStallInputs" description="Number of stall input signals"/>
+            </parameter-list>
+        </message>
+        <message identifier="SVC_OUTPUT_STALL_LATENCY_INTERFACES_MISMATCH">
+            <message-text>StallValidConnector block named '%block%' has a mismatch in the number of signals it has. It has %numValidOutputs% output valid, %numEmptyOutputs% output empty, and %numAlmostEmptyOutputs% output almost empty signals and %numStallInputs% input stall signals. It should have the same number of each.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the StallValidConnector block"/>
+                <parameter name="numValidOutputs" description="Number of valid output signals"/>
+                <parameter name="numEmptyOutputs" description="Number of empty output signals"/>
+                <parameter name="numAlmostEmptyOutputs" description="Number of almost empty output signals"/>
+                <parameter name="numStallInputs" description="Number of stall input signals"/>
+            </parameter-list>
+        </message>
+        <message identifier="STALLVALID_UNSUPPORTED_BLOCK">
+            <message-text>Unsupported block ('%block%') with type '%blockType%' found within Stall/Valid region of model '%model%'. This block type is not supported within Stall/Valid regions.</message-text>
+            <parameter-list>
+                <parameter name="model" description="Name of the model"/>
+                <parameter name="block" description="Name of the block"/>
+                <parameter name="blockType" description="Type of the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="STALLVALID_ENTEROREXIT_DIFFERENT_MODEL">
+            <message-text>Unexpected StallEnter or StallExit block '%block%' found in model '%model%'. Please ensure all StallEnter and StallExit boundary blocks delineating the same Stall/Valid region are found in the same model. The top level model for the relevant Stall/Valid region in this case is '%topModel%'</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the Stall/Valid boundary block"/>
+                <parameter name="model" description="Name of the model"/>
+                <parameter name="topModel" description="Name of the model which expects the Stall/Valid boundary blocks"/>
+            </parameter-list>
+        </message>
+        <message identifier="QUERY_POINT_INVALID_INPUT">
+            <message-text>Trying to create a QueryPoint for a model input which doesn't exist. The model is '%model%' and the input name is '%inputName%'.</message-text>
+            <parameter-list>
+                <parameter name="model" description="Name of the model"/>
+                <parameter name="inputName" description="Name of the input"/>
+            </parameter-list>
+        </message>
+        <message identifier="QUERY_POINT_INVALID_OUTPUT">
+            <message-text>Trying to create a QueryPoint for a model output which doesn't exist. The model is '%model%' and the output name is '%outputName%'.</message-text>
+            <parameter-list>
+                <parameter name="model" description="Name of the model"/>
+                <parameter name="outputName" description="Name of the output"/>
+            </parameter-list>
+        </message>
+        <message identifier="QUERY_POINT_UNSUPPORTED_BLOCK_TYPE">
+            <message-text>Trying to create a QueryPoint for a type of block which doesn't support it. The block is named '%block%', is within the model named '%model%' and is of type '%blockType%'.</message-text>
+            <parameter-list>
+                <parameter name="model" description="Name of the model"/>
+                <parameter name="block" description="Name of the block"/>
+                <parameter name="blockType" description="Type of the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="NO_CAPACITY_PATH">
+            <message-text>Unable to find a path between two points the a capacity was requested between.</message-text>
+        </message>
+        <message identifier="ECC_SINK_BLOCK_NOT_CONNECTED">
+            <message-text>ECC sink block named '%block%' is not connected.</message-text>
+            <suggestion>Remove the ECC sink block or connect it to ECC output ports of submodels or external IP blocks</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Name of the ECC sink block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_MEM_ADDRESS_CONFLICT">
+            <message-text>Two SharedMems found with address ranges that do not overlap exactly. SharedMem %block1% has the address range %from1% to %to1% and SharedMem %block2% has the address range %from2% to %to2%.</message-text>
+            <suggestion>SharedMems can only overlap their addresses exactly; change one of the SharedMem's address range to match the other.</suggestion>
+            <parameter-list>
+                <parameter name="block1" description="Name of SharedMem 1"/>
+                <parameter name="from1" description="Start address of SharedMem 1"/>
+                <parameter name="to1" description="End address of SharedMem 1"/>
+                <parameter name="block2" description="Name of SharedMem 2"/>
+                <parameter name="from2" description="Start address of SharedMem 2"/>
+                <parameter name="to2" description="End address of SharedMem 2"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_MEM_NON_LINEAR_ADDRESS_MAP">
+            <message-text>With bit-slicing enabled, SharedMem blocks can only have auto-generated linear address maps. SharedMem %block% has a user defined address map.</message-text>
+            <suggestion>In the "Memory Mapped Address" field, replace the custom address map vector with a single address offset.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Name of SharedMem"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_MEM_WIDTH_ERROR">
+            <message-text>Inconsistent bit-slice specification for the SharedMem %block%. With bit-slicing enabled, a SharedMem block's width must be equal to or less than the bus width, its LSB must be less than or equal to its MSB, its LSB must be greater than or equal to 0, and the bit-slice width must equal the data type width.</message-text>
+            <suggestion>Review the MSB and LSB settings in the block parameters.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Name of SharedMem"/>
+            </parameter-list>
+        </message>
+        <message identifier="INVALID_IDENTIFIER">
+            <message-text>The identifier '%id%' is invalid, for the '%interface%'.</message-text>
+            <suggestion>Change the identifier name.</suggestion>
+            <parameter-list>
+                <parameter name="id" description="Identifier"/>
+                <parameter name="interface" description="Interface"/>
+            </parameter-list>
+        </message>
+        <message identifier="REMOVE_BETA_BLOCK">
+            <message-text>The beta block '%block%' is invalid.</message-text>
+            <suggestion>Replace the beta block with the release version.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Block name"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_BLOCK_DEVICE_MODE">
+            <message-text>This device family does not support block '%block%' %attribute% using %mode%.</message-text>
+            <suggestion>Change the settings on this block or change the way in which the block is used (or the targeted device family), if possible.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Name of the block"/>
+                <parameter name="attribute" description="Name of the attribute"/>
+                <parameter name="mode" description="Name of the mode"/>
+            </parameter-list>
+        </message>
+        <message identifier="ROM_UNINIT">
+            <message-text>Memory '%block%' is an uninitialised ROM.</message-text>
+            <suggestion>Make the memory writeable and/or initialise the memory content.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Name of the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CANNOT_CREATE_DIRECTORY">
+            <message-text>Could not create directory %directory%'.</message-text>
+            <parameter-list>
+                <parameter name="directory" description="The name of the directory"/>
+            </parameter-list>
+        </message>
+        <message identifier="CANNOT_COPY_FILE">
+            <message-text>Could not copy %fromfile% to %tofile%'.</message-text>
+            <parameter-list>
+                <parameter name="fromfile" description="Source file name"/>
+                <parameter name="tofile" description="Destination file name"/>
+            </parameter-list>
+        </message>
+        <message identifier="CANNOT_FIND_DEPENDED_UPON_MODEL">
+            <message-text>Model '%model%' depends on unfound scheduled model '%wantedModel%'.</message-text>
+            <suggestion>Check the name of the depended-upon model.</suggestion>
+            <parameter-list>
+                <parameter name="model" description="Model"/>
+                <parameter name="wantedModel" description="Depended-upon Model"/>
+            </parameter-list>
+        </message>
+        <message identifier="REFLEXIVE_DEPENDED_UPON_MODEL">
+            <message-text>Model '%model%' depends reflexively upon itself.</message-text>
+            <suggestion>Remove the cyclic latency dependency.</suggestion>
+            <parameter-list>
+                <parameter name="model" description="Model"/>
+            </parameter-list>
+        </message>
+        <message identifier="CYCLIC_DEPENDED_UPON_MODELS">
+            <message-text>Dependency cycle(s) found involving %cycleSize% models, including '%model%'.</message-text>
+            <suggestion>Remove the cyclic latency dependency.</suggestion>
+            <parameter-list>
+                <parameter name="cycleSize" description="Number of models in cycle(s)"/>
+                <parameter name="model" description="Model"/>
+            </parameter-list>
+        </message>
+        <message identifier="DEPENDED_UPON_CIC">
+            <message-text>Model '%model%' depends on CIC Model IP - a CIC does not have a simple latency definition to depend upon.</message-text>
+            <parameter-list>
+                <parameter name="model" description="Model"/>
+            </parameter-list>
+        </message>
+        <message identifier="DEPENDED_UPON_FIR">
+            <message-text>Model '%model%' depends on incompatibly configured FIR Model IP - this FIR does not have a simple latency definition to depend upon.</message-text>
+            <parameter-list>
+                <parameter name="model" description="Model"/>
+            </parameter-list>
+        </message>
+        <message identifier="DEPENDED_UPON_SHARED_FIFO">
+            <message-text>Model '%model%' depends on SharedFIFO Model IP - a SharedFIFO does not have a simple latency definition to depend upon.</message-text>
+            <parameter-list>
+                <parameter name="model" description="Model"/>
+            </parameter-list>
+        </message>
+        <message identifier="DEPEND_UPON_BAD_MODEL">
+            <message-text>Model '%dependentModel%' depends upon model '%badModel%' which does not have a single well-defined latency.</message-text>
+            <parameter-list>
+                <parameter name="dependentModel" description="Dependent Model"/>
+                <parameter name="badModel" description="Bad Model"/>
+            </parameter-list>
+        </message>
+        <message identifier="BAD_MODEL_DEPENDS_UPON">
+            <message-text>Model '%model%' is constrained to depend-upon another but itself may not have a simple singular latency and so it may not respect that constraint</message-text>
+            <parameter-list>
+                <parameter name="model" description="Model"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_FIFO_DEPTH_TOO_SMALL">
+            <message-text>The depth of SharedFIFO [%block%] must be greater than or equal to %depth%.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="depth" description="required depth of FIFO"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_FIFO_DEPTH_NOT_A_POWER_OF_TWO">
+            <message-text>The depth %depth% of SharedFIFO [%block%] is not a power of two.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="depth" description="specified depth of FIFO"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_FIFO_UNSPECIFIED_SAMPLE_TIME">
+            <message-text>SharedFIFO sample times must be greater than 0.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_FIFO_IDENTICAL_SAMPLE_TIMES">
+            <message-text>SharedFIFO sample times must be different.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_FIFO_SAMPLE_TIME_RATIO_NOT_INTEGER">
+            <message-text>SharedFIFO [%block%] sample time ratio %ratio% (larger/smaller) must be an integer.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="ratio" description="sample time ratio"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_FIFO_SAMPLE_RATIO_NOT_A_POWER_OF_TWO">
+            <message-text>SharedFIFO [%block%] sample time ratio %ratio% (larger/smaller) must be a power of two.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="ratio" description="sample time ratio"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_FIFO_SAMPLE_RATIO_TOO_LARGE">
+            <message-text>SharedFIFO [%block%] sample time ratio %ratio% (larger/smaller) must be less than or equal to 32.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+                <parameter name="ratio" description="sample time ratio"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_FIFO_OVERFLOW">
+            <message-text>Write to SharedFIFO [%block%] while it is full.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to block"/>
+            </parameter-list>
+        </message>
+        <message identifier="SHARED_FIFO_EXT_CLOCK_NAME_IN_USE">
+            <message-text>The external clock name %extClkName% of SharedFIFO [%block%] is already used.</message-text>
+            <parameter-list>
+                <parameter name="extClkName" description="external clock name that is in use"/>
+                <parameter name="block" description="name of the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONDUIT_PORT_ROLES_ARE_NOT_UNIQUE">
+            <message-text>In Conduit interface %interfaceName%, the ports %portOneName% and %portTwoName% have the same role.</message-text>
+            <suggestion>Ensure that the names of the ChannelIn, ChannelOut, GPIn, GPOut or ModelIP blocks connected to these ports have uniques names within the entire Simulink design.</suggestion>
+            <parameter-list>
+                <parameter name="portOneName" description="name of first port"/>
+                <parameter name="portTwoName" description="name of second port"/>
+                <parameter name="interfaceName" description="name of the Conduit interface"/>
+            </parameter-list>
+        </message>
+        <message identifier="GREATER_THAN_DOUBLE_BUS">
+            <message-text>The bus block [%block%] is wider than twice the width of the bus. Bus blocks must be less than or equal to twice the bus width.</message-text>
+            <suggestion>Reduce the bit-width of this block or increase the width of the bus.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="The block with width > 2 * bus width"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNSUPPORTED_INOUT_PORT">
+            <message-text>Subsystem input/output block [%block_path%] is not supported for synthesis</message-text>
+            <parameter-list>
+                <parameter name="block_path" description="Simulink path to inport/outport"/>
+            </parameter-list>
+        </message>
+        <message identifier="BUS_CREATOR_NOT_INHERIT_AUTO">
+            <message-text>Simulink Bus Creator [%block%] must be configured as "Inherit: auto"</message-text>
+            <parameter-list>
+                <parameter name="block" description="Simulink path to inport/outport"/>
+            </parameter-list>
+        </message>
+        <message identifier="BIT_ACCURATE_SIM_MISSING">
+          <message-text>A bit-accurate simulation model does not exist for the model [%model%]. Please enable bit-accurate simulation setting on the SynthesisInfo block.</message-text>
+          <parameter-list>
+              <parameter name="model" description="name of model"/>
+          </parameter-list>
+        </message>
+    </message-list>
+
+    <message-list type="WARNING">
+        <message identifier="DEPRECATED_BLOCK">
+            <message-text>Block [%path%] is deprecated. %specifics%</message-text>
+            <suggestion>Deprecated blocks should be replaced.</suggestion>
+            <parameter-list>
+                <parameter name="path" description="path to block"/>
+                <parameter name="specifics" description="any specifics on this deprecation"/>
+            </parameter-list>
+        </message>
+        <message identifier="OBSOLETE_BLOCK">
+            <message-text>Design contains an obsolete block [%block%].</message-text>            
+            <suggestion>Obsolete blocks should be removed.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="The obsolete block identifier"/>
+            </parameter-list>
+        </message>
+        <message identifier="HDL_EXPRESSION_INPORT_INVALID">
+            <message-text>Trying to generate HDLExpression for InPort but it has no net or its net is not driven. This will almost always produce invalid HDL output unless the expression is ignored.</message-text>
+        </message>
+        <message identifier="HDL_EXPRESSION_OUTPORT_INVALID">
+            <message-text>Trying to generate HDLExpression for OutPort but it has no net or its net is not driven. This will almost always produce invalid HDL output unless the expression is ignored.</message-text>
+        </message>
+        <message identifier="UNSCHEDULED_VARIABLE_SAMPDELAY">
+            <message-text>Attempting to use flexible delay [%block%] in unscheduled primitive subsystem</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to flexible Sample Delay"/>
+            </parameter-list>
+        </message>
+        <message identifier="COMPLEX_REALIMAG_INPUTREAL_NOSYNTH">
+            <message-text>block '%path%' requires a complex input, but the signal driving it is real.</message-text>
+            <parameter-list>
+                <parameter name="path" description="describe path"/>
+            </parameter-list>
+        </message>
+        <message identifier="FAILED_TO_LOCATE_REGISTERED_MODEL">
+             <message-text>Failed to locate Registered Model for S-Function '%sfunction%'.</message-text>
+            <parameter-list>
+              <parameter name="sfunction" description="The S-Function without a registered model"/>
+            </parameter-list>
+        </message>
+        <message identifier="DSPBA_FEATURES_VARIABLE_NOT_STRUCT">
+            <message-text>Found variable DSPBA_Features in base workspace, but it is not of type 'struct'. Ignoring it.</message-text>
+        </message>
+        <message identifier="DSPBA_FEATURES_MULTIPLE_ELEMENTS">
+            <message-text>Found variable DSPBA_Features in base workspace, but it does not have exactly one element. Ignoring it.</message-text>
+        </message>
+        <message identifier="FIELD_IS_NON_SCALAR_DOUBLE">
+            <message-text>Field '%fieldname%' in DSPBA_Features is a non-scalar double. Ignoring.</message-text>
+            <parameter-list>
+                <parameter name="fieldname" description="The field which is a non-scalar double."/>
+            </parameter-list>
+        </message>
+        <message identifier="FIELD_IS_NON_SCALAR_LOGICAL">
+            <message-text>Field '%fieldname%' in DSPBA_Features is a non-scalar logical. Ignoring.</message-text>
+            <parameter-list>
+                <parameter name="fieldname" description="The field which is a non-scalar logical."/>
+            </parameter-list>
+        </message>
+        <message identifier="SUBFIELD_IS_NOT_A_STRING">
+            <message-text>Subfield '%subfieldname%' of field '%fieldname%' in DSPBA_Features is not a string. Ignoring.</message-text>
+            <parameter-list>
+                <parameter name="subfieldname" description="The name of the subfield containing the offending field."/>
+                <parameter name="fieldname" description="The field which is not a string."/>
+            </parameter-list>
+        </message>
+        <message identifier="CELLARRAY_ELEMENT_IS_NOT_A_STRING">
+            <message-text>An element of cell array '%fieldname%' in DSPBA_Features, at index %cellelementindex%, is not a string. Instead it has type '%cellelementtype%'. Ignoring.</message-text>
+            <parameter-list>
+                <parameter name="fieldname" description="The cell array field with a non-string component" />
+                <parameter name="cellelementtype" description="The type of the cell array element which is not a string" />
+                <parameter name="cellelementindex" description="The index into the cell array which contains a non-string" />
+            </parameter-list>
+        </message>
+        <message identifier="UNSUPPORTED_FIELD_TYPE">
+            <message-text>Field '%fieldname%' in DSPBA_Features is of unsupported type '%fieldtype%'. Ignoring.</message-text>
+            <parameter-list>
+                <parameter name="fieldname" description="The field which is not a string."/>
+                <parameter name="fieldtype" description="The field type which is not supported."/>
+            </parameter-list>
+        </message>
+        <message identifier="FEATURE_DOES_NOT_HAVE_STRUCT_VALUE">
+            <message-text>Feature %feature% expects a struct, but is of a different type.</message-text>
+            <parameter-list>
+                <parameter name="feature" description="The feature which does not have a struct type." />
+            </parameter-list>
+        </message>
+        <message identifier="FEATURE_DOES_NOT_HAVE_LIST_VALUE">
+            <message-text>Feature %feature% expects a list of strings in a cell array, but is of a different type.</message-text>
+            <parameter-list>
+                <parameter name="feature" description="The feature which does not have a list type." />
+            </parameter-list>
+        </message>
+        <message identifier="COMPLEX_TO_REAL_IMAG_NON_INHERITED_SAMPLE_TIME">
+            <message-text>The Complex To Real-Imag block '%blockname%' has a non-inherited 'Sample time'. Only inherited sample times are currently supported (-1). The parameter will be ignored in generated hardware, with the result the simulation result in Simulink may differ from hardware.</message-text>
+            <parameter-list>
+                <parameter name="blockname" description="The complex to real-imag block in question."/>
+            </parameter-list>
+        </message>
+        <message identifier="REAL_IMAG_TO_COMPLEX_NON_INHERITED_SAMPLE_TIME">
+            <message-text>The Real-Imag To Complex block '%blockname%' has a non-inherited 'Sample time'. Only inherited sample times are currently supported (-1). The parameter will be ignored in generated hardware, with the result the simulation result in Simulink may differ from hardware.</message-text>
+            <parameter-list>
+                <parameter name="blockname" description="The real-imag to complex block in question."/>
+            </parameter-list>
+        </message>
+        <message identifier="IGNORING_PORT_AT_TOP_LEVEL">
+            <message-text>'%portname%': Ignoring port at the top level.</message-text>
+            <parameter-list>
+                <parameter name="portname" description="The port which will be ignored."/>
+            </parameter-list>
+        </message>
+        <message identifier="ENABLE_PORT_IS_UNSUPPORTED">
+            <message-text>Ignoring Enable port for subsystem '%subsystemname%'.</message-text>
+            <parameter-list>
+                <parameter name="subsystemname" description="The subsystem containing the block."/>
+            </parameter-list>
+        </message>
+        <message identifier="TRIGGER_PORT_IS_UNSUPPORTED">
+            <message-text>Ignoring Trigger port for subsystem '%subsystemname%'.</message-text>
+            <parameter-list>
+                <parameter name="subsystemname" description="The subsystem containing the block."/>
+            </parameter-list>
+        </message>
+        <message identifier="IGNORING_SECOND_SPEED_GRADE_DEFINITION">
+            <message-text>Ignoring second definition of speed grade '%speedgrade%'.</message-text>
+            <parameter-list>
+                <parameter name="speedgrade" description="The speed grade to ignore."/>
+            </parameter-list>
+        </message>
+        <message identifier="FIR_ERROR_OCCURED_EXECUTING_MODEL">
+            <message-text>Error occured executing model %modelname%, at time step %timestep%, error: %error%.</message-text>
+            <parameter-list>
+                <parameter name="modelname" description="The name of the model with an error."/>
+                <parameter name="timestep" description="The timestep at which the error occured."/>
+                <parameter name="error" description="The text of the error thrown."/>
+            </parameter-list>
+        </message>
+        <message identifier="FAILED_TO_CREATE_FILTER">
+            <message-text>Failed to create Filter with these parameters: Error: %error%.</message-text>
+            <parameter-list>
+                <parameter name="error" description="The text of the error thrown."/>
+            </parameter-list>
+        </message>
+        <message identifier="CAST_ERROR_WARNING">
+            <message-text>Cast error in %name%. Conversion from %informat% to %outformat% not found in table.</message-text>
+            <parameter-list>
+                <parameter name="name" description="Location of the cast error."/>
+                <parameter name="informat" description="Original format."/>
+                <parameter name="outformat" description="Proposed new format."/>
+            </parameter-list>
+        </message>
+        <message identifier="NEGATIVE_LATENCY_CORRECTION">
+            <message-text>Negative IO correction on block %block%. Simulink will not match hardware.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Which Channel/GP-In/Out block is affected"/>
+            </parameter-list>
+        </message>
+        <message identifier="SOURCENET_PORT_APPEARS_UNCONNECTED">
+            <message-text>Port %port%(%element%,%complex%) on %block% appears to be unconnected.  This is currently unsupported and could lead to instability.</message-text>
+            <parameter-list>
+                <parameter name="port" description="index of input port on block"/>
+                <parameter name="element" description="element index of signal"/>
+                <parameter name="complex" description="component index of signal"/>
+                <parameter name="block" description="path to unconnect block"/>
+            </parameter-list>
+        </message>
+        <message identifier="DIMENSIONALITY_MISMATCH">
+            <message-text>Ports %portA% and %portB% on %block% have incompatible dimensionalities.</message-text>
+            <parameter-list>
+                <parameter name="portA" description="index of one input port" />
+                <parameter name="portB" description="index of another input port" />
+                <parameter name="block" description="path to the affected block" />
+            </parameter-list>
+        </message>
+        <message identifier="BLOCK_HAS_BLANK_NAME">
+            <message-text>Block '%block%' has a name containing only whitespace characters.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to the affected block" />
+            </parameter-list>
+        </message>
+        <message identifier="FOLDING_CLOCKRATE_LESSTHAN_SAMPLERATE">
+            <message-text>[2] The clock rate (%clock%) is smaller than the sample rate (%sample%).  Setting folding factor to 1.</message-text>
+            <parameter-list>
+                <parameter name="clock" description="clock frequence"/>
+                <parameter name="sample" description="sample rate used to determine folding factor"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIFO_READACK_VALID_LOW">
+            <message-text>Read acknowledge received by FIFO %path% when valid output is still low at time %time%.</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to FIFO block"/>
+                <parameter name="time" description="the cycle in which the read acknowlgement was received"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXCESS_SAMPLEDELAYS_OPTIMIZED_AWAY">
+            <message-text>Some user inserted SampleDelays have been optimized away. The latency on the valid path across primitive subsystem '%subsystem%' in hardware will be 0, which may differ from the simulation model. If you need to preserve extra SampleDelays in this case, use the 'Constraint Latency' option on the SynthesisInfo block.</message-text>
+            <parameter-list>
+                <parameter name="subsystem" description="name of scheduled primitive subsystem with too many sample delays"/>
+            </parameter-list>
+        </message>
+        <message identifier="NCO_REGISTERS_TOO_WIDE_FOR_BUS">
+            <message-text>The NCO %modelname% is specified with writable registers and an accumulator of width %accumwidth%. This requires addressable registers of width %regwidth%, which is not supported using a bus of width %buswidth%.</message-text>
+            <suggestion>Try increasing the bus width specified in the Avalon Interfaces menu.</suggestion>
+            <parameter-list>
+                <parameter name="modelname" description="name of the NCO"/>
+                <parameter name="accumwidth" description="specified width of NCO accumulator (in bits)"/>
+                <parameter name="regwidth" description="width of NCO registers (in bits)s"/>
+                <parameter name="buswidth" description="width of bus (in bits)"/>
+            </parameter-list>
+        </message>
+        <message identifier="RUN_ALL_ATBS_DEPRECATED">
+            <message-text>Found Run all ATBs block %blockname%. This block is deprecated and will be removed in future versions of DSP Builder Advanced. Remove this block and use the Verify Model option on the DSP Builder menu instead.</message-text>
+            <parameter-list>
+                <parameter name="blockname" description="name of the run all ATBS block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CHANNEL_BLOCK_BAD_VALID_PORT">
+            <message-text>The Valid port of %block% is connected to a signal of invalid type %type%.</message-text>
+            <suggestion>Connect the Valid port to a signal of type boolean or ufix1.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Path to block where problem detected"/>
+                <parameter name="type" description="Invalid signal type"/>
+            </parameter-list>
+        </message>
+        <message identifier="CHANNEL_BLOCK_BAD_CHANNEL_PORT">
+            <message-text>The Channel port of %block% is connected to a signal of invalid type %type%.</message-text>
+            <suggestion>Connect the Channel port to a signal of type uint8 or ufix8.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Path to block where problem detected"/>
+                <parameter name="type" description="Invalid signal type"/>
+            </parameter-list>
+        </message>
+        <message identifier="CHANNEL_BLOCK_BAD_PACKET_BEGIN_PORT">
+            <message-text>The Start of Packet port of %block% is connected to a signal of invalid type %type%.</message-text>
+            <suggestion>Connect the Start of Packet port to a signal of type boolean or ufix1.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Path to block where problem detected"/>
+                <parameter name="type" description="Invalid signal type"/>
+            </parameter-list>
+        </message>
+        <message identifier="DEVICE_ATB_NO_INPUT_STIMULUS">
+            <message-text>Device ATB is unable to access any input stimulus files.</message-text>
+        </message>
+        <message identifier="DEVICE_ATB_NO_OUTPUT_STIMULUS">
+            <message-text>Device ATB is unable to access any output stimulus files.</message-text>
+        </message>
+        <message identifier="CLOCKS_FIGHTING">
+            <message-text>Clock domains for '%clock0%' and '%clock1%' have come into contact without appropriate clock crossing at block '%block%'. Try using a DualMem to cross clocks.</message-text>
+            <parameter-list>
+                <parameter name="clock0" description="Name of first clock"/>
+                <parameter name="clock1" description="Name of second clock"/>
+                <parameter name="block" description="Path to block where problem detected"/>
+            </parameter-list>
+        </message>
+        <message identifier="CANT_OPEN_HDL_OUTPUT">
+            <message-text>Could not open file %filename% for HDL output.</message-text>
+            <suggestion>Please ensure the path to the file is correct and the file is present.</suggestion>
+            <parameter-list>
+                <parameter name="filename" description="The output file"/>
+            </parameter-list>
+        </message>
+        <message identifier="STALL_VALID_NOT_BOOLEAN">
+            <message-text>A StallEntry or StallExit block's control ports must be connected to a signal of type boolean or ufix1.</message-text>
+        </message>
+        <message identifier="BIT_ACCURATE_ZERO_MINDELAY">
+            <message-text>Sample Delay %block% in [%model%] has minimum length of 0. This is not guaranteed to work with bit accurate simulation. Either enable cycle accurate simulation or use a non-zero minimum length delay.</message-text>
+            <parameter-list>
+                <parameter name="block" description="name of Sample Delay"/>
+                <parameter name="model" description="path to enclosing subsystem"/>
+            </parameter-list>
+        </message>
+        <message identifier="INDIVIDUAL_ATB_DISABLED">
+            <message-text>Individual ATB for model %model% is disabled because it contains one or more ModelBus blocks. Please use the device-level ATB to verify your design.</message-text>
+            <parameter-list>
+                <parameter name="model" description="model with disabled atbs"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIFO_WRITE_WHILE_FULL">
+            <message-text>Write received by FIFO %path% when FIFO is full at time %time%.</message-text>
+            <parameter-list>
+                <parameter name="path" description="path to FIFO block"/>
+                <parameter name="time" description="the cycle in which the write request was received"/>
+            </parameter-list>
+        </message>             
+        <message identifier="CLOCK_DATA_RATE_MIX">
+            <message-text>Block(s) which must run at the clock rate found in the same design as an ALU Folder system at the data rate.</message-text>
+            <suggestion>Please be aware that interfacing data rate signals to/from a folded system with other parts of the design at the clock rate may lead to unexpected behaviour. The "clock rate" option for the ALU Folder is recommended for interfacing between ALU Folder systems and other parts of the design.</suggestion>
+        </message>
+        <message identifier="MULTIPLE_DATA_RATES">
+            <message-text>Multiple ALU Folder systems which are set to run at the "data rate" are present, and which are running at different rates.</message-text>
+        </message>
+        <message identifier="MULTIPLE_DATA_RATE_SYSTEMS">
+            <message-text>Multiple ALU Folder systems which are set to run at the "data rate" are present. The device level ModelSim ATB might not work. Try running ModelSim ATBs of individual models to verify your design.</message-text>
+        </message>
+
+        <message identifier="CONST_MULT_OVERFLOW">
+            <message-text>Scaling by constant %constant% in ConstMult [%block%] will saturate output type %sign%fix%bitwidth%%fraction%</message-text>
+            <parameter-list>
+                <parameter name="constant" description="value of scaling constant"/>
+                <parameter name="block" description="path to this block"/>
+                <parameter name="sign" description="sign of output fixed point type"/>
+                <parameter name="bitwidth" description="output bitwidth"/>
+                <parameter name="fraction" description="fraction spec of output fixed point type"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONST_MULT_SIGNED_EXPECTED">
+            <message-text>Output fixed point type of ConstMult [%block%] is expected to be signed</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to ConstMult block"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIFO_DEPTH_CHECK">
+            <message-text>FIFO %block% depth parameter value %oldVal% must be greater or equal to 2. The depth of this FIFO has been reset to %newVal%</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to FIFO block"/>
+                <parameter name="oldVal" description="Original value of the depth parameter"/>
+                <parameter name="newVal" description="New value of the depth parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIFO_THRESHOLD_CHECK">
+            <message-text>FIFO %block% threshold parameter value %oldVal% must be in the range [0,depth]. The threshold of this FIFO has been reset to %newVal%</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to FIFO block"/>
+                <parameter name="oldVal" description="Original value of the threshold parameter"/>
+                <parameter name="newVal" description="New value of the threshold parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="FIFO_FILL_THRESHOLD_CHECK">
+            <message-text>FIFO %block% fill_threshold parameter value %oldVal% must be in the range [0,depth]. The fill_threshold of this FIFO has been reset to %newVal%</message-text>
+            <parameter-list>
+                <parameter name="block" description="path to FIFO block"/>
+                <parameter name="oldVal" description="Original value of the fill_threshold parameter"/>
+                <parameter name="newVal" description="New value of the fill_threshold parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="PRIMITIVE_BLOCK_NOT_SUPPORTED_ON_ARCHITECTURE">
+            <message-text>The primitive block multiply-accumulate/accumulate is not supported on this architecture.</message-text>
+            <suggestion>Use a target device that has hardware floating-point DSP support, such as Arria10.</suggestion>
+        </message>     
+        <message identifier="EXT_IFACE_INVALID_PARAM_NAME">
+            <message-text>External IP block '%block%' has a parameter with invalid name '%paramName%'.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the external IP block"/>
+                <parameter name="paramName" description="Invalid parameter name"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXT_IFACE_PARAM_KEY_INVALID">
+            <message-text>External IP block '%block%' has a parameter (set by A_EXT_IFACE_PARAM_KEY), named '%param%', with an invalid value specification, '%valueSpec%'.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the external IP block"/>
+                <parameter name="param" description="Name of the parameter with an invalid type"/>
+                <parameter name="valueSpec" description="Incorrect value specification of the A_EXT_IFACE_PARAM_KEY"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXT_IFACE_INVALID_PARAM_TYPE">
+            <message-text>External IP block '%block%' has a parameter, '%param%', with invalid type '%type%'</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the external IP block"/>
+                <parameter name="param" description="Name of the parameter with an invalid type"/>
+                <parameter name="type" description="Invalid type of the parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXT_IFACE_INVALID_PARAM_VALUE">
+            <message-text>External IP block '%block%' has a parameter, '%param%', with invalid value '%value%'</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the external IP block"/>
+                <parameter name="param" description="Name of the parameter with an invalid value"/>
+                <parameter name="value" description="Invalid value of the parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXT_IFACE_INVALID_LATE_PARAM_VALUE">
+            <message-text>Late bound parameter, '%param%', has an invalid value '%value%'</message-text>
+            <parameter-list>
+                <parameter name="param" description="Name of the parameter with an invalid value"/>
+                <parameter name="value" description="Invalid value of the parameter"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXT_IFACE_INVALID_RESOURCE_USAGE_VALUE">
+            <message-text>External IP block %block% has a resource usage specification with invalid value '%value%'</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the external IP block"/>
+                <parameter name="value" description="Invalid value"/>
+            </parameter-list>
+        </message>
+        <message identifier="MODEL_BLOCK_WITHOUT_MODEL_NODE">
+            <message-text>DSDK Model block '%block%' found without a model reference node.</message-text>
+            <parameter-list>
+                <parameter name="block" description="path of the model block"/>
+            </parameter-list>
+        </message>
+        <message identifier="GOTO_BAD_TAG_TYPE">
+            <message-text>Goto block '%block%' has invalid tag type '%tagType%'</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the goto block"/>
+                <parameter name="tagType" description="Tag type on the goto block"/>
+            </parameter-list>
+        </message>
+        <message identifier="MODIFYING_PORT_TYPE">
+            <message-text>Modifying port '%port%' on block '%block%'. Existing type was '%oldType%'. New type is '%newType%'.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the DSDK block"/>
+                <parameter name="port" description="Name of the DSDK port"/>
+                <parameter name="oldType" description="Existing type of the port"/>
+                <parameter name="newType" description="New type of the port"/>
+            </parameter-list>
+        </message>
+        <message identifier="MODIFYING_WIRE_TYPE">
+            <message-text>Modifying wire '%wire%' on block '%block%'. Existing type was '%oldType%'. New type is '%newType%'.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the DSDK block"/>
+                <parameter name="wire" description="Name of the DSDK wire"/>
+                <parameter name="oldType" description="Existing type of the wire"/>
+                <parameter name="newType" description="New type of the wire"/>
+            </parameter-list>
+        </message>
+        <message identifier="MISSING_UNRELAX_BOOLS_HANDLER">
+            <message-text>Missing DSDK UnrelaxBoolsHandler for block '%block%', which has A_PRIM_RELAX_BOOLS set.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the DSDK block"/>
+            </parameter-list>
+        </message>
+        <message identifier="BRIDGE_CLOCK_NAME_UNSET">
+            <message-text>Clock name not set for model '%model%'.</message-text>
+            <parameter-list>
+                <parameter name="model" description="Name of the model"/>
+            </parameter-list>
+        </message>
+        <message identifier="EXT_IFACE_PARAM_NOT_PURETUPLE">
+            <message-text>External interface DSDK block '%block%' in model '%model%' has invalid setting for DSDK parameter %param%. Parameter is not set to a PureTuple value.</message-text>
+            <parameter-list>
+                <parameter name="param" description="Name of the parameter which isn't a PureTuple value"/>
+                <parameter name="block" description="Name of the external interface block"/>
+                <parameter name="model" description="Name of the model containing the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="MODELBUS_OUTSIDE_SCHEDULED_SYSTEM">
+            <message-text>The block '%block%' is placed outside scheduled subsystem. Inputs will not be automatically balanced.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="DSPBA_FEATURES_FIELDNAME_CLASH">
+            <message-text>DSPBA_Features field '%fieldname%' collides with another field name when case insensitive comparison is applied.</message-text>
+            <parameter-list>
+                <parameter name="fieldname" description="Name of DSPBA feature that is causing the collision with another field name"/>
+            </parameter-list>
+        </message>
+        <message identifier="NONIDEAL">
+            <message-text>Non-ideal '%nonideal%' employed instead of '%ideal%' in '%block%'.</message-text>
+            <suggestion>No action - it should still work.</suggestion>
+            <parameter-list>
+                <parameter name="nonideal" description="Name of suboptimal setting used"/>
+                <parameter name="ideal" description="Name of suboptimal setting used"/>
+                <parameter name="block" description="Name of the block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONST_SATURATION_TYPE_NOT_SET">
+            <message-text>Constant block '%block%' does not have a type set, unable to check for saturation.</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the constant block"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONST_SATURATION_TYPE_MISMATCH">
+            <message-text>Constant block '%block%' constant value contains an unexpected type. Expected type [%expected%] but found value [%actual%].</message-text>
+            <parameter-list>
+                <parameter name="block" description="Name of the constant block"/>
+                <parameter name="expected" description="Expected type of the constant block value"/>
+                <parameter name="actual" description="Actual value of the constant block value"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONST_SATURATION_REAL_SCALAR">
+            <message-text>Constant block '%block%' with the value %value% has saturated due to insufficient bit-width (%bitwidth% bits available, %required% bits required).</message-text>
+            <suggestion>Increase the bit-width or disable this warning in the block parameters.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Name of the constant block"/>
+                <parameter name="value" description="Constant value"/>
+                <parameter name="bitwidth" description="Constant bitwidth"/>
+                <parameter name="required" description="Number of bits needed to avoid saturation"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONST_SATURATION_REAL_VECTOR">
+            <message-text>Constant at index %index% in block '%block%' with the value %value% has saturated due to insufficient bit-width (%bitwidth% bits available, %required% bits required).</message-text>
+            <suggestion>Increase the bit-width or disable this warning in the block parameters.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Name of the constant block"/>
+                <parameter name="value" description="Constant value"/>
+                <parameter name="bitwidth" description="Constant bitwidth"/>
+                <parameter name="required" description="Number of bits needed to avoid saturation"/>
+                <parameter name="index" description="Index in vector"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONST_SATURATION_COMPLEX_SCALAR">
+           <message-text>The %component% part of constant block '%block%' with the value %value% has saturated due to insufficient bit-width (%bitwidth% bits available, %required% bits required).</message-text>
+            <suggestion>Increase the bit-width or disable this warning in the block parameters.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Name of the constant block"/>
+                <parameter name="value" description="Constant value"/>
+                <parameter name="bitwidth" description="Constant bitwidth"/>
+                <parameter name="required" description="Number of bits needed to avoid saturation"/>
+                <parameter name="component" description="Real or imaginary"/>
+            </parameter-list>
+        </message>
+        <message identifier="CONST_SATURATION_COMPLEX_VECTOR">
+            <message-text>The %component% part of constant at index %index% of block '%block%' with the value %value% has saturated due to insufficient bit-width (%bitwidth% bits available, %required% bits required).</message-text>
+            <suggestion>Increase the bit-width or disable this warning in the block parameters.</suggestion>
+            <parameter-list>
+                <parameter name="block" description="Name of the constant block"/>
+                <parameter name="value" description="Constant value"/>
+                <parameter name="bitwidth" description="Constant bitwidth"/>
+                <parameter name="required" description="Number of bits needed to avoid saturation"/>
+                <parameter name="index" description="Index in vector"/>
+                <parameter name="component" description="Real or imaginary"/>
+            </parameter-list>
+        </message>
+        <message identifier="NULL_CONTROLFLOW">
+            <message-text>Model '%model%' has a 'valid' output that is discarded within the scope of the DSP Builder design. This means that the whole of this model will be considered Data-Flow and reset-minimized.</message-text>
+            <suggestion>Fully connect the 'valid' output (within the scope of DSP Builder) if you intend for it to convey Control-Flow information. Leave the design as it is if you intend this model to have no 'valid' Control-Flow.</suggestion>
+            <parameter-list>
+                <parameter name="model" description="Name of the model"/>
+            </parameter-list>
+        </message>
+        <message identifier="DUALMEM_ADDRESS_TRUNCATION">
+            <message-text>Address port %addr% on DualMem block '%block%' is larger than required to access all addresses and will be truncated to %bits% bits. You may be trying to access addresses beyond the memory's range.</message-text>
+            <suggestion>Change the data type of the source block or insert a ChooseBits block.</suggestion>
+            <parameter-list>
+                <parameter name="addr" description="Address port (1 or 2)"/>
+                <parameter name="block" description="Block in question"/>
+                <parameter name="bits" description="Address bits required"/>
+            </parameter-list>
+        </message>
+        <message identifier="DUALMEM_ADDRESS_ZEROPAD">
+            <message-text>Address port %addr% on DualMem block '%block%' is smaller than required to access all addresses and will be zero-padded to %bits% bits. You cannot access all addresses from this port.</message-text>
+            <suggestion>Change the data type of the source block.</suggestion>
+            <parameter-list>
+                <parameter name="addr" description="Address port (1 or 2)"/>
+                <parameter name="block" description="Block in question"/>
+                <parameter name="bits" description="Address bits required"/>
+            </parameter-list>
+        </message>
+        <message identifier="DUALMEM_ADDR_OUT_OF_RANGE">
+            <message-text>Address out of range: Attempted to %rw% DualMem '%path%' location %address% at tick %time%. Valid address range is from 0 to %upperBound%.</message-text>
+            <parameter-list>
+                <parameter name="path" description="Path to DualMem block"/>
+                <parameter name="time" description="The cycle in which the address was out of range"/>
+                <parameter name="rw" description="Read or write access"/>
+                <parameter name="address" description="Address used"/>
+                <parameter name="upperBound" description="Memory depth"/>
+            </parameter-list>
+        </message>
+        <message identifier="DUALMEM_RW_CLASH">
+            <message-text>Read/Write address clash in a 'DONT_CARE' memory '%path%' at address1=%addressA% and address2=%addressB% at tick %time%. The memory is marked as 'DONT_CARE' so this read value must not be relied upon (it has been zeroed in the Simulink Simulation but the HW behaviour is undefined).</message-text>
+            <suggestion>Possible solutions are: ensure the read value is 'not used' in these circumstances; refactor so that the read address is different when there is a write; untick DONT_CARE.</suggestion>
+            <parameter-list>
+                <parameter name="path" description="Path to DualMem block"/>
+                <parameter name="time" description="The cycle in which the r/w address clash occurred"/>
+                <parameter name="addressA" description="Address used on side A/1"/>
+                <parameter name="addressB" description="Address used on side B/2"/>
+            </parameter-list>
+        </message>
+        <message identifier="MEM_UNINIT_X">
+            <message-text>Memory %path% is marked as 'uninitialized' and the meaning of 'uninitialized' has been set to 'X - Truly Uninitialized'. Simulink and HDL simulation will mismatch if an uninitialized location is read and used.</message-text>
+            <suggestion>To ensure a system simulation match, do not allow uninitialized data to propagate so as to influence an output; for example use a Mux. (In a SharedMem with bus read, connected bus logic may need to cope with reading Xs.)</suggestion>
+            <parameter-list>
+                <parameter name="path" description="Path to memory block"/>
+            </parameter-list>
+        </message>
+        <message identifier="UNSUPPORTED_LANGUAGE">
+            <message-text>Device %device% does not support %wantLanguage%, instead %gotLanguage% will be used.</message-text>
+            <suggestion>Select a supported language for this device.</suggestion>
+            <parameter-list>
+                <parameter name="device" description="Device"/>
+                <parameter name="wantLanguage" description="User language preference"/>
+                <parameter name="gotLanguage" description="Actual language"/>
+            </parameter-list>
+        </message>
+    </message-list>
+
+    <message-list type="INFO">
+        <message identifier="FIFO_MAX_DEPTH_REACHED">
+           <message-text>The FIFO %block% reached a maximum depth of %usedDepth% out of %configDepth%.</message-text>
+           <parameter-list>
+           <parameter name="block" description="path to FIFO block"/>
+           <parameter name="configDepth" description="the configured depth of the FIFO"/>
+           <parameter name="usedDepth" description="the maximum used depth"/>
+            </parameter-list>
+        </message>   
+        <message identifier="FIFO_MAX_DEPTH_REACHED_VECTOR">
+           <message-text>The vector element %numElement% of FIFO %block% reached a maximum depth of %usedDepth% out of %configDepth%.</message-text>
+           <parameter-list>
+           <parameter name="block" description="path to FIFO block"/>
+           <parameter name="configDepth" description="the configured depth of the FIFO"/>
+           <parameter name="numElement" description="the element number in a vector"/>
+           <parameter name="usedDepth" description="the maximum used depth"/>
+            </parameter-list>
+        </message>   
+        <message identifier="RESET_DURATION">
+            <message-text>The reset duration for %model% is %len%.</message-text>
+            <parameter-list>
+               <parameter name="model" description="Model to which reset duration applies"/>
+               <parameter name="len" description="Length of reset"/>
+            </parameter-list>
+        </message>
+        <message identifier="REPORT_VALUE">
+            <message-text>The value of the %name% is %value%.</message-text>
+            <parameter-list>
+               <parameter name="name" description="Name of the attribute being reported"/>
+               <parameter name="value" description="Reported value"/>
+            </parameter-list>
+        </message>
+    </message-list>
+
+    <message-list type="DEBUG">
+        <!-- Add any debug messages here. End users should not see these messages. -->
+        <message identifier="TEST_DEBUG_MESSAGE_1">
+            <message-text>Test message: parameter 1 is %param1%, parameter 2 is %param2%.</message-text>
+            <suggestion>No suggestion, this is a test.</suggestion>
+            <parameter-list>
+                <parameter name="param1" description="parameter 1"/>
+                <parameter name="param2" description="parameter 2"/>
+            </parameter-list>
+        </message>
+    </message-list>
+</messages>

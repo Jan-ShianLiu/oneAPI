@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<board_env version="17.1" name="intel_a10gx_pac">
+  <hardware dir="hardware" default="pac_a10"></hardware>
+  <platform name="linux64">
+    <mmdlib>libopae-c.so,%b/linux64/lib/libMPF.so,%b/linux64/lib/libintel_opae_mmd.so</mmdlib>
+    <linkflags>-L%a/linux64/lib -L%b/linux64/lib </linkflags>
+    <linklibs> -lintel_opae_mmd -lrt</linklibs>
+    <utilbindir>%b/linux64/libexec</utilbindir>
+  </platform>
+  <quartus version="19.2" patches="0.01rc"></quartus>
+
+</board_env>

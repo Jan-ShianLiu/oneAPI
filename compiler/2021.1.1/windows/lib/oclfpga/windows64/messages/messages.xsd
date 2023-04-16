@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="messages">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="message-list" type="messagelist" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="language" type="xs:string" use="required"/>
+      <!-- Language code for the messages - for example EN-US -->
+      
+    </xs:complexType>
+    <xs:unique name="messageIDsuniqueAcrossAllmessages">
+      <xs:selector xpath="messages"/>
+      <xs:field xpath="@identifier"/>
+    </xs:unique>
+  </xs:element>
+
+  <xs:simpleType name="messageType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="WARN"/>
+      <xs:enumeration value="ERROR"/>
+      <xs:enumeration value="INFO"/>
+      <xs:enumeration value="TEST"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="messagelist">
+    <xs:sequence>
+      <xs:element name="message" type="message" maxOccurs="unbounded"/>
+    </xs:sequence>
+    
+    <xs:attribute name="type" type="messageType" use="required"/>
+    <!-- Message type should be INFO, WARN, ERROR -->
+  </xs:complexType>
+
+  <xs:complexType name="message">
+    <xs:all>
+      <xs:element name="message-text" type="xs:string"/>
+      <!-- Messagetext is parameterizable by elements of type parameter. 
+    to use the value of a parameter in the message text use %parametername% 
+    and it'll be parsed accordingly -->
+
+      <xs:element name="suggestion" type="xs:string"/>
+      <!-- A suggestion of how to fix the error/warning-->
+
+      <xs:element name="parameter-list" type="parameterlist"/>
+    </xs:all>
+    <xs:attribute name="identifier" type="xs:string" use="required"/>
+    <!-- identifier you use when calling the message trigger event. ID type forces them to be unique -->
+  </xs:complexType>
+
+  <xs:complexType name="parameter">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="description" type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="parameterlist">
+    <xs:sequence>
+      <xs:element name="parameter" type="parameter" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

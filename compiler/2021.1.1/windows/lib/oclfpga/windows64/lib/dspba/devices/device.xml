@@ -1,0 +1,1108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<devices version="1" acds_version="20.3" >
+    <definitions>
+        <!-- COCIR - uses a chain-out to chain-in register -->
+        <!-- FMBC  - flat multi-block chain does not use a chain-out to chain-in register -->
+
+        <define-precision mode-name="9x9i" awidth="9" bwidth="9" products="1" signs="US,US" />
+
+        <define-precision mode-name="18x18i" awidth="18" bwidth="18" products="1" signs="US,US" />
+        <define-precision mode-name="18x18s2" awidth="18" bwidth="18" products="2" signs="US,US" />
+        <define-precision mode-name="18x18d2" awidth="18" bwidth="18" products="-2" signs="US,US" />
+        <define-precision mode-name="18x18s4" awidth="18" bwidth="18" products="4" signs="US,US"/>
+        <define-precision mode-name="18x18s4_fmbc" awidth="18" bwidth="18" products="4" signs="US,US" operation-mode="FMBC" />
+        <define-precision mode-name="18x18s4_cocir" awidth="18" bwidth="18" products="4" signs="US,US" operation-mode="COCIR" />
+
+        <define-precision mode-name="27x27i" awidth="27" bwidth="27" products="1" signs="US,US" />
+        <define-precision mode-name="27x27s2" awidth="27" bwidth="27" products="2" signs="US,US" />
+        <define-precision mode-name="27x27d2" awidth="27" bwidth="27" products="-2" signs="US,US" />
+        <define-precision mode-name="27x27s2_fmbc" awidth="27" bwidth="27" products="2" signs="US,US" operation-mode="FMBC" />
+        <define-precision mode-name="27x27d2_fmbc" awidth="27" bwidth="27" products="-2" signs="US,US" operation-mode="FMBC" />
+        <define-precision mode-name="27x27s2_cocir" awidth="27" bwidth="27" products="2" signs="US,US" operation-mode="COCIR" />
+        <define-precision mode-name="27x27d2_cocir" awidth="27" bwidth="27" products="-2" signs="US,US" operation-mode="COCIR" />
+
+        <!-- modes whose availability depends on argument signedness -->
+        <define-precision mode-name="s9xs9s4" awidth="9" bwidth="9" products="4" signs="S,S" />
+        <define-precision mode-name="s9xs9s8" awidth="9" bwidth="9" products="8" signs="S,S" />
+
+        <define-precision mode-name="s18xs18i" awidth="18" bwidth="18" products="1" signs="S,S" />
+        <define-precision mode-name="u18xu18i" awidth="18" bwidth="18" products="1" signs="U,U" />
+        <define-precision mode-name="s18xs18s2" awidth="18" bwidth="18" products="2" signs="S,S" />
+        <define-precision mode-name="u18xu17s2" awidth="18" bwidth="17" products="2" signs="U,U" />
+
+        <define-precision mode-name="s19xs18i" awidth="19" bwidth="18" products="1" signs="S,S" />
+        <define-precision mode-name="s19xs18s2" awidth="19" bwidth="18" products="2" signs="S,S" />
+        <define-precision mode-name="s19xs18d2" awidth="19" bwidth="18" products="-2" signs="S,S" />
+        <define-precision mode-name="s19xs18s4_fmbc" awidth="19" bwidth="18" products="4" signs="S,S" operation-mode="FMBC" />
+        <define-precision mode-name="s19xs18s4_cocir" awidth="19" bwidth="18" products="4" signs="S,S" operation-mode="COCIR" />
+        <define-precision mode-name="s19x18i" awidth="19" bwidth="18" products="1" signs="S,US" />
+        <define-precision mode-name="s19x18s2" awidth="19" bwidth="18" products="2" signs="S,US" />
+        <define-precision mode-name="s19x18d2" awidth="19" bwidth="18" products="-2" signs="S,US" />
+        <define-precision mode-name="s19x18s4_fmbc" awidth="19" bwidth="18" products="4" signs="S,US" operation-mode="FMBC" />
+        <define-precision mode-name="s19x18s4_cocir" awidth="19" bwidth="18" products="4" signs="S,US" operation-mode="COCIR" />
+
+        <define-precision mode-name="s27xs27d2_fmbc" awidth="27" bwidth="27" products="-2" signs="S,S" operation-mode="FMBC" />
+        <define-precision mode-name="s27xs27d2_cocir" awidth="27" bwidth="27" products="-2" signs="S,S" operation-mode="COCIR" />
+        
+        
+        <!-- Arria 10 and Cyclone 10 GX -->
+        <define-dsp-block name="vp3">
+            <dsp-block-type>vp3</dsp-block-type>
+            <accumulators>2</accumulators>
+            <has-mult-add>true</has-mult-add>
+            <has-chain-mult-add>true</has-chain-mult-add>
+            <has-mult-add-round>false</has-mult-add-round>
+            <has-biased-mult-round>true</has-biased-mult-round>
+            <has-direction-port>true</has-direction-port>
+            <dsp-blocks-per-block>2</dsp-blocks-per-block>
+            <multiplier-cost-per-dsp-block>2</multiplier-cost-per-dsp-block>
+            <supports-fp32>true</supports-fp32>
+            <required-delay>3</required-delay>
+            <!-- <pipeline-threshold-percentages>50</pipeline-threshold-percentages> -->
+            <precisions>
+<?obsolete
+                <!-- 19x18 mode is supported only when both multiplicands are signed -->
+                <!-- decimal       hex      MA4    MS2    MA2   Mult -->
+                <!--  266305 = x041041 = 000001 000001 000001 000001 -->
+                <precision-mode awidth="18" bwidth="18" mult-add="4" mult-per-block="4" mult-add-per-block="1" chain-blocks="2" chain-block-size="1" />
+                <precision-mode awidth="19" bwidth="18" mult-add="4" mult-per-block="4" mult-add-per-block="1" chain-blocks="2" chain-block-size="1" modifier-flags="266305"/>
+                <precision-mode awidth="27" bwidth="27" mult-add="2" mult-per-block="2" mult-add-per-block="1" chain-blocks="1" chain-block-size="1" />
+?>
+            </precisions>
+            <mult-splitter tiling="square">
+                <tiling-parameter key="bitwidth" value="18,27" />
+                <tiling-parameter key="extended" value="19" />
+                <mult-add-qor mode-name="18x18i,18x18s2,18x18d2"             cost-mult="1.0"   mults-per-block="4" chain-blocks="2" />
+                <mult-add-qor mode-name="s19x18i,s19x18s2,s19x18d2"          cost-mult="1.001" mults-per-block="4" chain-blocks="2" />
+                <mult-add-qor mode-name="18x18s4_cocir,18x18s4_fmbc"         cost-mult="1.0"   mults-per-block="4" chain-blocks="2" />
+                <mult-add-qor mode-name="s19x18s4_cocir,s19x18s4_fmbc"       cost-mult="1.001" mults-per-block="4" chain-blocks="2" />
+                <mult-add-qor mode-name="27x27i"                             cost-mult="2.0"   mults-per-block="2" chain-blocks="1" />
+                <mult-add-qor mode-name="27x27s2_fmbc,27x27d2_fmbc"          cost-mult="2.0"   mults-per-block="2" chain-blocks="1" />
+                <mult-add-qor mode-name="27x27s2_cocir,27x27d2_cocir"        cost-mult="2.0"   mults-per-block="2" chain-blocks="1" />
+            </mult-splitter>
+        </define-dsp-block>
+
+        <!-- Stratix 10 -->
+        <define-dsp-block name="vp4">
+            <dsp-block-type>vp4</dsp-block-type>
+            <accumulators>2</accumulators>
+            <has-mult-add>true</has-mult-add>
+            <has-chain-mult-add>true</has-chain-mult-add>
+            <has-mult-add-round>false</has-mult-add-round>
+            <has-biased-mult-round>true</has-biased-mult-round>
+            <has-direction-port>true</has-direction-port>
+            <dsp-blocks-per-block>2</dsp-blocks-per-block>
+            <multiplier-cost-per-dsp-block>2</multiplier-cost-per-dsp-block>
+            <required-delay>4</required-delay>
+            <!-- <pipeline-threshold-percentages>50,30</pipeline-threshold-percentages> -->
+            <supports-fp32>true</supports-fp32>
+            <precisions>
+                <!-- 19x18 mode requires all input operands to be signed
+                     18x18 difference-of-2 mode requires all input operands to be signed
+                     18x17 mode avoids restriction by sign-extending arguments and using 19x18
+                     27x27 difference-of-2 mode requires all input operands to be signed
+                     26x26 mode avoids restriction by sign-extending arguments and using 27x27
+                     The 18-bit restrictions may be relaxed at some point. -->
+                <!-- decimal       hex      MA4    MS2    MA2   Mult -->
+                <!--  262144 = x040000 = 000001 000000 000000 000000
+                      266305 = x041041 = 000001 000001 000001 000001
+                     5510485 = x541555 = 010101 000001 010101 010101
+                        5461 = x001555 = 000000 000001 010101 010101
+                      349525 = x055555 = 000000 010101 010101 010101 -->
+<?obsolete
+                <precision-mode awidth="19" bwidth="18" mult-add="4" mult-per-block="4" mult-add-per-block="1" chain-blocks="2" chain-block-size="1" modifier-flags="266305"/>
+                <precision-mode awidth="18" bwidth="18" mult-add="4" mult-per-block="4" mult-add-per-block="1" chain-blocks="2" chain-block-size="1" modifier-flags="5510485" />
+                <precision-mode awidth="18" bwidth="17" mult-add="4" mult-per-block="4" mult-add-per-block="1" chain-blocks="2" chain-block-size="1" />
+                <precision-mode awidth="27" bwidth="27" mult-add="2" mult-per-block="2" mult-add-per-block="1" chain-blocks="1" chain-block-size="1" modifier-flags="5461" />
+                <precision-mode awidth="26" bwidth="26" mult-add="2" mult-per-block="2" mult-add-per-block="1" chain-blocks="1" chain-block-size="1" />
+?>
+            </precisions>
+
+            <mult-splitter tiling="square">
+                <tiling-parameter key="bitwidth" value="18,27" />
+                <tiling-parameter key="extended" value="19" />
+                <mult-add-qor mode-name="18x18i,18x18s2,s19xs18i,s19xs18s2,s19xs18d2"                   cost-mult="1.0" mults-per-block="4" chain-blocks="2" />
+                <mult-add-qor mode-name="18x18s4_cocir,s19xs18s4_cocir,18x18s4_fmbc,s19xs18s4_fmbc"     cost-mult="1.0" mults-per-block="4" chain-blocks="2" />
+                <mult-add-qor mode-name="27x27i"                                                        cost-mult="2.0" mults-per-block="2" chain-blocks="1" />
+                <mult-add-qor mode-name="27x27s2_fmbc,s27xs27d2_fmbc"                                   cost-mult="2.0" mults-per-block="2" chain-blocks="1" />
+                <mult-add-qor mode-name="27x27s2_cocir,s27xs27d2_cocir"                                 cost-mult="2.0" mults-per-block="2" chain-blocks="1" />
+            </mult-splitter>
+        </define-dsp-block>
+
+        <!-- Agilex -->
+        <define-dsp-block name="vp5">
+            <dsp-block-type>vp5</dsp-block-type>
+            <accumulators>2</accumulators>
+            <has-mult-add>true</has-mult-add>
+            <has-chain-mult-add>true</has-chain-mult-add>
+            <has-mult-add-round>false</has-mult-add-round>
+            <has-biased-mult-round>true</has-biased-mult-round>
+            <has-direction-port>true</has-direction-port>
+            <dsp-blocks-per-block>2</dsp-blocks-per-block>
+            <multiplier-cost-per-dsp-block>2</multiplier-cost-per-dsp-block>
+            <required-delay>4</required-delay>
+            <!-- <pipeline-threshold-percentages>50,30</pipeline-threshold-percentages> -->
+            <supports-fp16>true</supports-fp16>
+            <supports-fp32>true</supports-fp32>
+            <precisions>
+                <!-- 9x9 mode supports only sum-of-4 using signed inputs.
+                     19x18 mode requires all input operands to be signed
+                     18x18 difference-of-2 mode requires all input operands to be signed
+                     18x17 mode avoids restriction by sign-extending arguments and using 19x18
+                     27x27 difference-of-2 mode requires all input operands to be signed
+                     26x26 mode avoids restriction by sign-extending arguments and using 27x27
+                     The 18-bit restrictions may be relaxed at some point. -->
+                <!-- decimal       hex      MA4    MS2    MA2   Mult -->
+                <!--  266305 = x041041 = 000001 000001 000001 000001
+                     5510485 = x541555 = 010101 000001 010101 010101
+                        5461 = x001555 = 000000 000001 010101 010101
+                      349525 = x055555 = 000000 010101 010101 010101 -->
+<?obsolete
+                <precision-mode awidth="9"  bwidth="9"  mult-add="4" mult-per-block="4" mult-add-per-block="2" chain-blocks="1" chain-block-size="4" modifier-flags="262144"/>
+                <precision-mode awidth="19" bwidth="18" mult-add="4" mult-per-block="4" mult-add-per-block="1" chain-blocks="2" chain-block-size="1" modifier-flags="266305"/>
+                <precision-mode awidth="18" bwidth="18" mult-add="4" mult-per-block="4" mult-add-per-block="1" chain-blocks="2" chain-block-size="1" modifier-flags="5510485" />
+                <precision-mode awidth="18" bwidth="17" mult-add="4" mult-per-block="4" mult-add-per-block="1" chain-blocks="2" chain-block-size="1" />
+                <precision-mode awidth="27" bwidth="27" mult-add="2" mult-per-block="2" mult-add-per-block="1" chain-blocks="1" chain-block-size="1" modifier-flags="5461" />
+                <precision-mode awidth="26" bwidth="26" mult-add="2" mult-per-block="2" mult-add-per-block="1" chain-blocks="1" chain-block-size="1" />
+?>
+            </precisions>
+
+            <mult-splitter tiling="square">
+                <tiling-parameter key="bitwidth" value="18,27" />
+                <tiling-parameter key="extended" value="19" />
+                <mult-add-qor mode-name="s9xs9s4"        
+                              cost-mult="0.5" mults-per-block="8" chain-blocks="1" chain-block-size="4" />
+                <mult-add-qor mode-name="18x18i,18x18s2,18x18s4_cocir,s19xs18i,s19xs18s2,s19xs18d2,s19xs18s4_cocir" 
+                              cost-mult="1.0" mults-per-block="4" chain-blocks="2" />
+                <mult-add-qor mode-name="27x27i"
+                              cost-mult="2.0" mults-per-block="2" chain-blocks="1" />
+                <mult-add-qor mode-name="27x27s2_cocir,s27xs27d2_cocir" 
+                              cost-mult="2.0" mults-per-block="2" chain-blocks="1" />
+            </mult-splitter>
+        </define-dsp-block>
+
+
+
+
+        <!-- ALM-based Fabric with fast adder and 4 registers per ALM -->
+        <define-logic name="alm-28nm">
+            <LUT-type>ALM2</LUT-type>
+            <adder-control-inputs>2</adder-control-inputs>
+            <adder-data-inputs>3</adder-data-inputs>
+            <has-fast-adder>true</has-fast-adder>
+            <has-hyper-registers>false</has-hyper-registers>
+            <has-share-chain>true</has-share-chain>
+            <lab-length>20</lab-length>
+            <num-inputs-per-LUT>6</num-inputs-per-LUT>
+            <registers-per-LUT4>2</registers-per-LUT4>
+            <use-synchronous-reset>false</use-synchronous-reset>
+        </define-logic>
+
+        <!-- ALM-based Fabric with hyperflex registers -->
+        <define-logic name="alm-14nm">
+            <LUT-type>ALM3</LUT-type>
+            <adder-control-inputs>2</adder-control-inputs>
+            <adder-data-inputs>2</adder-data-inputs>
+            <has-fast-adder>true</has-fast-adder>
+            <has-hyper-registers>true</has-hyper-registers>
+            <has-share-chain>false</has-share-chain>
+            <lab-length>20</lab-length>
+            <num-inputs-per-LUT>6</num-inputs-per-LUT>
+            <registers-per-LUT4>2</registers-per-LUT4>
+            <use-synchronous-reset>true</use-synchronous-reset>
+        </define-logic>
+
+
+    </definitions>
+
+
+    <family name="Cyclone 10 GX">
+        <!-- Numbers in this section are provisional -->
+        <speed-grade name="-5">
+            <alternative-name>5</alternative-name>
+            <alternative-name>fast</alternative-name>
+            <alternative-name>medium</alternative-name>
+            <timing-model name="default">
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.462</routing-delay>
+                <chain-start-delay>0.362</chain-start-delay>
+                <chain-end-delay>0.286</chain-end-delay>
+                <per-cell-delay>0.015</per-cell-delay>
+                <inter-lab-delay>0.066</inter-lab-delay>
+                <mid-lab-delay>0.058</mid-lab-delay>
+                <ternary-chain-start>1.2</ternary-chain-start>
+                <!-- obsolete <dsp-multiblock-fmax>270</dsp-multiblock-fmax> -->
+                <default-device>10CX220YU484I5G</default-device>
+                <LUT-delay>0.165</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.005404</ripple-gradient>
+                <ripple-offset>1.249802</ripple-offset>
+                <carrychain-gradient>0.014028</carrychain-gradient>
+                <ripple-carrychain-boundary>40</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.015" />
+                </routing-coefficient>
+                <output-register-threshold>300</output-register-threshold>
+                <high-speed-adder-threshold>350</high-speed-adder-threshold>
+                <mult-splitter>
+                    <!-- Estimates for single DSP modes -->
+                    <mult-add-qor mode-name="18x18i" fmax="480" />
+                    <mult-add-qor mode-name="18x18s2,18x18d2,s19x18i,s19x18s2,s19x18d2" fmax="430" />
+                    <mult-add-qor mode-name="27x27i" fmax="420" />
+                    <!-- Estimate for multiblock modes -->
+                    <mult-add-qor mode-name="27x27s2_fmbc,27x27d2_fmbc,18x18s4_fmbc,s19x18s4_fmbc" fmax="290" />
+                    <mult-add-qor mode-name="27x27s2_cocir,27x27d2_cocir,18x18s4_cocir,s19x18s4_cocir" fmax="440" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="570" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="625" true-dual-port-fmax="625" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+
+        <speed-grade name="-6">
+            <alternative-name>6</alternative-name>
+            <alternative-name>slow</alternative-name>
+            <timing-model name="default">
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.525</routing-delay>
+                <chain-start-delay>0.395</chain-start-delay>
+                <chain-end-delay>0.305</chain-end-delay>
+                <per-cell-delay>0.015</per-cell-delay>
+                <inter-lab-delay>0.077</inter-lab-delay>
+                <mid-lab-delay>0.061</mid-lab-delay>
+                <ternary-chain-start>1.2</ternary-chain-start>
+                <!-- obsolete <dsp-multiblock-fmax>235</dsp-multiblock-fmax> -->
+                <default-device>10CX220YU484I6G</default-device>
+                <LUT-delay>0.179</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.018801</ripple-gradient>
+                <ripple-offset>1.141445</ripple-offset>
+                <carrychain-gradient>0.007512</carrychain-gradient>
+                <ripple-carrychain-boundary>40</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.015" />
+                </routing-coefficient>
+                <output-register-threshold>300</output-register-threshold>
+                <high-speed-adder-threshold>350</high-speed-adder-threshold>
+                <mult-splitter>
+                    <!-- Estimates for single DSP modes -->
+                    <mult-add-qor mode-name="18x18i" fmax="400" />
+                    <mult-add-qor mode-name="18x18s2,18x18d2,s19x18i,s19x18s2,s19x18d2" fmax="360" />
+                    <mult-add-qor mode-name="27x27i" fmax="360" />
+                    <!-- Estimate for multiblock modes -->
+                    <mult-add-qor mode-name="27x27s2_fmbc,27x27d2_fmbc,18x18s4_fmbc,s19x18s4_fmbc" fmax="250" />
+                    <mult-add-qor mode-name="27x27s2_cocir,27x27d2_cocir,18x18s4_cocir,s19x18s4_cocir" fmax="350" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="490" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="530" true-dual-port-fmax="530" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+        <!-- Cyclone 10 GX Memories -->
+        <memories>
+            <memory name="MLAB" size="640"  threshold-group="small" lut4-cost="20" minimum-fill="30"
+                    true-dual-port-support="none" single-port-rw-support="emulated">
+                <dimensions width="20" depth="32"/>
+            </memory>
+            <memory name="M20K" size="20K" threshold-group="medium" minimum-fill="1280"
+                    supports-read-enable="true"
+                    true-dual-port-support="native" single-port-rw-support="emulated">
+                <mixable>
+                    <dimensions width="1" depth="16K"/>
+                    <dimensions width="2" depth="8K"/>
+                    <dimensions width="4" depth="4K"/>
+                    <dimensions width="8" depth="2K"/>
+                    <dimensions width="16" depth="1K"/>
+                    <dimensions width="32" depth="512"/>
+                </mixable>
+                <mixable>
+                    <dimensions width="5" depth="4K"/>
+                    <dimensions width="10" depth="2K"/>
+                    <dimensions width="20" depth="1K"/>
+                    <dimensions width="40" depth="512"/>
+                </mixable>
+            </memory>
+        </memories>
+        <logic include="alm-28nm" />
+        <dsp-block include="vp3">
+            <max-dsp-block-chain-length>27</max-dsp-block-chain-length>
+        </dsp-block>
+        <sandwich-fifo />
+    </family>
+
+    <!--
+       The suffix after the speed grade in the part number denotes the power options offered in Intel Arria 10 devices.
+          L-Low static power
+          S-Standard power
+          V-Supported with the SmartVID feature (lowest static power) (vid)
+          H-High performance power
+       
+       All H parts support both 0.9V and 0.95V.
+       How L and S relate to the voltage is unclear. Check on Quartus device selector.
+     -->
+    <family name="Arria 10">
+        <!-- Numbers in this section are uncalibrated -->
+        <speed-grade name="-1">
+            <alternative-name>1</alternative-name>
+            <alternative-name>fast</alternative-name>
+            <timing-model name="default">
+                <alternative-name>0.9V</alternative-name>
+                <core-voltage>0.9V</core-voltage>
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.4725</routing-delay>
+                <chain-start-delay>0.302</chain-start-delay>
+                <chain-end-delay>0.238</chain-end-delay>
+                <per-cell-delay>0.012</per-cell-delay>
+                <inter-lab-delay>0.055</inter-lab-delay>
+                <mid-lab-delay>0.048</mid-lab-delay>
+                <ternary-chain-start>1.2</ternary-chain-start>
+                <!-- obsolete <dsp-multiblock-fmax>360</dsp-multiblock-fmax> -->
+                <default-device>10AX066K2F35I1HG</default-device>
+                <LUT-delay>0.136</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.004795</ripple-gradient>
+                <ripple-offset>1.221739</ripple-offset>
+                <carrychain-gradient>0.009830</carrychain-gradient>
+                <ripple-carrychain-boundary>54</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.015" />
+                </routing-coefficient>
+                <output-register-threshold>300</output-register-threshold>
+                <high-speed-adder-threshold>350</high-speed-adder-threshold>
+                <mult-splitter>
+                    <!-- Estimates for single DSP modes -->
+                    <mult-add-qor mode-name="18x18i,18x18s2,18x18d2,s19x18i,s19x18s2,s19x18d2" fmax="520" />
+                    <mult-add-qor mode-name="27x27i" fmax="520" />
+                    <!-- Estimate for multiblock modes -->
+                    <mult-add-qor mode-name="27x27s2_fmbc,27x27d2_fmbc,18x18s4_fmbc,s19x18s4_fmbc" fmax="360" />
+                    <mult-add-qor mode-name="27x27s2_cocir,27x27d2_cocir,18x18s4_cocir,s19x18s4_cocir" fmax="520" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="700" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="730" true-dual-port-fmax="730" />
+                </memory-speeds>
+            </timing-model>
+            <timing-model name="0.95V">
+                <core-voltage>0.95V</core-voltage>
+                <quartus-requires-voltage-setting>true</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.4095</routing-delay>
+                <chain-start-delay>0.302</chain-start-delay>
+                <chain-end-delay>0.238</chain-end-delay>
+                <per-cell-delay>0.012</per-cell-delay>
+                <inter-lab-delay>0.055</inter-lab-delay>
+                <mid-lab-delay>0.048</mid-lab-delay>
+                <ternary-chain-start>1.2</ternary-chain-start>
+                <!-- obsolete <dsp-multiblock-fmax>360</dsp-multiblock-fmax> -->
+                <default-device>10AX066K2F35I1HG</default-device>
+                <LUT-delay>0.136</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.004795</ripple-gradient>
+                <ripple-offset>1.221739</ripple-offset>
+                <carrychain-gradient>0.009830</carrychain-gradient>
+                <ripple-carrychain-boundary>54</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.015" />
+                </routing-coefficient>
+                <output-register-threshold>300</output-register-threshold>
+                <high-speed-adder-threshold>350</high-speed-adder-threshold>
+                <mult-splitter>
+                    <!-- Estimates for single DSP modes -->
+                    <mult-add-qor mode-name="18x18i,18x18s2,18x18d2,s19x18i,s19x18s2,s19x18d2" fmax="635" />
+                    <mult-add-qor mode-name="27x27i" fmax="635" />
+                    <!-- Estimate for multiblock modes -->
+                    <mult-add-qor mode-name="27x27s2_fmbc,27x27d2_fmbc,18x18s4_fmbc,s19x18s4_fmbc" fmax="410" />
+                    <mult-add-qor mode-name="27x27s2_cocir,27x27d2_cocir,18x18s4_cocir,s19x18s4_cocir" fmax="630" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="700" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="730" true-dual-port-fmax="730" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+
+        <speed-grade name="-2">
+            <alternative-name>2</alternative-name>
+            <alternative-name>medium</alternative-name>
+            <timing-model name="default">
+                <alternative-name>0.9V</alternative-name>
+                <core-voltage>0.9V</core-voltage>
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.567</routing-delay>
+                <chain-start-delay>0.362</chain-start-delay>
+                <chain-end-delay>0.286</chain-end-delay>
+                <per-cell-delay>0.015</per-cell-delay>
+                <inter-lab-delay>0.066</inter-lab-delay>
+                <mid-lab-delay>0.058</mid-lab-delay>
+                <ternary-chain-start>1.2</ternary-chain-start>
+                <!-- obsolete <dsp-multiblock-fmax>270</dsp-multiblock-fmax> -->
+                <default-device>10AX115H3F34I2LG</default-device>
+                <LUT-delay>0.165</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.005404</ripple-gradient>
+                <ripple-offset>1.249802</ripple-offset>
+                <carrychain-gradient>0.014028</carrychain-gradient>
+                <ripple-carrychain-boundary>40</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.015" />
+                </routing-coefficient>
+                <output-register-threshold>300</output-register-threshold>
+                <high-speed-adder-threshold>350</high-speed-adder-threshold>
+                <mult-splitter>
+                    <!-- Estimates for single DSP modes -->
+                    <mult-add-qor mode-name="18x18i,18x18s2,18x18d2,s19x18i,s19x18s2,s19x18d2" fmax="480" />
+                    <mult-add-qor mode-name="27x27i" fmax="440" />
+                    <!-- Estimate for multiblock modes -->
+                    <mult-add-qor mode-name="27x27s2_fmbc,27x27d2_fmbc,18x18s4_fmbc,s19x18s4_fmbc" fmax="290" />
+                    <mult-add-qor mode-name="27x27s2_cocir,27x27d2_cocir,18x18s4_cocir,s19x18s4_cocir" fmax="440" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="570" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="625" true-dual-port-fmax="625" />
+                </memory-speeds>
+            </timing-model>
+            <timing-model name="0.95V">
+                <core-voltage>0.95V</core-voltage>
+                <quartus-requires-voltage-setting>true</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.4935</routing-delay>
+                <chain-start-delay>0.362</chain-start-delay>
+                <chain-end-delay>0.286</chain-end-delay>
+                <per-cell-delay>0.015</per-cell-delay>
+                <inter-lab-delay>0.066</inter-lab-delay>
+                <mid-lab-delay>0.058</mid-lab-delay>
+                <ternary-chain-start>1.2</ternary-chain-start>
+                <!-- obsolete <dsp-multiblock-fmax>270</dsp-multiblock-fmax> -->
+                <default-device>10AX115H3F34I2LG</default-device>
+                <LUT-delay>0.165</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.005404</ripple-gradient>
+                <ripple-offset>1.249802</ripple-offset>
+                <carrychain-gradient>0.014028</carrychain-gradient>
+                <ripple-carrychain-boundary>40</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.015" />
+                </routing-coefficient>
+                <output-register-threshold>300</output-register-threshold>
+                <high-speed-adder-threshold>350</high-speed-adder-threshold>
+                <mult-splitter>
+                    <!-- Estimates for single DSP modes -->
+                    <mult-add-qor mode-name="18x18i,18x18s2,18x18d2,s19x18i,s19x18s2,s19x18d2" fmax="510" />
+                    <mult-add-qor mode-name="27x27i" fmax="510" />
+                    <!-- Estimate for multiblock modes -->
+                    <mult-add-qor mode-name="27x27s2_fmbc,27x27d2_fmbc,18x18s4_fmbc,s19x18s4_fmbc" fmax="340" />
+                    <mult-add-qor mode-name="27x27s2_cocir,27x27d2_cocir,18x18s4_cocir,s19x18s4_cocir" fmax="510" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="610" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="670" true-dual-port-fmax="640" />
+                </memory-speeds>
+            </timing-model>
+            <timing-model name="vid">
+                <core-voltage>vid</core-voltage>
+                <quartus-requires-voltage-setting>true</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.567</routing-delay>
+                <chain-start-delay>0.362</chain-start-delay>
+                <chain-end-delay>0.286</chain-end-delay>
+                <per-cell-delay>0.015</per-cell-delay>
+                <inter-lab-delay>0.066</inter-lab-delay>
+                <mid-lab-delay>0.058</mid-lab-delay>
+                <ternary-chain-start>1.2</ternary-chain-start>
+                <!-- obsolete <dsp-multiblock-fmax>270</dsp-multiblock-fmax> -->
+                <default-device>10AX115S2F45I2VG</default-device>
+                <LUT-delay>0.165</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.005404</ripple-gradient>
+                <ripple-offset>1.249802</ripple-offset>
+                <carrychain-gradient>0.014028</carrychain-gradient>
+                <ripple-carrychain-boundary>40</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.015" />
+                </routing-coefficient>
+                <output-register-threshold>300</output-register-threshold>
+                <high-speed-adder-threshold>350</high-speed-adder-threshold>
+                <mult-splitter>
+                    <!-- Estimates for single DSP modes -->
+                    <mult-add-qor mode-name="18x18i,18x18s2,18x18d2,s19x18i,s19x18s2,s19x18d2" fmax="480" />
+                    <mult-add-qor mode-name="27x27i" fmax="440" />
+                    <!-- Estimate for multiblock modes -->
+                    <mult-add-qor mode-name="27x27s2_fmbc,27x27d2_fmbc,18x18s4_fmbc,s19x18s4_fmbc" fmax="280" />
+                    <mult-add-qor mode-name="27x27s2_cocir,27x27d2_cocir,18x18s4_cocir,s19x18s4_cocir" fmax="440" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="570" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="625" true-dual-port-fmax="625" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+
+        <speed-grade name="-3">
+            <alternative-name>3</alternative-name>
+            <alternative-name>slow</alternative-name>
+            <timing-model name="default">
+                <alternative-name>0.9V</alternative-name>
+                <core-voltage>0.9V</core-voltage>
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.651</routing-delay>
+                <chain-start-delay>0.395</chain-start-delay>
+                <chain-end-delay>0.305</chain-end-delay>
+                <per-cell-delay>0.015</per-cell-delay>
+                <inter-lab-delay>0.077</inter-lab-delay>
+                <mid-lab-delay>0.061</mid-lab-delay>
+                <ternary-chain-start>1.2</ternary-chain-start>
+                <!-- obsolete <dsp-multiblock-fmax>235</dsp-multiblock-fmax> -->
+                <default-device>10AX115H4F34I3SG</default-device>
+                <LUT-delay>0.179</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.018801</ripple-gradient>
+                <ripple-offset>1.141445</ripple-offset>
+                <carrychain-gradient>0.007512</carrychain-gradient>
+                <ripple-carrychain-boundary>40</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.015" />
+                </routing-coefficient>
+                <output-register-threshold>300</output-register-threshold>
+                <high-speed-adder-threshold>350</high-speed-adder-threshold>
+                <mult-splitter>
+                    <!-- Estimates for single DSP modes -->
+                    <mult-add-qor mode-name="18x18i,18x18s2,18x18d2,s19x18i,s19x18s2,s19x18d2" fmax="350" />
+                    <mult-add-qor mode-name="27x27i" fmax="350" />
+                    <!-- Estimate for multiblock modes -->
+                    <mult-add-qor mode-name="27x27s2_fmbc,27x27d2_fmbc,18x18s4_fmbc,s19x18s4_fmbc" fmax="240" />
+                    <mult-add-qor mode-name="27x27s2_cocir,27x27d2_cocir,18x18s4_cocir,s19x18s4_cocir" fmax="350" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="490" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="530" true-dual-port-fmax="530" />
+                </memory-speeds>
+            </timing-model>
+            <timing-model name="vid">
+                <core-voltage>vid</core-voltage>
+                <quartus-requires-voltage-setting>true</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.651</routing-delay>
+                <chain-start-delay>0.395</chain-start-delay>
+                <chain-end-delay>0.305</chain-end-delay>
+                <per-cell-delay>0.015</per-cell-delay>
+                <inter-lab-delay>0.077</inter-lab-delay>
+                <mid-lab-delay>0.061</mid-lab-delay>
+                <ternary-chain-start>1.2</ternary-chain-start>
+                <!-- obsolete <dsp-multiblock-fmax>235</dsp-multiblock-fmax> -->
+                <default-device>10AX115S4F45I3VG</default-device>
+                <LUT-delay>0.179</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.018801</ripple-gradient>
+                <ripple-offset>1.141445</ripple-offset>
+                <carrychain-gradient>0.007512</carrychain-gradient>
+                <ripple-carrychain-boundary>40</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.015" />
+                </routing-coefficient>
+                <output-register-threshold>300</output-register-threshold>
+                <high-speed-adder-threshold>350</high-speed-adder-threshold>
+                <mult-splitter>
+                    <!-- Estimates for single DSP modes -->
+                    <mult-add-qor mode-name="18x18i,18x18s2,18x18d2,s19x18i,s19x18s2,s19x18d2" fmax="350" />
+                    <mult-add-qor mode-name="27x27i" fmax="350" />
+                    <!-- Estimate for multiblock modes -->
+                    <mult-add-qor mode-name="27x27s2_fmbc,27x27d2_fmbc,18x18s4_fmbc,s19x18s4_fmbc" fmax="240" />
+                    <mult-add-qor mode-name="27x27s2_cocir,27x27d2_cocir,18x18s4_cocir,s19x18s4_cocir" fmax="350" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="490" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="530" true-dual-port-fmax="530" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+        <!-- Arria 10 Memories -->
+        <memories>
+            <memory name="MLAB" size="640"  threshold-group="small" lut4-cost="20" minimum-fill="30"
+                    true-dual-port-support="none" single-port-rw-support="emulated">
+                <dimensions width="20" depth="32"/>
+            </memory>
+            <memory name="M20K" size="20K" threshold-group="medium" minimum-fill="1280"
+                    supports-read-enable="true"
+                    true-dual-port-support="native" single-port-rw-support="emulated">
+                <mixable>
+                    <dimensions width="1" depth="16K"/>
+                    <dimensions width="2" depth="8K"/>
+                    <dimensions width="4" depth="4K"/>
+                    <dimensions width="8" depth="2K"/>
+                    <dimensions width="16" depth="1K"/>
+                    <dimensions width="32" depth="512"/>
+                </mixable>
+                <mixable>
+                    <dimensions width="5" depth="4K"/>
+                    <dimensions width="10" depth="2K"/>
+                    <dimensions width="20" depth="1K"/>
+                    <dimensions width="40" depth="512"/>
+                </mixable>
+            </memory>
+        </memories>
+        <logic include="alm-28nm" />
+        <dsp-block include="vp3">
+            <max-dsp-block-chain-length>27</max-dsp-block-chain-length>
+        </dsp-block>
+        <sandwich-fifo />
+    </family>
+
+    <!--
+       The suffix after the speed grade in the part number denotes the power options offered in Intel Stratix 10 devices.
+          V-SmartVID with standard static power (vid)
+          0.85 V for all else
+    -->
+    <family name="Stratix 10">
+        <speed-grade name="-1">
+            <alternative-name>1</alternative-name>
+            <alternative-name>fast</alternative-name>
+            <timing-model name="default">
+                <alternative-name>vid</alternative-name>
+                <core-voltage>vid</core-voltage>
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.5775</routing-delay>
+                <chain-start-delay>0.24</chain-start-delay>
+                <chain-end-delay>0.19</chain-end-delay>
+                <per-cell-delay>0.009</per-cell-delay>
+                <inter-lab-delay>0.044</inter-lab-delay>
+                <mid-lab-delay>0.039</mid-lab-delay>
+                <!-- obsolete <dsp-multiblock-fmax>350</dsp-multiblock-fmax> -->
+                <default-device>1SG280LN3F43E1VG</default-device>
+                <LUT-delay>0.11</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.040</ripple-gradient>
+                <ripple-offset>0.20</ripple-offset>
+                <carrychain-gradient>0.015</carrychain-gradient>
+                <ripple-carrychain-boundary>10</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.027" />
+                </routing-coefficient>
+                <output-register-threshold>300</output-register-threshold>
+                <high-speed-adder-threshold>500</high-speed-adder-threshold>
+                <mult-splitter>
+                    <mult-add-qor mode-name="18x18i,18x18s2,s19xs18i,s19xs18s2,s19xs18d2" fmax="1000" />
+                    <mult-add-qor mode-name="27x27i" fmax="800" />
+                    <mult-add-qor mode-name="27x27s2_fmbc,s27xs27d2_fmbc,18x18s4_fmbc,s19xs18s4_fmbc" fmax="480" />
+                    <mult-add-qor mode-name="27x27s2_cocir,s27xs27d2_cocir" fmax="680" />
+                    <mult-add-qor mode-name="18x18s4_cocir,s19xs18s4_cocir" fmax="790" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="1000" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="1000" true-dual-port-fmax="600" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+
+        <speed-grade name="-2">
+            <alternative-name>2</alternative-name>
+            <alternative-name>medium</alternative-name>
+            <timing-model name="default">
+                <alternative-name>vid</alternative-name>
+                <core-voltage>vid</core-voltage>
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.735</routing-delay>
+                <chain-start-delay>0.24</chain-start-delay>
+                <chain-end-delay>0.19</chain-end-delay>
+                <per-cell-delay>0.009</per-cell-delay>
+                <inter-lab-delay>0.044</inter-lab-delay>
+                <mid-lab-delay>0.039</mid-lab-delay>
+                <!-- obsolete <dsp-multiblock-fmax>280</dsp-multiblock-fmax> -->
+                <default-device>1SG280LN3F43E2VG</default-device>
+                <LUT-delay>0.14</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.050</ripple-gradient>
+                <ripple-offset>0.25</ripple-offset>
+                <carrychain-gradient>0.020</carrychain-gradient>
+                <ripple-carrychain-boundary>10</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.027" />
+                </routing-coefficient>
+                <output-register-threshold>240</output-register-threshold>
+                <high-speed-adder-threshold>400</high-speed-adder-threshold>
+                <mult-splitter>
+                    <mult-add-qor mode-name="18x18i,18x18s2,s19xs18i,s19xs18s2,s19xs18d2" fmax="770" />
+                    <mult-add-qor mode-name="27x27i" fmax="615" />
+                    <mult-add-qor mode-name="27x27s2_fmbc,s27xs27d2_fmbc,18x18s4_fmbc,s19xs18s4_fmbc" fmax="410" />
+                    <mult-add-qor mode-name="27x27s2_cocir,s27xs27d2_cocir" fmax="580" />
+                    <mult-add-qor mode-name="18x18s4_cocir,s19xs18s4_cocir" fmax="800" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="780" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="780" true-dual-port-fmax="500" />
+                </memory-speeds>
+            </timing-model>
+            <timing-model name="0.85V">
+                <core-voltage>0.85V</core-voltage>
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.735</routing-delay>
+                <chain-start-delay>0.24</chain-start-delay>
+                <chain-end-delay>0.19</chain-end-delay>
+                <per-cell-delay>0.009</per-cell-delay>
+                <inter-lab-delay>0.044</inter-lab-delay>
+                <mid-lab-delay>0.039</mid-lab-delay>
+                <!-- obsolete <dsp-multiblock-fmax>280</dsp-multiblock-fmax> -->
+                <default-device>1SG280LN3F43E2LG</default-device>
+                <LUT-delay>0.14</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.050</ripple-gradient>
+                <ripple-offset>0.25</ripple-offset>
+                <carrychain-gradient>0.020</carrychain-gradient>
+                <ripple-carrychain-boundary>10</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.027" />
+                </routing-coefficient>
+                <output-register-threshold>240</output-register-threshold>
+                <high-speed-adder-threshold>400</high-speed-adder-threshold>
+                <mult-splitter>
+                    <mult-add-qor mode-name="18x18i,18x18s2,s19xs18i,s19xs18s2,s19xs18d2" fmax="770" />
+                    <mult-add-qor mode-name="27x27i" fmax="615" />
+                    <mult-add-qor mode-name="27x27s2_fmbc,s27xs27d2_fmbc,18x18s4_fmbc,s19xs18s4_fmbc" fmax="410" />
+                    <mult-add-qor mode-name="27x27s2_cocir,s27xs27d2_cocir" fmax="580" />
+                    <mult-add-qor mode-name="18x18s4_cocir,s19xs18s4_cocir" fmax="730" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="780" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="780" true-dual-port-fmax="500" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+
+        <speed-grade name="-3">
+            <alternative-name>3</alternative-name>
+            <alternative-name>slow</alternative-name>
+            <timing-model name="default">
+                <alternative-name>vid</alternative-name>
+                <core-voltage>vid</core-voltage>
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.84</routing-delay>
+                <chain-start-delay>0.24</chain-start-delay>
+                <chain-end-delay>0.19</chain-end-delay>
+                <per-cell-delay>0.009</per-cell-delay>
+                <inter-lab-delay>0.044</inter-lab-delay>
+                <mid-lab-delay>0.039</mid-lab-delay>
+                <!-- obsolete <dsp-multiblock-fmax>250</dsp-multiblock-fmax> -->
+                <default-device>1SG280LN3F43E3VG</default-device>
+                <LUT-delay>0.16</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.060</ripple-gradient>
+                <ripple-offset>0.30</ripple-offset>
+                <carrychain-gradient>0.026</carrychain-gradient>
+                <ripple-carrychain-boundary>10</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.027" />
+                </routing-coefficient>
+                <output-register-threshold>200</output-register-threshold>
+                <high-speed-adder-threshold>330</high-speed-adder-threshold>
+                <mult-splitter>
+                    <mult-add-qor mode-name="18x18i,18x18s2,s19xs18i,s19xs18s2,s19xs18d2" fmax="660" />
+                    <mult-add-qor mode-name="27x27i" fmax="530" />
+                    <mult-add-qor mode-name="27x27s2_fmbc,s27xs27d2_fmbc,18x18s4_fmbc,s19xs18s4_fmbc" fmax="370" />
+                    <mult-add-qor mode-name="27x27s2_cocir,s27xs27d2_cocir" fmax="530" />
+                    <mult-add-qor mode-name="18x18s4_cocir,s19xs18s4_cocir" fmax="690" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="660" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="660" true-dual-port-fmax="420" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+        <!-- Stratix 10 Memories -->
+        <memories>
+            <memory name="MLAB" size="640" threshold-group="small" lut4-cost="20" minimum-fill="40"
+                    can-sync-clear="true"
+                    true-dual-port-support="none" single-port-rw-support="none">
+                <dimensions width="20" depth="32"/>
+            </memory>
+            <memory name="M20K" size="20K" threshold-group="medium" minimum-fill="1280" can-sync-clear="true"
+                    supports-read-enable="true" supports-force-to-zero="true"
+                    true-dual-port-support="emulated" single-port-rw-support="none"
+                    width-stitch-fanout-threshold="5">
+                <mixable>
+                    <dimensions width="10" depth="2K"/>
+                    <dimensions width="20" depth="1K"/>
+                    <dimensions width="40" depth="512"/>
+                </mixable>
+            </memory>
+        </memories>
+        <logic include="alm-14nm" />
+        <dsp-block include="vp4">
+            <max-dsp-block-chain-length>36</max-dsp-block-chain-length>
+        </dsp-block>
+        <sandwich-fifo>
+            <through-regs>3</through-regs>
+            <break-threshold>1.5,0.9</break-threshold>
+            <sparsity-ram>8</sparsity-ram>
+            <sparsity-dsp>8</sparsity-dsp>
+            <break-aggressive>1,100</break-aggressive>
+        </sandwich-fifo>
+    </family>
+    
+    <!-- "Advanced" (i.e. very early, uncalibrated) timing model -->
+    <family name="Agilex">
+        <speed-grade name="-1">
+            <alternative-name>1</alternative-name>
+            <alternative-name>fast</alternative-name>
+            <timing-model name="default">
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.42</routing-delay>
+                <chain-start-delay>0.24</chain-start-delay>
+                <chain-end-delay>0.19</chain-end-delay>
+                <per-cell-delay>0.009</per-cell-delay>
+                <inter-lab-delay>0.044</inter-lab-delay>
+                <mid-lab-delay>0.039</mid-lab-delay>
+                <default-device>AGFB014R24A1E1V</default-device>
+                <LUT-delay>0.11</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.040</ripple-gradient>
+                <ripple-offset>0.20</ripple-offset>
+                <carrychain-gradient>0.015</carrychain-gradient>
+                <ripple-carrychain-boundary>10</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.027" />
+                </routing-coefficient>
+                <output-register-threshold>300</output-register-threshold>
+                <high-speed-adder-threshold>500</high-speed-adder-threshold>
+                <mult-splitter>
+                    <mult-add-qor mode-name="s9xs9s4" fmax="900" />
+                    <mult-add-qor mode-name="18x18i,18x18s2,s19xs18i,s19xs18s2,s19xs18d2" fmax="900" />
+                    <mult-add-qor mode-name="27x27i" fmax="900" />
+                    <mult-add-qor mode-name="27x27s2_cocir,s27xs27d2_cocir" fmax="720" />
+                    <mult-add-qor mode-name="18x18s4_cocir,s19xs18s4_cocir" fmax="810" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="1000" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="1000" true-dual-port-fmax="600" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+
+        <speed-grade name="-2">
+            <alternative-name>2</alternative-name>
+            <alternative-name>medium</alternative-name>
+            <timing-model name="default">
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.53</routing-delay>
+                <chain-start-delay>0.24</chain-start-delay>
+                <chain-end-delay>0.19</chain-end-delay>
+                <per-cell-delay>0.009</per-cell-delay>
+                <inter-lab-delay>0.044</inter-lab-delay>
+                <mid-lab-delay>0.039</mid-lab-delay>
+                <default-device>AGFB014R24A2E2V</default-device>
+                <LUT-delay>0.14</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.050</ripple-gradient>
+                <ripple-offset>0.25</ripple-offset>
+                <carrychain-gradient>0.020</carrychain-gradient>
+                <ripple-carrychain-boundary>10</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.027" />
+                </routing-coefficient>
+                <output-register-threshold>240</output-register-threshold>
+                <high-speed-adder-threshold>400</high-speed-adder-threshold>
+                <mult-splitter>
+                    <mult-add-qor mode-name="s9xs9s4" fmax="770" />
+                    <mult-add-qor mode-name="18x18i,18x18s2,s19xs18i,s19xs18s2,s19xs18d2" fmax="770" />
+                    <mult-add-qor mode-name="27x27i" fmax="770" />
+                    <mult-add-qor mode-name="27x27s2_cocir,s27xs27d2_cocir" fmax="620" />
+                    <mult-add-qor mode-name="18x18s4_cocir,s19xs18s4_cocir" fmax="810" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="780" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="780" true-dual-port-fmax="500" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+
+        <speed-grade name="-3">
+            <alternative-name>3</alternative-name>
+            <timing-model name="default">
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.61</routing-delay>
+                <chain-start-delay>0.24</chain-start-delay>
+                <chain-end-delay>0.19</chain-end-delay>
+                <per-cell-delay>0.009</per-cell-delay>
+                <inter-lab-delay>0.044</inter-lab-delay>
+                <mid-lab-delay>0.039</mid-lab-delay>
+                <default-device>AGFB014R24A3E3V</default-device>
+                <LUT-delay>0.16</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.056</ripple-gradient>
+                <ripple-offset>0.30</ripple-offset>
+                <carrychain-gradient>0.023</carrychain-gradient>
+                <ripple-carrychain-boundary>10</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.027" />
+                </routing-coefficient>
+                <output-register-threshold>200</output-register-threshold>
+                <high-speed-adder-threshold>330</high-speed-adder-threshold>
+                <mult-splitter>
+                    <mult-add-qor mode-name="s9xs9s4" fmax="675" />
+                    <mult-add-qor mode-name="18x18i,18x18s2,s19xs18i,s19xs18s2,s19xs18d2" fmax="675" />
+                    <mult-add-qor mode-name="27x27i" fmax="675" />
+                    <mult-add-qor mode-name="27x27s2_cocir,s27xs27d2_cocir" fmax="520" />
+                    <mult-add-qor mode-name="18x18s4_cocir,s19xs18s4_cocir" fmax="700" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="660" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="660" true-dual-port-fmax="420" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+
+        <speed-grade name="-4">
+            <alternative-name>4</alternative-name>
+            <alternative-name>slow</alternative-name>
+            <timing-model name="default">
+                <quartus-requires-voltage-setting>false</quartus-requires-voltage-setting>
+                <source-cell-out-delay>0</source-cell-out-delay>
+                <routing-delay>0.68</routing-delay>
+                <chain-start-delay>0.24</chain-start-delay>
+                <chain-end-delay>0.19</chain-end-delay>
+                <per-cell-delay>0.009</per-cell-delay>
+                <inter-lab-delay>0.044</inter-lab-delay>
+                <mid-lab-delay>0.039</mid-lab-delay>
+                <default-device>AGFB014R24A3E4FR0</default-device>
+                <LUT-delay>0.18</LUT-delay>
+                <DSP-in-delay>4</DSP-in-delay>
+                <DSP-out-delay>2</DSP-out-delay>
+                <mem-in-delay>4</mem-in-delay>
+                <mem-out-delay>2</mem-out-delay>
+                <mlab-delay>4</mlab-delay>
+                <ripple-gradient>0.063</ripple-gradient>
+                <ripple-offset>0.34</ripple-offset>
+                <carrychain-gradient>0.025</carrychain-gradient>
+                <ripple-carrychain-boundary>10</ripple-carrychain-boundary>
+                <routing-coefficient>
+                  <routing-precision width="36" coefficient="1.0" extended-gradient="0.027" />
+                </routing-coefficient>
+                <output-register-threshold>200</output-register-threshold>
+                <high-speed-adder-threshold>330</high-speed-adder-threshold>
+                <mult-splitter>
+                    <mult-add-qor mode-name="s9xs9s4" fmax="600" />
+                    <mult-add-qor mode-name="18x18i,18x18s2,s19xs18i,s19xs18s2,s19xs18d2" fmax="600" />
+                    <mult-add-qor mode-name="27x27i" fmax="600" />
+                    <mult-add-qor mode-name="27x27s2_cocir,s27xs27d2_cocir" fmax="400" />
+                    <mult-add-qor mode-name="18x18s4_cocir,s19xs18s4_cocir" fmax="730" />
+                </mult-splitter>
+                <memory-speeds>
+                    <memory-speed name="MLAB" simple-dual-port-fmax="600" true-dual-port-fmax="0" />
+                    <memory-speed name="M20K" simple-dual-port-fmax="600" true-dual-port-fmax="340" />
+                </memory-speeds>
+            </timing-model>
+        </speed-grade>
+        <!-- Agilex 10 Memories -->
+        <memories>
+            <memory name="MLAB" size="640" threshold-group="small" lut4-cost="20" minimum-fill="40"
+                    can-sync-clear="true"
+                    true-dual-port-support="none" single-port-rw-support="none">
+                <dimensions width="20" depth="32"/>
+            </memory>
+            <memory name="M20K" size="20K" threshold-group="medium" minimum-fill="1280" can-sync-clear="true"
+                    supports-read-enable="true" supports-force-to-zero="true"
+                    true-dual-port-support="emulated" single-port-rw-support="none"
+                    width-stitch-fanout-threshold="5">
+                <mixable>
+                    <dimensions width="10" depth="2K"/>
+                    <dimensions width="20" depth="1K"/>
+                    <dimensions width="40" depth="512"/>
+                </mixable>
+            </memory>
+        </memories>
+
+        <logic include="alm-14nm" /> <!-- Agilex is 10nm but ALM definition is as S10 -->
+
+        <dsp-block include="vp5">
+            <max-dsp-block-chain-length>41</max-dsp-block-chain-length>
+        </dsp-block>
+
+        <sandwich-fifo>
+            <through-regs>3</through-regs>
+            <break-threshold>1.5,0.9</break-threshold>
+            <sparsity-ram>8</sparsity-ram>
+            <sparsity-dsp>8</sparsity-dsp>
+            <break-aggressive>1,100</break-aggressive>
+        </sandwich-fifo>
+    </family>
+    
+
+</devices>
+
+

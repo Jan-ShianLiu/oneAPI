@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="parameters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="design"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="design">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="designChoice" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="defaults" type="xs:boolean" default="false" />
+		</xs:complexType>
+		<xs:unique name="uniqueavalonslaveid">
+			<xs:selector xpath="avalonmmslave" />
+			<xs:field xpath="@id" />
+		</xs:unique>
+		<xs:unique name="uniqueavalonstid">
+			<xs:selector xpath="avalonst" />
+			<xs:field xpath="@id" />
+		</xs:unique>
+		<xs:unique name="uniqueavalonsinkid">
+			<xs:selector xpath="avalonstsink" />
+			<xs:field xpath="@id" />
+		</xs:unique>
+		<xs:unique name="uniqueavalonsinkstimulusid">
+			<xs:selector xpath="avalonstsinkstimulus" />
+			<xs:field xpath="@id" />
+		</xs:unique>
+		<xs:unique name="uniqueavalonsourceid">
+			<xs:selector xpath="avalonstsource" />
+			<xs:field xpath="@id" />
+		</xs:unique>
+		<xs:unique name="uniqueavalonsourcestimulusid">
+			<xs:selector xpath="avalonstsourcestimulus" />
+			<xs:field xpath="@id" />
+		</xs:unique>
+		<xs:unique name="uniquedeviceid">
+			<xs:selector xpath="device" />
+			<xs:field xpath="@id" />
+		</xs:unique>
+	</xs:element>
+
+	<xs:group name="designChoice">
+		<xs:choice>
+			<xs:element ref="avalonmmslave"/>
+			<xs:element ref="avalonst"/>
+			<xs:element ref="avalonstsink"/>
+			<xs:element ref="avalonstsource"/>
+			<xs:element ref="avalonstsinkstimulus"/>
+			<xs:element ref="avalonstsourcestimulus"/>
+			<xs:element ref="device"/>
+			<xs:group ref="paramChoice" />
+		</xs:choice>
+	</xs:group>
+
+	<xs:element name="avalonmmslave">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="paramChoice" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="avalonst">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="paramChoice" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="avalonstsink">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="paramChoice" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="avalonstsource">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="paramChoice" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="avalonstsinkstimulus">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="paramChoice" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="avalonstsourcestimulus">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="paramChoice" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="device">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="paramChoice" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:group name="paramChoice">
+		<xs:choice>
+			<xs:element ref="defaultParam" maxOccurs="unbounded" />
+			<xs:element ref="param" maxOccurs="unbounded" />
+		</xs:choice>
+	</xs:group>
+
+	<xs:element name="defaultParam">
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="default" type="xs:string" use="required"/>
+			<xs:attribute name="type" type="paramType" use="required"/>
+			<xs:attribute name="evaluable" type="xs:boolean" default="false"/>
+			<xs:attribute name="internalName" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="param">
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string"/>
+			<xs:attribute name="value" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>	
+
+	<xs:simpleType name="paramType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="string" />
+			<xs:enumeration value="integer" />
+			<xs:enumeration value="double" />
+			<xs:enumeration value="boolean" />
+		</xs:restriction>
+	</xs:simpleType>
+		
+</xs:schema>

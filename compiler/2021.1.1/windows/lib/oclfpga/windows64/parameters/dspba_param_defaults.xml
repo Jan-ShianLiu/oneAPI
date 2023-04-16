@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<parameters xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<design defaults="true">
+	<!-- Avalon interfaces -->
+		<avalonmmslave id="default">
+			<defaultParam name="addressWidth" default="10" type="integer" internalName="AMM_ADDR_WIDTH"/>
+			<defaultParam name="dataWidth" default="16" type="integer" internalName="AMM_DATA_WIDTH"/>
+			<defaultParam name="busEndian" default="big" type="string" internalName="AMM_BUS_ENDIAN"/>
+			<defaultParam name="interfaceName" default="bus" type="string" internalName="AMM_IFACE_NAME"/>
+			<defaultParam name="separateBusClock" default="false" type="boolean" internalName="AMM_SEPARATE_BUS_CLK"/>
+			<defaultParam name="busClockFreq" default="240" type="double" evaluable="true" internalName="AMM_BUS_CLK_FREQ"/>
+			<defaultParam name="busClockSynchronous" default="true" type="boolean" internalName="AMM_BUS_IS_SYNCHRONOUS"/>
+		</avalonmmslave>
+
+		<avalonst id="default">
+			<defaultParam name="interfaceName" default="astsink" type="string" internalName="AST_IFACE_NAME"/> 
+			<!--!type is sink or source -->
+			<defaultParam name="interfaceType" default="sink" type="string" internalName="AST_IFACE_TYPE"/> 
+			<defaultParam name="readyLatency" default="0" type="integer" internalName="AST_READY_LATENCY"/>
+			<defaultParam name="useEOP" default="true" type="boolean" internalName="AST_USE_EOP"/>
+			<defaultParam name="useSOP" default="true" type="boolean" internalName="AST_USE_SOP"/>
+		</avalonst>
+
+		<avalonstsink id="default">
+			<defaultParam name="associatedInterfaceID" default="sink" type="string" internalName="ASTSINK_ASSOC_IFACE"/>
+			<defaultParam name="stimulusMethod" default="None" type="string" internalName="ASTSINK_STIM_METHOD"/>
+			<defaultParam name="pairedBlock" default="" type="string" internalName="ASTSINK_STIM_PAIRED_BLOCK"/>
+			<defaultParam name="pairedStimulus" default="" type="string" internalName="ASTSINK_STIM_PAIRED_STIMULUS"/>
+		</avalonstsink>
+
+		<avalonstsinkstimulus id="default">
+			<defaultParam name="associatedInterfaceID" default="sink" type="string" internalName="ASTSINKSTIM_ASSOC_IFACE"/>
+		</avalonstsinkstimulus>
+
+		<avalonstsource id="default">
+			<defaultParam name="associatedInterfaceID" default="source" type="string" internalName="ASTSRC_ASSOC_IFACE"/>
+			<defaultParam name="stimulusMethod" default="None" type="string" internalName="ASTSRC_STIM_METHOD"/>
+			<defaultParam name="pairedBlock" default="" type="string" internalName="ASTSRC_STIM_PAIRED_BLOCK"/>
+			<defaultParam name="pairedStimulus" default="" type="string" internalName="ASTSRC_STIM_PAIRED_STIMULUS"/>
+		</avalonstsource>
+
+		<avalonstsourcestimulus id="default">
+			<defaultParam name="associatedInterfaceID" default="source" type="string" internalName="ASTSRCSTIM_ASSOC_IFACE"/>
+		</avalonstsourcestimulus>
+
+	<!-- From Device block -->
+		<device id="default">
+			<defaultParam name="family" default="Arria 10" type="string" internalName="DEVICE_FAMILY"/>
+			<defaultParam name="deviceMember" default="" type="string" internalName="DEVICE_MEMBER"/>
+			<defaultParam name="speedGrade" default="1" type="string" internalName="DEVICE_SPEED_GRADE"/>
+			<defaultParam name="part" default="AUTO" type="string" internalName="DEVICE_PART"/>
+			<defaultParam name="max10NoMemInit" default="false" type="boolean" internalName="DEVICE_MAX_10_NO_MEM_INIT"/>
+		</device>
+
+	<!-- From Control block -->
+		<defaultParam name="generateHardware" default="true" type="boolean" internalName="GENERATE_HARDWARE"/>
+		<defaultParam name="hardwareDescriptionLanguage" default="VHDL" type="string" internalName="HDL_LANGUAGE"/>
+		<defaultParam name="hardwareDestinationDirectory" default="../rtl" type="string" evaluable="true" internalName="HW_DEST_DIR"/>
+		<defaultParam name="useSeparateQuartusDirectory" default="false" type="boolean" internalName="USE_SEPARATE_QUARTUS_DIR"/>
+		<defaultParam name="quartusWorkDirectory" default="../rtl" type="string" evaluable="true" internalName="QUARTUS_WORK_DIR"/>
+		<defaultParam name="generateSingleConduitInterface" default="true" type="boolean" internalName="GENERATE_SINGLE_CONDUIT_INTERFACE"/>
+		<defaultParam name="createATBs" default="true" type="boolean" internalName="CREATE_ATBS"/>
+		<defaultParam name="createTrace" default="false" type="boolean" internalName="CREATE_TRACE"/> 
+		<defaultParam name="registerRAMBlockThreshold" default="-1" type="integer" internalName="REGISTER_RAM_THRESHOLD"/>
+		<defaultParam name="dualMemSmallMediumThreshold" default="-1" type="integer" internalName="DUALMEM_SMALL_MEDIUM_THRESHOLD"/>
+		<defaultParam name="dualMemMediumLargeThreshold" default="-1" type="integer" internalName="DUALMEM_MEDIUM_LARGE_THRESHOLD"/>
+		<defaultParam name="multiplierLogicDSPThreshold" default="-1" type="integer" internalName="MULTIPLIER_LOGIC_DSP_THRESHOLD"/>
+		<defaultParam name="errorOnChanMismatch" default="true" type="boolean" internalName="ERROR_ON_CHAN_MISMATCH"/>
+		<defaultParam name="errorOnGPIOMismatch" default="false" type="boolean" internalName="ERROR_ON_GPIO_MISMATCH"/>
+		<defaultParam name="importModelSimResults" default="false" type="boolean" internalName="IMPORT_MODELSIM_RESULTS"/>
+		<defaultParam name="deviceOutputVariable" default="" type="string" internalName="DEVICE_OUTPUT_VARIABLE"/>
+		<defaultParam name="validMapVariable" default="" type="string" internalName="VALID_MAP_VARIABLE"/>
+		<defaultParam name="verificationFunction" default="" type="string" internalName="VERIFICATION_FUNCTION"/>
+		<defaultParam name="floatMismatchTolerance" default="-1" type="double" internalName="FLOAT_MISMATCH_TOLERANCE"/>
+		<defaultParam name="floatMismatchZeroTolerance" default="-1" type="double" internalName="FLOAT_MISMATCH_ZERO_TOLERANCE"/>
+		<defaultParam name="inputDuringReset" default="0" type="string" internalName="INPUT_DURING_RESET"/>
+		<defaultParam name="cycleAccurate" default="false" type="boolean" internalName="CYCLE_ACCURATE"/>
+		<defaultParam name="reinterpretCastMult" default="false" type="boolean" internalName="REINTERPRET_CAST_MULT"/>
+		<defaultParam name="resetMinimizationGlobalEnable" default="Auto" type="string" internalName="RESET_MINIMIZATION_GLOBAL_ENABLE"/>
+		<defaultParam name="resetMinimizeFloatSubmodels" default="Auto" type="string" internalName="RESET_MINIMIZE_FLOAT_SUBMODELS"/>
+		<defaultParam name="memUninitContent" default="0" type="string" internalName="MEM_UNINIT_CONTENT"/>
+		<defaultParam name="reportFIFOFillLevel" default="false" type="boolean" internalName="REPORT_FIFO_FILL_LEVEL"/>
+
+	<!-- From Control block software model tab -->
+		<defaultParam name="softwareModelGenerationEnabled" default="false" type="boolean" internalName="SOFTWARE_MODEL_GENERATION_ENABLED"/>
+		<defaultParam name="softwareModelLanguage" default="cpp03" type="string" internalName="SOFTWARE_MODEL_LANGUAGE"/>
+		<defaultParam name="softwareModelGenerateCMakeScript" default="true" type="boolean" internalName="SOFTWARE_MODEL_CPP_GENERATE_CMAKE_SCRIPT"/>
+		<defaultParam name="libraryWrapperGenerationEnabled" default="false" type="boolean" internalName="LIB_WRAPPER_GENERATION_ENABLED"/>
+		<defaultParam name="libraryWrapperIsVariableLatency" default="false" type="boolean" internalName="LIB_WRAPPER_IS_VARIABLE_LATENCY"/>
+		<defaultParam name="libraryWrapperPackValidInData" default="false" type="boolean" internalName="LIB_WRAPPER_PACK_VALID_IN_DATA"/>
+		<defaultParam name="libraryWrapperDefaultInstanceCount" default="1" type="integer" internalName="LIB_WRAPPER_DEFAULT_INSTANCE_COUNT"/>
+		<defaultParam name="libraryWrapperType" default="Stateful" type="string" internalName="LIB_WRAPPER_TYPE"/>
+		<defaultParam name="libraryWrapperTarget" default="OCL" type="string" internalName="LIB_WRAPPER_TARGET"/>
+        <defaultParam name="libraryWrapperFunctionName" default="" type="string" internalName="LIB_WRAPPER_FUNCTION_NAME"/>
+       
+	<!-- From Signals block -->
+		<defaultParam name="clock" default="clk" type="string" internalName="CLOCK_NAME"/>
+		<defaultParam name="clockFrequency" default="240" type="double" evaluable="true" internalName="CLOCK_FREQUENCY"/>
+		<defaultParam name="clockMargin" default="0" type="double" evaluable="true" internalName="CLOCK_MARGIN"/>
+		<defaultParam name="reset" default="areset" type="string" internalName="RESET_NAME"/>
+		<defaultParam name="resetActive" default="High" type="string" internalName="RESET_ACTIVE"/>
+		<defaultParam name="minResetPulseWidth" default="" type="string" evaluable="true" internalName="MIN_RESET_PULSE_WIDTH"/>
+	</design>
+</parameters>

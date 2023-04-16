@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<board version="0.9" name="a5_hls_dummy">
+  <device device_model="5agxfb3h4f35c5_dm.xml">
+    <used_resources>
+      <alms num="0"/>
+      <ffs  num="0"/>
+      <dsps num="0"/>
+      <rams num="0"/>
+    </used_resources>
+  </device>
+  <global_mem max_bandwidth="0"> 
+     <interface name="acl_iface" port="kernel_mem0" type="slave" width="256" maxburst="16" latency="240" address="0x00000000" size="0x40000000"/>
+  </global_mem>
+  <host>
+     <kernel_config start="0x00000000" size="0x0100000"/>
+  </host>
+  <interfaces>
+     <kernel_clk_reset clk="acl_iface.kernel_clk" clk2x="acl_iface.kernel_clk2x" reset="acl_iface.kernel_reset"/>
+  </interfaces>
+</board>

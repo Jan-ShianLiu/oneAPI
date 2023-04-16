@@ -1,0 +1,4126 @@
+<?xml version="1.0"?>
+
+<!-- (c) 1992-2020 Intel Corporation.                             -->
+<!-- Intel, the Intel logo, Intel, MegaCore, NIOS II, Quartus and TalkBack words     -->
+<!-- and logos are trademarks of Intel Corporation or its subsidiaries in the U.S.   -->
+<!-- and/or other countries. Other marks and brands may be claimed as the property   -->
+<!-- of others. See Trademarks on intel.com for full list of Intel trademarks or     -->
+<!-- the Trademarks & Brands Names Database (if Intel) or See www.Intel.com/legal (if Altera)  -->
+<!-- Your use of Intel Corporation's design tools, logic functions and other         -->
+<!-- software and tools, and its AMPP partner logic functions, and any output        -->
+<!-- files any of the foregoing (including device programming or simulation          -->
+<!-- files), and any associated documentation or information are expressly subject   -->
+<!-- to the terms and conditions of the Altera Program License Subscription          -->
+<!-- Agreement, Intel MegaCore Function License Agreement, or other applicable       -->
+<!-- license agreement, including, without limitation, that your use is for the      -->
+<!-- sole purpose of programming logic devices manufactured by Intel and sold by     -->
+<!-- Intel or its authorized distributors.  Please refer to the applicable           -->
+<!-- agreement for further details.                                                  -->
+
+
+<!-- 
+  Cyclone V Target Style Model (TSM)
+-->
+
+<styles version="0.7">
+  <!--
+    INSTRUCTIONS
+  -->
+
+  <!-- trivial instructions (wires)-->
+  <group inst="sext zext addrspacecast bitcast ptrtoint inttoptr trunc insertelement extractelement shufflevector insertvalue extractvalue">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+      <style name="registered">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs model="postfix" formula="width"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- most of the times these are wires, unless the shift amount is unknown -->
+  <group inst="shl lshr ashr">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les model="postfix" formula="width1 sig_width0 * 1024 /"/>
+        <area-ffs value="0"/>
+      </style>
+      <style name="registered">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les model="postfix" formula="width1 sig_width0 * 1024 /"/>
+        <area-ffs model="postfix" formula="width"/>
+      </style>
+    </type>
+  </group>
+
+  <group inst="and or xor">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les model="postfix" formula="sig_width0 width1 min 4 /"/>
+        <area-ffs value="0"/>
+      </style>
+      <style name="registered">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les model="postfix" formula="sig_width0 width1 min 4 /"/>
+        <area-ffs model="postfix" formula="width"/>
+      </style>
+    </type>
+  </group>
+
+  <group inst="select icmp getelementptr add sub">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les model="postfix" formula="sig_width0 width1 min 2 /"/>
+        <area-ffs value="0"/>
+      </style>
+      <style name="registered">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les model="postfix" formula="sig_width0 width1 min 2 /"/>
+        <area-ffs model="postfix" formula="width"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- fpga_int_add/sub -->
+  <group intrinsic="llvm.fpga.int.add llvm.fpga.int.sub">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les model="postfix" formula="sig_width0 width1 min 2 /"/>
+        <area-ffs value="0"/>
+      </style>
+      <style name="registered">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les model="postfix" formula="sig_width0 width1 min 2 /"/>
+        <area-ffs model="postfix" formula="width"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- fpga_int_mul -->
+  <group intrinsic="llvm.fpga.int.mul">
+    <type base="any">
+      <style name="default">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+        <area-les value="0" />
+        <area-ffs model="postfix" formula="widthres" />
+        <area-dsps model="postfix" formula="sig_width0 26 + 27 / sig_width1 26 + 27 / * sig_width0 35 + 36 / sig_width1 17 + 18 / * min sig_width0 17 + 18 / sig_width1 35 + 36 / * min pop0 pop1 min 60 + 64 / *" />
+      </style>
+    </type>
+  </group>
+
+  <!-- mul -->
+  <group inst="mul">
+    <type base="int">
+      <style name="default">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+        <area-les value="0" />
+        <area-ffs model="postfix" formula="widthres" />
+        <area-dsps model="postfix" formula="sig_width0 26 + 27 / sig_width1 26 + 27 / * sig_width0 35 + 36 / sig_width1 17 + 18 / * min sig_width0 17 + 18 / sig_width1 35 + 36 / * min pop0 pop1 min 60 + 64 / *" />
+      </style>
+    </type>
+  </group>
+
+  <!-- udiv -->
+  <group inst="udiv">
+    <type base="int">
+      <style name="default">
+        <max-latency value="32"/>
+        <min-capacity value="1"/>
+        <area-les value="217"/>
+        <area-ffs value="503"/>
+        <area-rams value="5"/>
+        <area-dsps value="5"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- sdiv -->
+  <group inst="sdiv">
+    <type base="int">
+      <style name="default">
+        <max-latency value="32"/>
+        <min-capacity value="1"/>
+        <area-les value="890"/>
+        <area-ffs value="1545"/>
+        <area-rams value="15"/>
+        <area-dsps value="4"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- urem/srem -->
+  <group inst="urem srem">
+    <type base="int">
+      <style name="default">
+        <max-latency value="32"/>
+        <min-capacity value="1"/>
+        <area-les value="1294"/>
+        <area-ffs value="2016"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- fadd/fsub -->
+  <group inst="fadd fsub">
+    <!-- type: half -->
+    <type base="half">
+      <!-- low-latency, low-capacity -->
+      <style name="ll-lc" default="">
+        <max-latency value="4"/><!-- ?? -->
+        <min-capacity value="1"/><!-- ?? -->
+        <area-les value="210"/><!-- ?? -->
+        <area-ffs value="211"/><!-- ?? -->
+      </style>
+      <!-- low-latency, high-capacity -->
+      <style name="ll-hc">
+        <max-latency value="4"/><!-- ?? -->
+        <min-capacity value="4"/><!-- ?? -->
+        <area-les value="217"/><!-- ?? -->
+        <area-ffs value="214"/><!-- ?? -->
+      </style>
+      <!-- high-latency, low-capacity -->
+      <style name="hl-lc">
+        <max-latency value="6"/><!-- ?? -->
+        <min-capacity value="1"/><!-- ?? -->
+        <area-les value="223"/><!-- ?? -->
+        <area-ffs value="244"/><!-- ?? -->
+      </style>
+      <!-- high-latency, high-capacity -->
+      <style name="hl-hc">
+        <max-latency value="6"/><!-- ?? -->
+        <min-capacity value="6"/><!-- ?? -->
+        <area-les value="223"/><!-- ?? -->
+        <area-ffs value="244"/><!-- ?? -->
+      </style>
+     </type>
+    <!-- type: float -->
+    <type base="float">
+      <style name="default">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+        <area-dsps value="1"/>
+      </style>
+    </type>
+    <!-- type: float x 2 -->
+    <type base="float" vecn="2">
+      <!-- double-pumped, low-capacity -->
+      <style name="dbl-pumped-lc">
+        <max-latency value="10"/>
+        <min-capacity value="1"/>
+      </style>
+      <!-- double-pumped, high-capacity -->
+      <style name="dbl-pumped-hc" default="">
+        <max-latency value="10"/>
+        <min-capacity value="10"/>
+      </style>
+    </type>
+    <!-- type: double -->
+    <type base="double">
+      <!-- low-latency, high-capacity -->
+      <style name="ll-hc" default="">
+        <max-latency value="10"/>
+        <min-capacity value="10"/>
+        <area-les value="973"/>
+        <area-ffs value="1044"/>
+      </style>
+      <!-- high-latency, high-capacity -->
+      <style name="hl-hc">
+        <max-latency value="14"/>
+        <min-capacity value="14"/>
+        <area-les value="997"/>
+        <area-ffs value="1607"/>
+      </style>
+      <!-- low-latency, low-capacity -->
+      <style name="ll-lc">
+        <max-latency value="10"/>
+        <min-capacity value="1"/>
+        <area-les value="1220"/>
+        <area-ffs value="670"/>
+      </style>
+      <!-- high-latency, low-capacity -->
+      <style name="hl-lc">
+        <max-latency value="14"/>
+        <min-capacity value="1"/>
+        <area-les value="997"/>
+        <area-ffs value="1607"/>
+      </style>      
+     </type>
+     <!-- type: double x 2 -->
+     <type base="double" vecn="2">
+      <!-- double-pumped, low-capacity -->
+      <style name="dbl-pumped-lc" default="">
+        <max-latency value="10"/>
+        <min-capacity value="1"/>
+        <area-les value="1220"/>
+        <area-ffs value="670"/>
+      </style>     
+    </type>
+  </group>
+
+  <!-- fneg -->
+  <group inst="fneg">
+    <!-- type: float -->
+    <type base="float">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+    <!-- type: double -->
+    <type base="double">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- fmul -->
+  <group inst="fmul">
+    <!-- type: half -->
+    <type base="half">
+      <!-- low-latency, low-capacity -->
+      <style name="ll-lc" default="">
+        <max-latency value="3"/><!-- ?? -->
+        <min-capacity value="1"/><!-- ?? -->
+        <area-les value="56"/><!-- ?? -->
+        <area-ffs value="128"/><!-- ?? -->
+        <area-dsps value="1"/><!-- ?? -->
+      </style>
+      <!-- low-latency, high-capacity -->
+      <style name="ll-hc">
+        <max-latency value="3"/><!-- ?? -->
+        <min-capacity value="3"/><!-- ?? -->
+        <area-les value="56"/><!-- ?? -->
+        <area-ffs value="128"/><!-- ?? -->
+        <area-dsps value="1"/><!-- ?? -->
+      </style>
+      <!-- high-latency, low-capacity -->
+      <style name="hl-lc">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+        <area-les value="56"/><!-- ?? -->
+        <area-ffs value="128"/><!-- ?? -->
+        <area-dsps value="1"/><!-- ?? -->
+      </style>
+      <!-- high-latency, high-capacity -->
+      <style name="hl-hc">
+        <max-latency value="3"/><!-- ?? -->
+        <min-capacity value="3"/><!-- ?? -->
+        <area-les value="56"/><!-- ?? -->
+        <area-ffs value="128"/><!-- ?? -->
+        <area-dsps value="1"/><!-- ?? -->
+      </style>
+     </type>
+    <!-- type: float -->
+    <type base="float">
+      <style name="default">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+        <area-dsps value="1"/>
+      </style>
+    </type>
+    <!-- type: double -->
+    <type base="double">
+      <!-- low-latency, low-capacity -->
+      <style name="ll-lc" default="">
+        <max-latency value="16"/>
+        <min-capacity value="1"/>
+        <area-les value="826"/>
+        <area-ffs value="1925"/>
+        <area-dsps value="4"/>
+      </style>
+      <!-- high-latency, low-capacity -->
+      <style name="hl-lc">
+        <max-latency value="16"/>
+        <min-capacity value="1"/>
+        <area-les value="826"/>
+        <area-ffs value="1925"/>
+        <area-dsps value="4"/>
+      </style>
+     </type>
+  </group>
+
+  <!-- fdiv -->
+  <group inst="fdiv">
+    <type base="float">
+      <style name="default">
+        <max-latency value="14"/>
+        <min-capacity value="1"/>
+        <area-les value="185"/>
+        <area-ffs value="409"/>
+        <area-rams value="5"/>
+        <area-dsps value="5"/>
+      </style>
+    </type>
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="36"/>
+        <min-capacity value="1"/>
+        <area-les value="809"/>
+        <area-ffs value="2804"/>
+        <area-rams value="1"/>
+        <area-dsps value="17"/>
+      </style>
+      <style name="fast">
+        <no-stall/>
+        <max-latency value="42"/>
+        <min-capacity value="1"/>
+        <area-les value="770"/>
+        <area-ffs value="3037"/>
+        <area-rams value="1"/>
+        <area-dsps value="17"/>
+      </style>
+    </type>
+  </group>
+  
+  <!-- fcmp -->
+  <group inst="fcmp">
+    <type base="int">
+      <style name="default">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+        <area-les value="63"/>
+        <area-ffs value="28"/>
+      </style>
+    </type>
+  </group>
+  
+ 
+  <!-- fptosi/fptoui -->
+  <group inst="fptosi fptoui">
+    <type base="int">
+      <style name="default">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+        <area-les value="116"/>
+        <area-ffs value="114"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- uitofp/sitofp -->
+  <group inst="uitofp sitofp">
+    <type base="float">
+      <style name="default">
+        <max-latency value="6"/>
+        <min-capacity value="1"/>
+        <area-les value="172"/>
+        <area-ffs value="257"/>
+      </style>
+    </type>
+    <!-- TODO backend does not actually support this; fill in valid values when it does -->
+    <type base="double">
+      <style name="default">
+        <max-latency value="-1"/>
+        <min-capacity value="-1"/>
+        <area-les value="122"/>
+        <area-ffs value="214"/>
+      </style>
+    </type>
+  </group>
+  
+  <!-- fpext -->
+  <group inst="fpext">
+    <type base="double">
+      <style name="default">
+        <max-latency value="2"/>
+        <min-capacity value="1"/>
+        <area-les value="37"/>
+        <area-ffs value="81"/>
+      </style>
+    </type>
+  </group>
+  
+  <!-- fptrunc -->
+  <group inst="fptrunc">
+    <type base="float">
+      <style name="default">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+        <area-les value="123"/>
+        <area-ffs value="140"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- load -->
+  <group inst="load">
+    <type base="any">
+      <style name="simple" default="">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les model="postfix" formula="mwidth widthres / "/>
+        <area-ffs model="postfix" formula="widthres mwidth widthres / +"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- store -->
+  <group inst="store">
+    <type base="any">
+      <style name="simple" default="">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les model="postfix" formula="1"/>
+        <area-ffs model="postfix" formula="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- br -->
+  <group inst="br">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- phi -->
+  <group inst="phi">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- ret -->
+  <group inst="ret">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!--
+    FUNCTIONS
+  -->
+
+  <!-- OpenCL work-item functions -->
+  <group func="__acl__get_work_dim __acl__get_global_size __acl__get_global_id __acl__get_local_size __acl__get_local_id __acl__get_local_linear_id __acl__get_num_groups __acl__get_group_id __acl__get_global_offset __acl_get_hw_wg_id">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- fpga_reg -->
+  <group intrinsic="llvm.fpga.reg">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- barrier -->
+  <group func="__acl_barrier">
+    <type base="any">
+      <style name="reordering">
+        <!-- TODO proper latency/capacity values -->
+        <max-latency model="poly1(barrier_depth)" c1="1" c0="1"/>
+        <min-capacity model="poly1(barrier_depth)" c1="1" c0="1"/>
+      </style>
+      <!-- Use simple style as the default. It is more conservative
+           in terms of dependence analysis than the reordering barrier. 
+           TODO is this really the right place to enforce this?
+           -->
+      <style name="simple" default="">
+      ff<max-latency model="poly1(barrier_depth)" c1="1" c0="3"/>
+        <min-capacity model="poly1(barrier_depth)" c1="1" c0="3"/>
+      </style>
+    </type>
+  </group>
+
+  <group intrinsic="llvm.fpga.simple.barrier">
+    <type base="any">
+      <style name="default">
+        <!-- copied from above -->
+        <max-latency model="poly1(barrier_depth)" c1="1" c0="3"/>
+        <min-capacity model="poly1(barrier_depth)" c1="1" c0="3"/>
+      </style>
+    </type>
+  </group>
+
+  <group intrinsic="llvm.fpga.reordering.barrier">
+    <type base="any">
+      <style name="default">
+        <!-- copied from above -->
+        <max-latency model="poly1(barrier_depth)" c1="1" c0="3"/>
+        <min-capacity model="poly1(barrier_depth)" c1="1" c0="3"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- mem_fence -->
+  <group func="__acl_mem_fence">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group intrinsic="llvm.fpga.mem.fence">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- read_mem_fence -->
+  <group func="read_mem_fence">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- write_mem_fence -->
+  <group func="write_mem_fence">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group intrinsic="llvm.fpga.sync.buffer">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- convert half types -->
+  <group func="__acl__convert_FPtoHalf">
+    <type base="any">
+      <style name="default">
+        <max-latency value="2"/>
+        <min-capacity value="2"/>
+        <area-les value="14"/>
+        <area-ffs value="20"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_HalfToFP">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="14"/>
+        <area-ffs value="20"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- double/integer conversions stubs - they are soft-ip so the values here don't matter -->
+  <group func="__acl__convert_FPtoSI_double_64 __acl__convert_FPtoSI_double_32 __acl__convert_FPtoSI_double_16 __acl__convert_FPtoSI_double_8">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_FPtoUI_double_64 __acl__convert_FPtoUI_double_32 __acl__convert_FPtoUI_double_16 __acl__convert_FPtoUI_double_8">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_SItoFP_double_64 __acl__convert_SItoFP_double_32 __acl__convert_SItoFP_double_16 __acl__convert_SItoFP_double_8">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_UItoFP_double_64 __acl__convert_UItoFP_double_32 __acl__convert_UItoFP_double_16 __acl__convert_UItoFP_double_8">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_double_to_long_rte __acl__convert_double_to_long_rtz __acl__convert_double_to_long_rtpi __acl__convert_double_to_long_rtni">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_double_to_ulong_rte __acl__convert_double_to_ulong_rtz __acl__convert_double_to_ulong_rtpi __acl__convert_double_to_ulong_rtni">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_double_to_int_rte __acl__convert_double_to_int_rtz __acl__convert_double_to_int_rtpi __acl__convert_double_to_int_rtni">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_double_to_uint_rte __acl__convert_double_to_uint_rtz __acl__convert_double_to_uint_rtpi __acl__convert_double_to_uint_rtni">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>  
+  <group func="__acl__convert_double_to_short_rte __acl__convert_double_to_short_rtz __acl__convert_double_to_short_rtpi __acl__convert_double_to_short_rtni">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_double_to_ushort_rte __acl__convert_double_to_ushort_rtz __acl__convert_double_to_ushort_rtpi __acl__convert_double_to_ushort_rtni">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group> 
+  <group func="__acl__convert_double_to_char_rte __acl__convert_double_to_char_rtz __acl__convert_double_to_char_rtpi __acl__convert_double_to_char_rtni">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_double_to_uchar_rte __acl__convert_double_to_uchar_rtz __acl__convert_double_to_uchar_rtpi __acl__convert_double_to_uchar_rtni">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_long_to_double_rte __acl__convert_long_to_double __acl__convert_long_to_double_rtpi __acl__convert_long_to_double_rtni">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_ulong_to_double_rte __acl__convert_ulong_to_double __acl__convert_ulong_to_double_rtpi __acl__convert_ulong_to_double_rtni">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_int_to_double __acl__convert_uint_to_double __acl__convert_short_to_double __acl__convert_ushort_to_double __acl__convert_char_to_double __acl__convert_uchar_to_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+ 
+  <!-- convert_int_* -->
+  <group func="__acl__convert_SItoFP_64">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="175"/>
+        <area-ffs value="317"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_UItoFP_64">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="394"/>
+        <area-ffs value="317"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_SItoFP_32">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="199"/>
+        <area-ffs value="188"/>
+      </style>
+    </type>
+  </group>  
+  <group func="__acl__convert_UItoFP_32">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="199"/>
+        <area-ffs value="188"/>
+      </style>
+    </type>
+  </group>  
+  <group func="__acl__convert_FPtoSI_64">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="175"/>
+        <area-ffs value="187"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_FPtoUI_64">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="175"/>
+        <area-ffs value="187"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_FPtoSI_32">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="175"/>
+        <area-ffs value="187"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_FPtoUI_32">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="175"/>
+        <area-ffs value="187"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_FPtoSI_16">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="175"/>
+        <area-ffs value="187"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_FPtoUI_16">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="175"/>
+        <area-ffs value="187"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_FPtoSI_8">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="175"/>
+        <area-ffs value="187"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__convert_FPtoUI_8">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="175"/>
+        <area-ffs value="187"/>
+      </style>
+    </type>
+  </group>
+  
+  <!-- copysign -->
+  <group func="__acl__copysignf">
+    <type base="float">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__copysignfd">
+    <type base="double">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- cbrtf -->
+  <group func="__acl__cbrtf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="15"/>
+        <min-capacity value="1"/>
+        <area-les value="93"/>
+        <area-ffs value="360"/>
+        <area-rams value="4"/>
+        <area-dsps value="2"/>
+      </style>
+    </type>
+  </group>
+  
+  <!-- sqrtf -->
+  <group func="__acl__sqrtf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="11"/>
+        <min-capacity value="1"/>
+        <area-les value="129"/>
+        <area-ffs value="346"/>
+        <area-rams value="3"/>
+        <area-dsps value="2"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__rsqrtf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="11"/>
+        <min-capacity value="1"/>
+        <area-les value="124"/>
+        <area-ffs value="333"/>
+        <area-rams value="3"/>
+        <area-dsps value="2"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__sqrtfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="32"/>
+        <min-capacity value="1"/>
+        <area-les value="537"/>
+        <area-ffs value="1948"/>
+        <area-rams value="8"/>
+        <area-dsps value="9"/>
+      </style>
+      <style name="fast">
+        <no-stall/>
+        <max-latency value="34"/>
+        <min-capacity value="1"/>
+        <area-les value="605"/>
+        <area-ffs value="2129"/>
+        <area-rams value="8"/>
+        <area-dsps value="9"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__rsqrtfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="23"/>
+        <min-capacity value="1"/>
+        <area-les value="537"/>
+        <area-ffs value="1948"/>
+        <area-rams value="8"/>
+        <area-dsps value="9"/>
+      </style>
+    </type>
+  </group>  
+
+  <group func="__acl__extract_exp">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="15"/>
+        <area-ffs value="33"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__frexp">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="20"/>
+        <area-ffs value="63"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- floorf -->
+  <group func="__acl__floorf">
+    <type base="float">
+      <style name="default">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+        <area-les value="175"/>
+        <area-ffs value="164"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__floorfd">
+    <type base="double">
+      <style name="default">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+        <area-les value="174"/>
+        <area-ffs value="157"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- ceilf -->
+  <group func="__acl__ceilf">
+    <type base="float">
+      <style name="default">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+        <area-les value="174"/>
+        <area-ffs value="157"/>
+      </style>
+    </type>
+  </group>  
+  
+  <group func="__acl__ceilfd">
+    <type base="double">
+      <style name="default">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+        <area-les value="174"/>
+        <area-ffs value="157"/>
+      </style>
+    </type>
+  </group>
+  
+  <!-- stub for a soft IP -->
+  <group func="__acl__fused_mad">
+    <type base="float">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="1"/>
+        <area-ffs value="1"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__fadd_with_denorms">
+    <type base="float">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="1"/>
+        <area-ffs value="1"/>
+      </style>
+    </type>
+  </group>  
+
+  <!-- sinf -->
+  <group func="__acl__sinf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="36"/>
+        <min-capacity value="1"/>
+        <area-les value="2105"/>
+        <area-ffs value="3083"/>
+        <area-dsps value="7"/>
+        <area-rams value="3"/>
+      </style>
+    </type>
+  </group>
+ 
+  <!-- sinpif -->
+  <group func="__acl__sinpif">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="20"/>
+        <min-capacity value="1"/>
+        <area-les value="782"/>
+        <area-ffs value="1058"/>
+        <area-dsps value="3"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- asinf -->
+  <group func="__acl__asinf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="33"/>
+        <min-capacity value="1"/>
+        <area-les value="711"/>
+        <area-ffs value="1217"/>
+        <area-dsps value="7"/>
+        <area-rams value="9"/>
+      </style>
+    </type>
+  </group>  
+
+  <group func="__acl__asinpif">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="39"/>
+        <min-capacity value="1"/>
+        <area-les value="1623"/>
+        <area-ffs value="1852"/>
+        <area-dsps value="17"/>
+        <area-rams value="16"/>
+      </style>
+    </type>
+  </group>  
+
+  <group func="__acl__asinfd">
+    <type base="double">
+      <style name="default">
+        <max-latency value="61"/>
+        <min-capacity value="1"/>
+        <area-les value="2948"/>
+        <area-ffs value="6048"/>
+        <area-dsps value="36"/>
+        <area-rams value="27"/>
+      </style>
+    </type>
+  </group>  
+
+  <group func="__acl__asinpifd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="82"/>
+        <min-capacity value="1"/>
+        <area-les value="3190"/>
+        <area-ffs value="8726"/>
+        <area-dsps value="40"/>
+        <area-rams value="29"/>
+      </style>
+    </type>
+  </group>  
+
+  <!-- __acl__sincosf -->
+  <group func="__acl__sincosf">
+    <type base="float" vecn="2">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="37"/>
+        <min-capacity value="1"/>
+        <area-les value="1471"/>
+        <area-ffs value="4226"/>
+        <area-rams value="8"/>
+        <area-dsps value="9"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__sincosfd">
+    <type base="double" vecn="2">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="45"/>
+        <min-capacity value="1"/>
+        <area-les value="5808"/>
+        <area-ffs value="10276"/>
+        <area-dsps value="47"/>
+        <area-rams value="9"/>        
+      </style>
+    </type>
+  </group>
+    
+  <!-- cosf -->
+  <group func="__acl__cosf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="35"/>
+        <min-capacity value="1"/>
+        <area-les value="2042"/>
+        <area-ffs value="2094"/>
+        <area-rams value="3"/>
+        <area-dsps value="7"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__cospif">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="17"/>
+        <min-capacity value="1"/>
+        <area-les value="678"/>
+        <area-ffs value="857"/>
+        <area-dsps value="3"/>
+      </style>
+    </type>
+  </group>
+  
+  <!-- tanf -->
+  <group func="__acl__tanf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="53"/>
+        <min-capacity value="1"/>
+        <area-les value="2653"/>
+        <area-ffs value="4320"/>
+        <area-dsps value="13"/>
+        <area-rams value="9"/>
+      </style>
+    </type>
+  </group>  
+  
+  <group func="__acl__tanfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="81"/>
+        <min-capacity value="1"/>
+        <area-les value="7319"/>
+        <area-ffs value="13679"/>
+        <area-dsps value="58"/>
+        <area-rams value="20"/>
+      </style>
+    </type>
+  </group>  
+  
+  <group func="__acl__tanpif">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="33"/>
+        <min-capacity value="1"/>
+        <area-les value="1531"/>
+        <area-ffs value="2547"/>
+        <area-dsps value="10"/>
+        <area-rams value="3"/>
+      </style>
+    </type>
+  </group>   
+
+  <!-- acosf -->
+  <group func="__acl__acosf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="42"/>
+        <min-capacity value="1"/>
+        <area-les value="834"/>
+        <area-ffs value="1755"/>
+        <area-dsps value="7"/>
+        <area-rams value="9"/>        
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__acospif">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="49"/>
+        <min-capacity value="1"/>
+        <area-les value="937"/>
+        <area-ffs value="2017"/>
+        <area-dsps value="8"/>
+        <area-rams value="9"/>        
+      </style>
+    </type>
+  </group>  
+
+  <group func="__acl__acosfd">
+    <type base="double">
+      <style name="default">
+        <max-latency value="79"/>
+        <min-capacity value="1"/>
+        <area-les value="4030"/>
+        <area-ffs value="7605"/>
+        <area-dsps value="33"/>
+        <area-rams value="25"/>         
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__acospifd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="92"/>
+        <min-capacity value="1"/>
+        <area-les value="3243"/>
+        <area-ffs value="9527"/>
+        <area-dsps value="38"/>
+        <area-rams value="26"/>        
+      </style>
+    </type>
+  </group>  
+
+  <!-- atanf -->
+  <group func="__acl__atanf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>    
+        <max-latency value="36"/>
+        <min-capacity value="1"/>
+        <area-les value="553"/>
+        <area-ffs value="1008"/>
+        <area-dsps value="5"/>
+        <area-rams value="6"/>        
+      </style>
+    </type>
+  </group>  
+  
+  <group func="__acl__atan2f">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="59"/>
+        <min-capacity value="1"/>
+        <area-les value="1004"/>
+        <area-ffs value="2788"/>
+        <area-dsps value="9"/>
+        <area-rams value="8"/>        
+      </style>
+    </type>
+  </group>  
+  
+  <group func="__acl__atanpif">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="43"/>
+        <min-capacity value="1"/>
+        <area-les value="697"/>
+        <area-ffs value="1250"/>
+        <area-dsps value="6"/>
+        <area-rams value="6"/>        
+      </style>
+    </type>
+  </group> 
+  
+  <group func="__acl__atanfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="51"/>
+        <min-capacity value="1"/>
+        <area-les value="1798"/>
+        <area-ffs value="4265"/>
+        <area-dsps value="24"/>
+        <area-rams value="20"/>        
+      </style>
+    </type>
+  </group>  
+  
+  <group func="__acl__atan2fd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="90"/>
+        <min-capacity value="1"/>
+        <area-les value="4146"/>
+        <area-ffs value="8261"/>
+        <area-dsps value="35"/>
+        <area-rams value="31"/>        
+      </style>
+    </type>
+  </group>  
+  
+  <group func="__acl__atanpifd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="114"/>
+        <min-capacity value="1"/>
+        <area-les value="3415"/>
+        <area-ffs value="9456"/>
+        <area-dsps value="30"/>
+        <area-rams value="14"/>        
+      </style>
+    </type>
+  </group>    
+
+  <!-- logf -->
+  <group func="__acl__logf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="21"/>
+        <min-capacity value="1"/>
+        <area-les value="539"/>
+        <area-ffs value="1240"/>
+        <area-rams value="3"/>
+        <area-dsps value="3"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__log2f">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="40"/>
+        <min-capacity value="1"/>
+        <area-les value="1769"/>
+        <area-ffs value="3936"/>
+        <area-rams value="8"/>
+        <area-dsps value="17"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__log10f">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="38"/>
+        <min-capacity value="1"/>
+        <area-les value="1995"/>
+        <area-ffs value="4043"/>
+        <area-rams value="20"/>
+        <area-dsps value="11"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__ln1pxf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>      
+        <max-latency value="32"/>
+        <min-capacity value="1"/>
+        <area-les value="539"/>
+        <area-ffs value="1240"/>
+        <area-rams value="3"/>
+        <area-dsps value="3"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__ln1pxfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>      
+        <max-latency value="40"/>
+        <min-capacity value="1"/>
+        <area-les value="2801"/>
+        <area-ffs value="5433"/>
+        <area-rams value="20"/>
+        <area-dsps value="14"/>
+      </style>
+    </type>
+  </group>
+    
+  <group func="__acl__logfd">
+    <type base="double">
+      <style name="default">
+        <max-latency value="38"/>
+        <min-capacity value="1"/>
+        <area-les value="2038"/>
+        <area-ffs value="4080"/>
+        <area-rams value="20"/>
+        <area-dsps value="14"/>
+      </style>
+    </type>
+  </group>
+
+
+  <group func="__acl__log2fd">
+    <type base="double">
+      <style name="default">
+        <max-latency value="40"/>
+        <min-capacity value="1"/>
+        <area-les value="1769"/>
+        <area-ffs value="3936"/>
+        <area-rams value="8"/>
+        <area-dsps value="17"/>
+      </style>
+    </type>
+  </group>
+ 
+  <group func="__acl__log10fd">
+    <type base="double">
+      <style name="default">
+        <max-latency value="38"/>
+        <min-capacity value="1"/>
+        <area-les value="1995"/>
+        <area-ffs value="4043"/>
+        <area-rams value="20"/>
+        <area-dsps value="11"/>
+      </style>
+    </type>
+  </group>
+  
+  <!-- hypotf -->
+  <group func="__acl__hypotf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>      
+        <max-latency value="25"/>
+        <min-capacity value="1"/>
+        <area-les value="194"/>
+        <area-ffs value="801"/>
+        <area-rams value="3"/>
+        <area-dsps value="3"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- expf -->
+  <group func="__acl__expf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="25"/>
+        <min-capacity value="1"/>
+        <area-les value="276"/>
+        <area-ffs value="211"/>
+        <area-rams value="3"/>
+        <area-dsps value="6"/>
+      </style>
+      <style name="fast">
+        <no-stall/>
+        <max-latency value="27"/>
+        <min-capacity value="1"/>
+        <area-les value="276"/>
+        <area-ffs value="283"/>
+        <area-rams value="3"/>
+        <area-dsps value="6"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__expm1f">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="29"/>
+        <min-capacity value="1"/>
+        <area-les value="1360"/>
+        <area-ffs value="2358"/>
+        <area-rams value="3"/>
+        <area-dsps value="5"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__exp2f">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="13"/>
+        <min-capacity value="1"/>
+        <area-les value="576"/>
+        <area-ffs value="497"/>
+        <area-rams value="4"/>
+        <area-dsps value="9"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__exp2fd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="23"/>
+        <min-capacity value="1"/>
+        <area-les value="1212"/>
+        <area-ffs value="2502"/>
+        <area-rams value="0"/>
+        <area-dsps value="10"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__exp10fd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="32"/>
+        <min-capacity value="1"/>
+        <area-les value="1212"/>
+        <area-ffs value="2502"/>
+        <area-rams value="0"/>
+        <area-dsps value="10"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__exp10f">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="25"/>
+        <min-capacity value="1"/>
+        <area-les value="716"/>
+        <area-ffs value="1330"/>
+        <area-rams value="3"/>
+        <area-dsps value="2"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__expfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="30"/>
+        <min-capacity value="1"/>
+        <area-les value="4343"/>
+        <area-ffs value="2319"/>
+        <area-rams value="8"/>
+        <area-dsps value="22"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__powfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="98"/>
+        <min-capacity value="98"/>
+        <area-les value="8052"/>
+        <area-ffs value="8472"/>
+        <area-rams value="11"/>
+        <area-dsps value="44"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__powrfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="85"/>
+        <min-capacity value="1"/>
+        <area-les value="6822"/>
+        <area-ffs value="9995"/>
+        <area-rams value="11"/>
+        <area-dsps value="38"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__pownfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="84"/>
+        <min-capacity value="1"/>
+        <area-les value="6456"/>
+        <area-ffs value="9010"/>
+        <area-rams value="11"/>
+        <area-dsps value="35"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__powf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="54"/>
+        <min-capacity value="54"/>
+        <area-les value="2635"/>
+        <area-ffs value="2939"/>
+        <area-rams value="8"/>
+        <area-dsps value="14"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__powrf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="85"/>
+        <min-capacity value="1"/>
+        <area-les value="6822"/>
+        <area-ffs value="9995"/>
+        <area-rams value="11"/>
+        <area-dsps value="38"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__pownf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="84"/>
+        <min-capacity value="1"/>
+        <area-les value="6456"/>
+        <area-ffs value="9010"/>
+        <area-rams value="11"/>
+        <area-dsps value="35"/>
+      </style>
+    </type>
+  </group>   
+  
+  <!-- fabsf -->
+  <group func="__acl__fabsf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="63"/>
+        <area-ffs value="60"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fabsfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="95"/>
+        <area-ffs value="93"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- truncf -->
+  <group func="__acl__truncf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__truncfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- roundf -->
+  <group func="__acl__roundf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="2"/>
+        <min-capacity value="2"/>
+        <area-les value="176"/>
+        <area-ffs value="94"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__roundfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="2"/>
+        <min-capacity value="2"/>
+        <area-les value="336"/>
+        <area-ffs value="199"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- isfinite -->
+  <group func="__acl__isfinitef">
+    <type base="int">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="35"/>
+        <area-ffs value="36"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__isfinitefd">
+    <type base="int">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="49"/>
+        <area-ffs value="49"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- isinff -->
+  <group func="__acl__isinff">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="45"/>
+        <area-ffs value="60"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__isinffd">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="62"/>
+        <area-ffs value="102"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- isnanf -->
+  <group func="__acl__isnanf">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="47"/>
+        <area-ffs value="59"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__isnanfd">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="64"/>
+        <area-ffs value="101"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- ilogbf -->
+  <group func="__acl__ilogbf">
+    <type base="int">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="43"/>
+        <area-ffs value="39"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__ilogbfd">
+    <type base="int">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="48"/>
+        <area-ffs value="39"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- rintf -->
+  <group func="__acl__rintf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="3"/>
+        <min-capacity value="3"/>
+        <area-les value="287"/>
+        <area-ffs value="183"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__rintfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="3"/>
+        <min-capacity value="3"/>
+        <area-les value="596"/>
+        <area-ffs value="384"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- fmaxf -->
+  <group func="__acl__fmaxf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="134"/>
+        <area-ffs value="68"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fmaxfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="174"/>
+        <area-ffs value="131"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- fminf -->
+  <group func="__acl__fminf">
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="134"/>
+        <area-ffs value="67"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fminfd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="174"/>
+        <area-ffs value="132"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- ldexpf -->
+  <group func="__acl__ldexpf">
+    <type base="float">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="32"/>
+        <area-ffs value="33"/>
+      </style>
+      <style name="hc">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="32"/>
+        <area-ffs value="33"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__ldexpfd">
+    <type base="double">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="61"/>
+        <area-ffs value="65"/>
+      </style>
+    </type>
+  </group>   
+
+  <!-- fdimf -->
+  <group func="__acl__fdimf">
+    <type base="float">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- fdimfd -->
+  <group func="__acl__fdimfd">
+    <type base="float">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- modf -->
+  <group func="__acl__modf">
+    <type base="float">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- modfd -->
+  <group func="__acl__modfd">
+    <type base="float">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- local work-group limiters -->
+  <group intrinsic="llvm.fpga.wg.limiter.enter">
+    <type base="any">
+      <style name="default">
+        <!-- Core latency is 1, but hdlgen adds one additional stage -->
+        <max-latency value="2"/>
+        <min-capacity value="2"/>
+      </style>
+    </type>
+  </group>
+
+  <group intrinsic="llvm.fpga.wg.limiter.exit">
+    <type base="any">
+      <style name="default">
+        <!-- Core latency is 1, but ignoring additional stage added by hdlgen
+             because this block has no dependents. Latency still matters to reflect
+             the number of cycles required to update the limiter state. -->
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- array privatization limiters -->
+  <group func="__acl.ap_limiter.enter">
+    <type base="any">
+      <style name="default">
+        <!-- FIXME -->
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl.ap_limiter.exit">
+    <type base="any">
+      <style name="default">
+        <!-- FIXME  -->
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl.ap_limiter.ctr">
+    <type base="any">
+      <style name="default">
+        <!-- FIXME  -->
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- ROM-based lookup tables created by LowerConst -->
+  <group intrinsic="llvm.fpga.rom.lookup">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__soft_fp_addsub">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>       
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__soft_fp_addsub_half">
+    <type base="any">
+      <style name="default">
+        <max-latency value="4"/>
+        <min-capacity value="4"/>       
+      </style>
+    </type>
+  </group>
+
+  <!-- Floating Point Compiler - Soft-IP -->
+  <group func="__acl__long_multiply_54">
+    <type base="any">
+      <style name="default">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>      
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__optimized_clz_27">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="17"/>
+        <area-ffs value="0"/>        
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_addsub">
+    <type base="any">
+      <style name="default">
+        <max-latency value="6"/>
+        <min-capacity value="1"/>       
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__fpc_convert_to_ieee">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__fpc_convert_to_internal">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_round">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_normalize">
+    <type base="any">
+      <style name="default">
+        <max-latency value="2"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_align">
+    <type base="any">
+      <style name="default">
+        <max-latency value="2"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_add_op">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_normalize_mult">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_mult_op">
+    <type base="any">
+      <style name="default">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_dynamic_align">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="1"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__fpc_convert_to_ieee_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__fpc_convert_to_internal_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_round_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_normalize_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_align_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_add_op_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_normalize_mult_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_mult_op_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__fpc_dynamic_align_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="7"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+    
+  <!-- Floating Point Compiler - OpenCL version -->
+  <group func="__acl_convert_to_internal">
+    <type base="any">
+      <style name="hl-hc" default="">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="3"/>
+        <area-ffs value="33"/>
+      </style>
+      <style name="hl-lc">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="3"/>
+        <area-ffs value="33"/>
+      </style>
+      <style name="ll-lc">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="3"/>
+        <area-ffs value="0"/>
+      </style>
+      <style name="ll-hc">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="3"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl_convert_to_ieee">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl_align">
+    <type base="any">
+      <style name="ll-hc" default="">
+        <max-latency value="2"/>
+        <min-capacity value="2"/>
+        <area-les value="139"/>
+        <area-ffs value="139"/>
+      </style>
+      <style name="ll-lc">
+        <max-latency value="2"/>
+        <min-capacity value="1"/>
+        <area-les value="139"/>
+        <area-ffs value="139"/>        
+      </style>
+      <style name="hl-hc">
+        <max-latency value="4"/>
+        <min-capacity value="4"/>
+        <area-les value="139"/>
+        <area-ffs value="239"/>        
+      </style>
+      <style name="hl-lc">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+        <area-les value="139"/>
+        <area-ffs value="239"/>        
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl_fp_add">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="41"/>
+        <area-ffs value="38"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl_dynamic_align">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="389"/>
+        <area-ffs value="344"/>
+      </style>
+    </type>
+  </group>  
+  
+  <group func="__acl_fp_mul">
+    <type base="any">
+      <style name="ll-hc" default="">
+        <max-latency value="2"/>
+        <min-capacity value="2"/>
+        <area-les value="52"/>
+        <area-ffs value="25"/>
+        <area-dsps value="1"/>
+      </style>
+      <style name="ll-lc">
+        <max-latency value="2"/>
+        <min-capacity value="1"/>
+        <area-les value="52"/>
+        <area-ffs value="25"/>
+        <area-dsps value="1"/>
+      </style>
+      <style name="hl-hc">
+        <max-latency value="5"/>
+        <min-capacity value="4"/>
+        <area-les value="88"/>
+        <area-ffs value="189"/>
+        <area-dsps value="1"/>
+      </style>
+      <style name="hl-lc">
+        <max-latency value="5"/>
+        <min-capacity value="1"/>
+        <area-les value="88"/>
+        <area-ffs value="189"/>
+        <area-dsps value="1"/>
+      </style>
+    </type>
+  </group>  
+  
+  <group func="__acl_fp_mul_double">
+    <type base="any">
+      <style name="ll-hc" default="">
+        <max-latency value="4"/>
+        <min-capacity value="4"/>
+        <area-les value="232"/>
+        <area-ffs value="309"/>
+        <area-dsps value="4"/>
+      </style>
+      <style name="ll-lc">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+        <area-les value="159"/>
+        <area-ffs value="234"/>
+        <area-dsps value="4"/>
+      </style>
+      <style name="hl-hc">
+        <max-latency value="4"/>
+        <min-capacity value="4"/>
+        <area-les value="232"/>
+        <area-ffs value="309"/>
+        <area-dsps value="4"/>
+      </style>
+      <style name="hl-lc">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+        <area-les value="159"/>
+        <area-ffs value="234"/>
+        <area-dsps value="4"/>
+      </style>
+    </type>
+  </group>   
+
+  <group func="__acl_reduced_normalization">
+    <type base="any">
+      <style name="ll-hc" default="">
+        <max-latency value="3"/>
+        <min-capacity value="3"/>
+        <area-les value="148"/>
+        <area-ffs value="76"/>
+      </style>
+      <style name="ll-lc">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+        <area-les value="148"/>
+        <area-ffs value="76"/>
+      </style>
+      <style name="hl-hc">
+        <max-latency value="4"/>
+        <min-capacity value="4"/>
+        <area-les value="150"/>
+        <area-ffs value="123"/>
+      </style>
+      <style name="hl-lc">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+        <area-les value="150"/>
+        <area-ffs value="123"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl_reduced_normalization_mult_double">
+    <type base="any">
+      <style name="ll-hc" default="">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="36"/>
+        <area-ffs value="70"/>
+      </style>
+      <style name="ll-lc">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="36"/>
+        <area-ffs value="70"/>
+      </style>
+      <style name="hl-hc">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="36"/>
+        <area-ffs value="70"/>
+      </style>
+      <style name="hl-lc">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="36"/>
+        <area-ffs value="70"/>
+      </style>
+    </type>
+  </group>
+
+  
+  <group func="__acl_reduced_normalization_mult">
+    <type base="any">
+      <style name="ll-hc" default="">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="12"/>
+        <area-ffs value="38"/>        
+      </style>
+      <style name="ll-lc">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="12"/>
+        <area-ffs value="38"/>        
+      </style>
+      <style name="hl-hc">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="12"/>
+        <area-ffs value="38"/>        
+      </style>
+      <style name="hl-lc">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="12"/>
+        <area-ffs value="38"/>        
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl_fp_post_round">
+    <type base="any">
+      <style name="ll-hc" default="">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="65"/>
+        <area-ffs value="31"/>
+      </style>
+      <style name="ll-lc">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="65"/>
+        <area-ffs value="31"/>
+      </style>
+      <style name="hl-hc">
+        <max-latency value="2"/>
+        <min-capacity value="2"/>
+        <area-les value="72"/>
+        <area-ffs value="79"/>
+      </style>
+      <style name="hl-lc">
+        <max-latency value="2"/>
+        <min-capacity value="1"/>
+        <area-les value="72"/>
+        <area-ffs value="79"/>
+      </style>
+    </type>
+  </group>  
+
+  <group func="__acl_convert_to_internal_double">
+    <type base="any">
+      <style name="hl-hc" default="">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="3"/>
+        <area-ffs value="70"/>
+      </style>
+      <style name="hl-lc">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="3"/>
+        <area-ffs value="70"/>
+      </style>
+      <style name="ll-lc">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="3"/>
+        <area-ffs value="0"/>
+      </style>
+      <style name="ll-hc">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="3"/>
+        <area-ffs value="0"/>
+      </style>
+    </type>    
+  </group>
+  
+  <group func="__acl_convert_to_ieee_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl_align_double">
+    <type base="any">
+      <style name="ll-hc" default="">
+        <max-latency value="3"/>
+        <min-capacity value="3"/>
+        <area-les value="278"/>
+        <area-ffs value="210"/>
+      </style>
+      <style name="ll-lc">
+        <max-latency value="3"/>
+        <min-capacity value="1"/>
+        <area-les value="278"/>
+        <area-ffs value="210"/>
+      </style>
+      <style name="hl-hc">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="278"/>
+        <area-ffs value="350"/>
+      </style>
+      <style name="hl-lc">
+        <max-latency value="5"/>
+        <min-capacity value="1"/>
+        <area-les value="278"/>
+        <area-ffs value="350"/>        
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl_fp_add_double">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="71"/>
+        <area-ffs value="70"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl_reduced_normalization_double">
+    <type base="any">
+      <style name="ll-hc" default="">
+        <max-latency value="4"/>
+        <min-capacity value="4"/>
+        <area-les value="296"/>
+        <area-ffs value="240"/>
+      </style>
+      <style name="ll-lc">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+        <area-les value="296"/>
+        <area-ffs value="240"/>
+      </style>
+      <style name="hl-hc">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="296"/>
+        <area-ffs value="310"/>
+      </style>
+      <style name="hl-lc">
+        <max-latency value="5"/>
+        <min-capacity value="1"/>
+        <area-les value="296"/>
+        <area-ffs value="310"/>
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl_fp_post_round_double">
+    <type base="any">
+      <style name="ll-hc" default="">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="130"/>
+        <area-ffs value="70"/>
+      </style>
+      <style name="ll-lc">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les value="130"/>
+        <area-ffs value="70"/>
+      </style>
+      <style name="hl-hc">
+        <max-latency value="2"/>
+        <min-capacity value="2"/>
+        <area-les value="130"/>
+        <area-ffs value="140"/>        
+      </style>
+      <style name="hl-lc">
+        <max-latency value="2"/>
+        <min-capacity value="1"/>
+        <area-les value="130"/>
+        <area-ffs value="140"/>        
+      </style>
+    </type>
+  </group> 
+  
+  <!-- sin/cos in double precision -->
+  <group func="__acl__sinfd">
+    <type base="double">
+      <style name="default">
+        <max-latency value="46"/>
+        <min-capacity value="1"/>
+        <area-les value="3775"/>
+        <area-ffs value="7095"/>
+        <area-rams value="9"/>
+        <area-dsps value="30"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__cosfd">
+    <type base="double">
+      <style name="default">
+        <max-latency value="45"/>
+        <min-capacity value="1"/>
+        <area-les value="3709"/>
+        <area-ffs value="6687"/>
+        <area-rams value="9"/>
+        <area-dsps value="30"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__sinpifd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="42"/>
+        <min-capacity value="0"/>
+        <area-les value="2230"/>
+        <area-ffs value="3240"/>
+        <area-rams value="2"/>
+        <area-dsps value="15"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__cospifd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="42"/>
+        <min-capacity value="0"/>
+        <area-les value="2230"/>
+        <area-ffs value="3240"/>
+        <area-rams value="2"/>
+        <area-dsps value="15"/>
+      </style>
+    </type>
+  </group>
+
+  <!--  ac_fixed math libraries  -->
+    <group intrinsic="llvm.fpga.acfixed.sqrt">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.acfixed.reciprocal">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.acfixed.reciprocal.sqrt">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.acfixed.sin">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.acfixed.cos">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.acfixed.sinpi">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.acfixed.cospi">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.acfixed.exp">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.acfixed.log">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.acfixed.sincos">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.acfixed.sincospi">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+  
+  <group func="__acl__mathlib__ac_fixed_div">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__mathlib__ac_fixed">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+
+<!--
+  <group func="__acl__mathlib__ac_fixed_sqrt">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__mathlib__ac_fixed_reciprocal">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__mathlib__ac_fixed_reciprocal_sqrt">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>  
+  
+  <group func="__acl__mathlib__ac_fixed_sin">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__mathlib__ac_fixed_cos">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__mathlib__ac_fixed_sincos">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__mathlib__ac_fixed_sinpi">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__mathlib__ac_fixed_cospi">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__mathlib__ac_fixed_sincospi">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__mathlib__ac_fixed_exp">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+
+  <group func="__acl__mathlib__ac_fixed_log">
+    <type base="any">
+      <style name="default">
+      </style>
+    </type>
+  </group>
+-->
+
+  <!-- clock-crossing -->
+  <!-- TODO check that these are the correct values for 1x clock domain -->
+  <group func="__builtin_vector_to_stream __builtin_vector_to_stream_narrow">
+    <type base="any">
+      <style name="default">
+        <max-latency value="3"/>
+        <min-capacity value="3"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="__builtin_stream_to_vector">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.ctpop intrinsic -->
+  <group intrinsic="llvm.ctpop">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="31"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- LLVM debug intrinsics -->
+  <group intrinsic="llvm.dbg.declare llvm.dbg.value llvm.var.annotation llvm.ptr.annotation llvm.annotation llvm.codeview.annotation llvm.directive.region.entry llvm.directive.region.exit llvm.dbg.label">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- LLVM lifetime intrinsics -->
+  <group intrinsic="llvm.lifetime.start llvm.lifetime.end">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- LLVM invariant intrinsics -->
+  <group intrinsic="llvm.invariant.start llvm.invariant.end">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- hw clock counter read -->
+  <group func="__hw_counter">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/> <!-- CONFIRM THAT THIS IS CORRECT BEFORE SUBMIT -->
+      </style>
+    </type>
+  </group>
+
+  <!-- printf callinst -->
+  <group func="printf">
+    <type base="any">
+      <!-- not defining any properties because 
+           printf is transformed before the end of opt
+      -->
+      <style name="default"/>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.printf callinst -->
+  <group intrinsic="llvm.fpga.printf">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.pipelined callinst (only informative) -->
+  <group intrinsic="llvm.fpga.pipelined llvm.fpga.reorder.parent">
+    <type base="any">
+      <style name="default">
+        <stall-latency-support/>
+      </style>
+    </type>
+  </group>
+
+  <group intrinsic="llvm.fpga.pipelined">
+    <type base="any">
+      <style name="default"/>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.pipeline.order.parent.loop callinst -->
+  <group intrinsic="llvm.fpga.pipeline.order.parent.loop">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="3"/>
+        <min-capacity value="3"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.forked (fast orchestration support) -->
+  <group intrinsic="llvm.fpga.forked">
+    <type base="any">
+      <style name="default">
+        <stall-latency-support/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.dummy.thread (fast orchestration support) -->
+  <group intrinsic="llvm.fpga.dummy.thread">
+    <type base="any">
+      <style name="default">
+        <stall-latency-support/>
+      </style>
+    </type>
+  </group>
+
+  <!-- Hardened FP support -->
+  <group func="llvm.fpga.fp.multadd">
+    <type base="any">
+      <style name="default">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+        <area-dsps value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="llvm.fpga.fp.multsub">
+    <type base="any">
+      <style name="default">
+        <max-latency value="4"/>
+        <min-capacity value="1"/>
+        <area-dsps value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="llvm.fpga.mdot.product.f32.f32.v2f32.v2f32">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+        <max-latency value="6"/>
+        <min-capacity value="1"/>
+        <area-dsps value="2"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.dot.product callinst -->
+  <group intrinsic="llvm.fpga.dot.product">
+    <!-- TODO: differentiate int from float statistics? hsdes 1808041595 -->
+    <type base="int">
+      <style name="default">
+        <max-latency model="postfix" formula="vector_size ceil_log2"/>
+        <min-capacity value="1"/>
+        <area-dsps model="postfix" formula="vector_size"/>
+      </style>
+    </type>
+    <type base="float">
+      <style name="default">
+        <no-stall/>
+        <max-latency model="postfix" formula="vector_size 1 - 27 / 1 + ceil_log2 4 * 18 + vector_size floor_log2 3 * 5 + vector_size 1 - 27 / 20 * + min"/>
+        <min-capacity value="1"/>
+        <area-dsps model="postfix" formula="vector_size 1 - 27 / vector_size +"/>
+      </style>
+    </type>
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency model="postfix" formula="vector_size ceil_log2 17 * 9 + 2 /"/>
+        <min-capacity value="1"/>
+        <area-dsps model="postfix" formula="vector_size 3 *"/>
+        <area-ffs model="postfix" formula="vector_size 1300 *"/>
+        <area-les model="postfix" formula="vector_size 700 *"/>
+      </style>
+    </type>
+  </group>
+
+  <group intrinsic="llvm.fpga.udot.product">
+    <type base="int">
+      <!-- TODO: Revise statistics. hsdes 1808041595 -->
+      <style name="default">
+        <max-latency model="postfix" formula="vector_size ceil_log2"/>
+        <min-capacity value="1"/>
+        <area-dsps model="postfix" formula="vector_size 1 - 27 / vector_size +"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- HLS variable precision floating point number dot product -->
+  <group intrinsic="llvm.fpga.vpfp.dot.product">
+    <type base="int">
+      <style name="default">
+        <no-stall/>
+        <max-latency model="postfix" formula="vector_size 1 - 27 / 1 + ceil_log2 4 * 18 + vector_size floor_log2 3 * 5 + vector_size 1 - 27 / 20 * + min"/>
+        <min-capacity value="1"/>
+        <area-dsps model="postfix" formula="vector_size 1 - 27 / vector_size +"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.experimental.vector.reduce.v2.fadd callinst -->
+  <group intrinsic="llvm.experimental.vector.reduce.v2.fadd">
+    <type base="double">
+      <style name="default">
+        <no-stall/>
+        <max-latency model="postfix" formula="vector_size ceil_log2 17 * 2 - 2 /"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.experimental.vector.reduce.add callinst -->
+  <group intrinsic="llvm.experimental.vector.reduce.add">
+    <type base="int">
+      <style name="default">
+        <!-- TODO: revise statistics. hsdes 1808041595 -->
+        <max-latency model="postfix" formula="vector_size ceil_log2"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <group func="llvm.fpga.fp.accum">
+    <type base="any">
+      <style name="default">
+        <max-latency value="4"/>
+        <min-capacity value="4"/>
+        <area-dsps value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.load callinst -->
+  <group intrinsic="llvm.fpga.load">
+    <type base="any">
+      <style name="simple" default="">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les model="postfix" formula="mwidth widthres / "/>
+        <area-ffs model="postfix" formula="widthres mwidth widthres / +"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.load.low.latency.pipelined callinst -->
+  <group intrinsic="llvm.fpga.load.low.latency.pipelined">
+    <type base="any">
+      <style name="default">
+        <!-- has input fifo -->
+        <max-latency value="31"/>
+        <min-capacity value="31"/>
+        <area-les model="postfix" formula="24 align 2 * + abits 2 * + widthres align / 9 * +"/>
+        <area-ffs model="postfix" formula="76 abits + widthres align / 6 * +"/>
+        <area-rams model="postfix" formula="widthres 32 rams abits 6 + 32 rams +"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.load.low.latency.pipelined.never.stall callinst -->
+  <group intrinsic="llvm.fpga.load.low.latency.pipelined.never.stall">
+    <type base="any">
+      <style name="default">
+        <!-- no input fifo -->
+        <max-latency value="8"/>
+        <min-capacity value="8"/>
+        <area-les model="postfix" formula="9 banked 6 * +"/>
+        <area-ffs model="postfix" formula="8"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.load.constant.pipelined callinst -->
+  <group intrinsic="llvm.fpga.load.constant.pipelined">
+    <type base="any">
+      <style name="default">
+        <max-latency value="9"/>
+        <min-capacity value="9"/>
+        <area-les model="postfix" formula="71"/>
+        <area-ffs model="postfix" formula="68"/>
+        <area-rams model="postfix" formula="1"/>
+       </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.load.high.latency.pipelined callinst -->
+  <group intrinsic="llvm.fpga.load.high.latency.pipelined">
+    <type base="any">
+      <style name="default">
+        <max-latency value="7"/>
+        <min-capacity value="7"/>
+        <area-les model="postfix" formula="49"/>
+        <area-ffs model="postfix" formula="59"/>
+        <area-rams model="postfix" formula="1"/>
+       </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.load.burst.coalesced callinst -->
+  <group intrinsic="llvm.fpga.load.burst.coalesced">
+    <type base="any">
+      <style name="default">
+        <stall-latency-support/>
+        <max-latency value="160"/>
+        <min-capacity value="160"/>
+        <area-les model="postfix" formula="205 high_fmax 48 * + widthres align / 21 * + mwidth widthres /  4 * +"/>
+        <area-ffs model="postfix" formula="267 high_fmax 46 * + widthres align / 205 * + mwidth widthres /  4 * +"/>
+        <area-rams model="postfix" formula="5 widthres align / +"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.load.burst.coalesced.cached callinst -->
+  <group intrinsic="llvm.fpga.load.burst.coalesced.cached">
+    <type base="any">
+      <style name="default">
+        <max-latency value="160"/>
+        <min-capacity value="160"/>
+        <area-les model="postfix" formula="1333 high_fmax 400 * + widthres align / 155 * + mwidth widthres /  3 * +"/>
+        <area-ffs model="postfix" formula="1091 high_fmax 567 * + widthres align / 326 * +"/>
+        <area-rams model="postfix" formula="3 widthres align / 5 * +"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.load.burst.coalesced.nonaligned callinst -->
+  <group intrinsic="llvm.fpga.load.burst.coalesced.nonaligned">
+    <type base="any">
+      <style name="default">
+        <!-- capacity is halved in worst-case unaligned access -->
+        <max-latency value="160"/>
+        <min-capacity value="80"/>
+        <area-les model="postfix" formula="378 align 7 * + widthres + widthres align / 10 * + mwidth widthres /  6 * +"/>
+        <area-ffs model="postfix" formula="2092 align 27 * + high_fmax 22 * + widthres + widthres align / 4 * +"/>
+        <area-rams model="postfix" formula="16"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.load.burst.coalesced.nonaligned.cached callinst -->
+  <group intrinsic="llvm.fpga.load.burst.coalesced.nonaligned.cached">
+    <type base="any">
+      <style name="default">
+        <!-- capacity is halved in worst-case unaligned access -->
+        <max-latency value="160"/>
+        <min-capacity value="80"/>
+        <area-les model="postfix" formula="2412 align 4 * + high_fmax 506 * + widthres + widthres align / 11 * + mwidth widthres /  10 * +"/>
+        <area-ffs model="postfix" formula="3218 align 4 * + high_fmax + widthres 4 * + widthres align / + mwidth widthres /  4 * +"/>
+        <area-rams model="postfix" formula="43"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.load.prefetching callinst -->
+  <group intrinsic="llvm.fpga.load.prefetching" default="">
+    <type base="any">
+      <style name="default">
+        <max-latency value="2"/>
+        <min-capacity value="1"/>
+        <area-les model="postfix" formula="285 mwidth widthres /  2 * +"/>
+        <area-ffs model="postfix" formula="290 mwidth widthres /  +"/>
+        <area-rams model="postfix" formula="13"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.store callinst -->
+  <group intrinsic="llvm.fpga.store">
+    <type base="any">
+      <style name="simple" default="">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les model="postfix" formula="1"/>
+        <area-ffs model="postfix" formula="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.store.low.latency.pipelined callinst -->
+  <group intrinsic="llvm.fpga.store.low.latency.pipelined">
+    <type base="any">
+      <style name="default">
+        <!-- has input fifo -->
+        <max-latency value="31"/>
+        <min-capacity value="31"/>
+        <area-les model="postfix" formula="1 align 2 * + sig_width0 align / 7 * + banks + mwidth sig_width0 /  13 * +"/>
+        <area-ffs model="postfix" formula="116 align + sig_width0 2 * + sig_width0 align / 3 * + abits +"/>
+        <area-rams model="postfix" formula="widthres abits + 32 rams"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.store.low.latency.pipelined.never.stall callinst -->
+  <group intrinsic="llvm.fpga.store.low.latency.pipelined.never.stall">
+    <type base="any">
+      <style name="default">
+        <!-- no input fifo -->
+        <max-latency value="2"/>
+        <min-capacity value="2"/>
+        <area-les model="postfix" formula="34"/>
+        <area-ffs model="postfix" formula="24"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.store.high.latency.pipelined callinst -->
+  <group intrinsic="llvm.fpga.store.high.latency.pipelined">
+    <type base="any">
+      <style name="default">
+        <max-latency value="7"/>
+        <min-capacity value="7"/>
+        <area-les model="postfix" formula="45"/>
+        <area-ffs model="postfix" formula="46"/>
+       </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.store.burst.coalesced callinst -->
+  <group intrinsic="llvm.fpga.store.burst.coalesced">
+    <type base="any">
+      <style name="default">
+        <!-- specicially optimized for no write-ack -->
+        <stall-latency-support/>
+        <max-latency value="4"/>
+        <min-capacity value="4"/>
+        <area-les model="postfix" formula="174 high_fmax 80 * + sig_width0 align / 11 * + mwidth sig_width0 /  3 * +"/>
+        <area-ffs model="postfix" formula="10 align 3 * + high_fmax 1354 * + sig_width0 + sig_width0 align / 90 * +"/>
+        <area-rams model="postfix" formula="16"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.store.burst.coalesced.write.ack callinst -->
+  <group intrinsic="llvm.fpga.store.burst.coalesced.write.ack">
+    <type base="any">
+      <style name="default">
+        <stall-latency-support/>
+        <max-latency value="96"/>
+        <min-capacity value="96"/>
+        <area-les model="postfix" formula="222 high_fmax 49 * + sig_width0 align / 12 * + mwidth sig_width0 /  2 * +"/>
+        <area-ffs model="postfix" formula="1537 high_fmax 7 * + sig_width0 + sig_width0 align / 78 * + mwidth sig_width0 / +"/>
+        <area-rams model="postfix" formula="15 high_fmax 2 * +"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.store.burst.coalesced.nonaligned callinst -->
+  <group intrinsic="llvm.fpga.store.burst.coalesced.nonaligned">
+    <type base="any">
+      <style name="default">
+        <max-latency value="4"/>
+        <min-capacity value="2"/>
+        <area-les model="postfix" formula="50 align 38 * + high_fmax + sig_width0 2 * + sig_width0 align / 14 * + mwidth sig_width0 /  110 * +"/>
+        <area-ffs model="postfix" formula="1777 align 6 * + high_fmax 42 * + sig_width0 6 * + sig_width0 align / 7 * + mwidth sig_width0 /  83 * +"/>
+        <area-rams model="postfix" formula="16"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.store.burst.coalesced.nonaligned.write.ack callinst -->
+  <group intrinsic="llvm.fpga.store.burst.coalesced.nonaligned.write.ack">
+    <type base="any">
+      <style name="default">
+        <!-- capacity is halved in worst-case unaligned access -->
+        <max-latency value="96"/>
+        <min-capacity value="48"/>
+        <area-les model="postfix" formula="581 align 46 * + high_fmax 2 * + sig_width0 2 * + sig_width0 align / 12 * + mwidth sig_width0 /  4 * +"/>
+        <area-ffs model="postfix" formula="2253 align 8 * + high_fmax 48 * + sig_width0 6 * + sig_width0 align / 4 * + mwidth sig_width0 /  3 * +"/>
+        <area-rams model="postfix" formula="high_fmax 17 *"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- io read/write -->
+  <group func="iord iowr">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.channel.full callinst -->
+  <group intrinsic="llvm.fpga.channel.full">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.iord and llvm.fpga.iowr callinst -->
+  <group intrinsic="llvm.fpga.iord llvm.fpga.iowr">
+    <type base="any">
+      <style name="default">
+        <stall-latency-support/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.iord.nb and llvm.fpga.iowr.nb callinst -->
+  <group intrinsic="llvm.fpga.iord.nb llvm.fpga.iowr.nb">
+    <type base="any">
+      <style name="default">
+        <stall-latency-support/>
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+  
+  <!-- llvm.fpga.channel.full callinst for IO channels -->
+  <group intrinsic="llvm.fpga.channel.full.io">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.iord and llvm.fpga.iowr callinst for IO channels -->
+  <group intrinsic="llvm.fpga.iord.io llvm.fpga.iowr.io">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- Non-blocking llvm.fpga.iord and llvm.fpga.iowr callinst for IO channels -->
+  <group intrinsic="llvm.fpga.iord.nb.io llvm.fpga.iowr.nb.io">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.ext.iord callinst -->
+  <group intrinsic="llvm.fpga.ext.iord">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.ext.iowr callinst -->
+  <group intrinsic="llvm.fpga.ext.iowr">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- Stall free entry / exit functions -->
+  <group intrinsic="llvm.fpga.sfc.entry">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <input-synced />
+      </style>
+    </type>
+  </group>
+
+  <group intrinsic="llvm.fpga.sfc.exit">
+    <type base="any">
+      <style name="default">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="218"/>
+        <area-ffs value="502"/>
+        <area-rams value="2"/>
+        <area-dsps value="0"/>
+        <output-synced />
+      </style>
+      <style name="nothrottle">
+        <max-latency value="5"/>
+        <min-capacity value="5"/>
+        <area-les value="218"/>
+        <area-ffs value="502"/>
+        <area-rams value="2"/>
+        <area-dsps value="0"/>
+        <output-synced />
+      </style>
+    </type>
+  </group>
+
+  <!-- atomic.add atomic.sub-->
+  <group intrinsic="llvm.fpga.atomic.add llvm.fpga.atomic.sub" >
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.atomic.inc llvm.fpga.atomic.dec -->
+  <group intrinsic="llvm.fpga.atomic.inc llvm.fpga.atomic.dec" >
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.atomic.xchg llvm.fpga.atomic.cmpxchg -->
+  <group intrinsic="llvm.fpga.atomic.xchg llvm.fpga.atomic.cmpxchg" >
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.atomic.mic llvm.fpga.atomic.max -->
+  <group intrinsic="llvm.fpga.atomic.min llvm.fpga.atomic.max" >
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.fpga.atomic.and llvm.fpga.atomic.or llvm.fpga.atomic.xor -->
+  <group intrinsic="llvm.fpga.atomic.and llvm.fpga.atomic.or llvm.fpga.atomic.xor" >
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- Resource sharing primitives -->
+  <group func="__acl_phase_shift">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <area-les model="postfix" formula="widthres 2 * sharing_degree 1 - * sharing_degree / 3 /"/>
+        <area-ffs model="postfix" formula="widthres"/>
+      </style>
+    </type>
+  </group>
+  <!-- No delay for the first instance -->
+  <group func="__acl_phase_sync">
+    <type base="any">
+      <style name="default">
+        <max-latency model="postfix" formula="sharing_degree"/>
+        <min-capacity model="postfix" formula="sharing_degree"/>
+        <area-ffs model="postfix" formula="widthres"/>
+      </style>
+    </type>
+  </group>
+  <!-- LLVM intrinsics that are supported by the backend -->
+  <group intrinsic="llvm.bswap llvm.bitreverse">
+    <!-- LLVM intrinsics that are supported by the backend -->
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+  <!-- C backend primitives -->
+  <group intrinsic="llvm.fpga.pop llvm.fpga.pop.coalesce llvm.fpga.pop.token llvm.fpga.pop.throttle">
+    <type base="any">
+      <style name="default">
+        <stall-latency-support/>
+        <max-latency value="1"/>
+        <min-capacity value="0"/>
+      </style>
+      <style name="bypass">
+        <stall-latency-support/>
+        <max-latency value="1"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+    <type base="int">
+      <style name="default">
+        <stall-latency-support/>
+        <max-latency value="1"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.push.token llvm.fpga.push.token.priv">
+    <type base="int">
+      <style name="default">
+        <stall-latency-support/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.push llvm.fpga.push.bypass">
+    <type base="any">
+      <style name="default">
+        <stall-latency-support/>
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.pipeline">
+    <type base="any">
+      <style name="default">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <stall-latency-support/>
+      </style>
+      <style name="no_spec">
+        <max-latency value="1"/>
+        <min-capacity value="1"/>
+        <stall-latency-support/>
+      </style>
+     </type>
+  </group>
+  <!-- llvm.fpga.ffwd.source -->
+  <group intrinsic="llvm.fpga.ffwd.source">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-ffs model="postfix" formula="width"/>
+      </style>
+    </type>
+  </group>
+  <!-- llvm.fpga.ffwd.dest -->
+  <group intrinsic="llvm.fpga.ffwd.dest">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+  <group intrinsic="llvm.fpga.fanout">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+  <!-- llvm.fpga.bit.shuffle -->
+  <group intrinsic="llvm.fpga.bit.shuffle">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+  <!-- llvm.fpga.case -->
+  <group intrinsic="llvm.fpga.case">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+  <!-- llvm.fpga.was_reset -->
+
+  <!-- images -->
+  <group func="__acl__get_image2d_width">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__get_image2d_height">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__get_image2d_channel_order">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__get_image2d_channel_data_type">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__get_image2d_element_size">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__get_image2d_dim">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__read_image2df_fcoord">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__read_image2df_icoord">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+
+  <group func="__acl__get_image3d_width">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__get_image3d_height">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__get_image3d_depth">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__get_image3d_channel_order">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__get_image3d_channel_data_type">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__get_image3d_element_size">
+    <type base="int">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__get_image3d_dim">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__read_image3df_fcoord">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+  <group func="__acl__read_image3df_icoord">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+        <area-les value="0"/>
+        <area-ffs value="0"/>
+        <area-rams value="0"/>
+        <area-dsps value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- Inststyle for operations with Variable Precision hls_float type -->
+  <!-- basic operators -->
+  <group intrinsic="llvm.fpga.vpfp.add llvm.fpga.vpfp.sub llvm.fpga.vpfp.mul llvm.fpga.vpfp.div">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+      </style>
+    </type>
+  </group>
+
+  <!-- casting -->
+  <group intrinsic="llvm.fpga.vpfp.cast llvm.fpga.vpfp.cast.from.fixed llvm.fpga.vpfp.cast.to.fixed">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+      </style>
+    </type>
+  </group>
+
+  <!-- comparison -->
+  <group intrinsic="llvm.fpga.vpfp.gt llvm.fpga.vpfp.lt llvm.fpga.vpfp.ge llvm.fpga.vpfp.le llvm.fpga.vpfp.eq">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+      </style>
+    </type>
+  </group>
+
+  <!-- math common-->
+  <group intrinsic="llvm.fpga.vpfp.sqrt llvm.fpga.vpfp.cbrt llvm.fpga.vpfp.recip llvm.fpga.vpfp.rsqrt llvm.fpga.vpfp.hypot">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+      </style>
+    </type>
+  </group>
+
+  <!-- exp -->
+  <group intrinsic="llvm.fpga.vpfp.exp llvm.fpga.vpfp.exp2 llvm.fpga.vpfp.exp10 llvm.fpga.vpfp.expm1">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+      </style>
+    </type>
+  </group>
+
+  <!-- log -->
+  <group intrinsic="llvm.fpga.vpfp.log llvm.fpga.vpfp.log2 llvm.fpga.vpfp.log10 llvm.fpga.vpfp.log1p">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+      </style>
+    </type>
+  </group>
+
+
+  <!-- pow -->
+  <group intrinsic="llvm.fpga.vpfp.pow llvm.fpga.vpfp.pown llvm.fpga.vpfp.powr">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+      </style>
+    </type>
+  </group>
+
+  <!-- trig -->
+  <group intrinsic="llvm.fpga.vpfp.sin llvm.fpga.vpfp.sinpi llvm.fpga.vpfp.cos llvm.fpga.vpfp.cospi llvm.fpga.vpfp.sincos llvm.fpga.vpfp.sincospi llvm.fpga.vpfp.asin llvm.fpga.vpfp.asinpi llvm.fpga.vpfp.acos llvm.fpga.vpfp.acospi llvm.fpga.vpfp.atan llvm.fpga.vpfp.atanpi llvm.fpga.vpfp.atan2">
+    <type base="any">
+      <style name="default">
+        <no-stall/>
+      </style>
+    </type>
+  </group>
+
+  <!-- fpga_calculate_offset -->
+  <group intrinsic="llvm.fpga.calculate.offset">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+
+  <!-- llvm.assume -->
+  <group intrinsic="llvm.assume">
+    <type base="any">
+      <style name="default">
+        <max-latency value="0"/>
+        <min-capacity value="0"/>
+      </style>
+    </type>
+  </group>
+</styles>

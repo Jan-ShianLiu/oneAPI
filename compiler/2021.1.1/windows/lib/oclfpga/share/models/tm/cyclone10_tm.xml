@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<!-- (c) 1992-2020 Intel Corporation.                             -->
+<!-- Intel, the Intel logo, Intel, MegaCore, NIOS II, Quartus and TalkBack words     -->
+<!-- and logos are trademarks of Intel Corporation or its subsidiaries in the U.S.   -->
+<!-- and/or other countries. Other marks and brands may be claimed as the property   -->
+<!-- of others. See Trademarks on intel.com for full list of Intel trademarks or     -->
+<!-- the Trademarks & Brands Names Database (if Intel) or See www.Intel.com/legal (if Altera)  -->
+<!-- Your use of Intel Corporation's design tools, logic functions and other         -->
+<!-- software and tools, and its AMPP partner logic functions, and any output        -->
+<!-- files any of the foregoing (including device programming or simulation          -->
+<!-- files), and any associated documentation or information are expressly subject   -->
+<!-- to the terms and conditions of the Altera Program License Subscription          -->
+<!-- Agreement, Intel MegaCore Function License Agreement, or other applicable       -->
+<!-- license agreement, including, without limitation, that your use is for the      -->
+<!-- sole purpose of programming logic devices manufactured by Intel and sold by     -->
+<!-- Intel or its authorized distributors.  Please refer to the applicable           -->
+<!-- agreement for further details.                                                  -->
+
+
+<!-- Cyclone 10 GX Target Model -->
+
+<target_model version="0.9" family="cyclone10gx">
+  <!-- Target Style Model -->
+  <style_model file="cyclone10_tsm.xml"/>
+
+  <!-- Family parameters for global interconnect -->
+  <global_interconnect>
+    <arb2_data_pipe_spacing value="2"/>
+    <arb2_data_pipe_min_depth value="2"/>
+    <arb2_stall_pipe_spacing value="4"/>
+    <arb2_stall_pipe_min_depth value="4"/>
+    <arb2_pipe_at_output value="1"/>
+    <arb2_test_add_latency value="1"/>  <!-- adding an extra stage -->
+  </global_interconnect>
+  
+  <!-- FIXME DATA BELOW IS COPIED FROM STRATIX IV AND IS NOT CORRECT FOR STRATIX V -->
+  <local_mem>
+    <!-- This is the preferred configuration for M20ks, which are used to implement local memory. 
+         The bit width is the maximum power of 2 that this RAM mode supports. M20Ks also support
+         certain multiple of 5s (5, 10, 20, 40), but they don't seem to be used with our
+         local memories. Specifying 20 instead of 16 (or 40 instead of 32) leads to
+         under-estimation of RAM blocks. -->
+    <dual_port_mem_block_width value="16"/>
+    <dual_port_mem_block_depth value="1024"/>
+
+    <single_port_mem_block_width value="32"/>
+    <single_port_mem_block_depth value="512"/>
+    
+    <!-- Number of memory pages (of width 512 bits == width of memory accesses) that
+         does not waste any bits in block RAM. The total size is cache_size x 512. -->
+    <bursting_lsu_cache_size_n value="1024"/>
+
+    <!-- Is OLD_DATA supported when performing a read during a write. -->
+    <single_port_mem_block_supports_rdw_mode_old_data value="1"/>
+    <dual_port_mem_block_supports_rdw_mode_old_data value="1"/>
+
+    <!-- fmax degradation factors -->
+    <fmax_degradation>
+      <!-- Fmax is cut in half if we use all M20Ks? -->
+      <group_per_all_rams value="0.5"/>
+
+      <!-- Just a small factor to allow us to favor designs with lower # of total M9Ks -->
+      <total_per_all_rams value="0.1"/>
+
+      <!-- Fmax drop per maximum coalescing width: 2048 cuts Fmax by 25% (0.25/2048) -->
+      <per_coalescing_width value="0.0001220703125"/>
+
+      <!-- Fmax drop of 40% for 6 bit bank addressing (0.4/6) -->
+      <per_log2_num_banks value="0.06666666667"/>
+
+      <!-- Fmax drop of 20% for 6 competing local memory masters (0.2/6) -->
+      <per_port_fanin value="0.03333333333"/>
+    </fmax_degradation>
+  </local_mem>
+
+  <!-- Approximated delays from Tom -->
+  <delay_model>
+    <alm_delay_ps value="300"/>
+    <routing_delay_ps value="400"/>
+  </delay_model>
+
+  <!-- General device family info -->
+  <family_info>
+    <bits_per_alm value="64"/>
+    <lut_inputs value="6"/>
+    <mux_inputs value="4"/>
+    <preferred_dsp_dot_size value="27"/>
+    <has_fp_dsp value="1"/>
+    <block_ram_name value="M20K"/>  <!-- String for ROM inference synthesis attribute -->
+    <alm_rom_name value="MLAB"/>    <!-- String for ROM inference synthesis attribute -->
+  </family_info>
+
+</target_model>
+ 

@@ -1,0 +1,99 @@
+/**
+*** Copyright (C) 2013-2016 Intel Corporation.  All rights reserved.
+***
+*** The information and source code contained herein is the exclusive
+*** property of Intel Corporation and may not be disclosed, examined
+*** or reproduced in whole or in part without explicit written authorization
+*** from the company.
+***
+**/
+
+#ifndef __ALIGNED_NEW_INCLUDED
+#define __ALIGNED_NEW_INCLUDED
+
+#include <new>
+
+#if __linux__
+#include <stdlib.h>
+#if defined(__ANDROID__)
+#define _ALIGNED_ALLOCATE(p, s, a)	p = memalign(a, s)
+#else
+#define _ALIGNED_ALLOCATE(p, s, a)	posix_memalign(&p, a, s)
+#endif
+#define _ALIGNED_FREE			free
+#elif _WIN32
+#define _ALIGNED_ALLOCATE(p, s, a)	p = _aligned_malloc(s, a)
+#define _ALIGNED_FREE			_aligned_free
+#endif
+
+inline void *operator new(
+	size_t _Sz,
+	std::align_val_t _A)
+{
+	void *_Ptr = 0;
+	_ALIGNED_ALLOCATE(_Ptr, _Sz, (size_t)_A);
+	if (!_Ptr) throw std::bad_alloc();
+	return _Ptr;
+}
+
+inline void *operator new(
+	size_t _Sz,
+	std::align_val_t _A,
+	std::nothrow_t const &)
+{
+	void *_Ptr = 0;
+	_ALIGNED_ALLOCATE(_Ptr, _Sz, (size_t)_A);
+	return _Ptr;
+}
+
+inline void operator delete(
+	void *_Ptr,
+	std::align_val_t)
+{
+	_ALIGNED_FREE(_Ptr);
+}
+
+inline void operator delete(
+	void *_Ptr,
+	std::align_val_t,
+	std::nothrow_t const &)
+{
+	_ALIGNED_FREE(_Ptr);
+}
+
+inline void *operator new[](
+	size_t _Sz,
+	std::align_val_t _A)
+{
+	void *_Ptr = 0;
+	_ALIGNED_ALLOCATE(_Ptr, _Sz, (size_t)_A);
+	if (!_Ptr) throw std::bad_alloc();
+	return _Ptr;
+}
+
+inline void *operator new[](
+	size_t _Sz,
+	std::align_val_t _A,
+	std::nothrow_t const &)
+{
+	void *_Ptr = 0;
+	_ALIGNED_ALLOCATE(_Ptr, _Sz, (size_t)_A);
+	return _Ptr;
+}
+
+inline void operator delete[](
+	void *_Ptr,
+	std::align_val_t)
+{
+	_ALIGNED_FREE(_Ptr);
+}
+
+inline void operator delete[](
+	void *_Ptr,
+	std::align_val_t,
+	std::nothrow_t const &)
+{
+	_ALIGNED_FREE(_Ptr);
+}
+
+#endif

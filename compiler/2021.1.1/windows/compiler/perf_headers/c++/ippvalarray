@@ -1,0 +1,532 @@
+/**
+*** Copyright (C) 2008-2016 Intel Corporation.  All rights reserved.
+***
+*** The information and source code contained herein is the exclusive
+*** property of Intel Corporation and may not be disclosed, examined
+*** or reproduced in whole or in part without explicit written authorization
+*** from the company.
+***
+**/
+
+/**
+*** ippvalarray
+***
+*** IPP specialization of several valarray operators
+***
+**/
+
+#ifndef _INC_IPPVALARRAY
+#define _INC_IPPVALARRAY
+
+/// generated for IPP needs
+#ifdef _MSC_VER
+#pragma pack(push,_CRT_PACKING)
+#pragma warning(push,3)
+#if defined(min)
+#pragma push_macro("min")
+#undef min
+#define _POP_MIN
+#endif
+#if defined(max)
+#pragma push_macro("max")
+#undef max
+#define _POP_MAX
+#endif
+#endif
+
+#include <ipp.h>
+
+namespace std {
+
+inline static Ipp32f* __data(const valarray<Ipp32f>& va) {
+     return &(const_cast<valarray<Ipp32f>& >(va)[0]);
+}
+
+inline static Ipp64f* __data(const valarray<Ipp64f>& va) {
+     return &(const_cast<valarray<Ipp64f>& >(va)[0]);
+}
+
+inline static Ipp32fc* __data(const valarray<Ipp32fc>& va) {
+     return &(const_cast<valarray<Ipp32fc>& >(va)[0]);
+}
+
+inline static Ipp64fc* __data(const valarray<Ipp64fc>& va) {
+     return &(const_cast<valarray<Ipp64fc>& >(va)[0]);
+}
+
+inline static Ipp8u* __data(const valarray<Ipp8u>& va) {
+     return &(const_cast<valarray<Ipp8u>& >(va)[0]);
+}
+
+inline static Ipp16u* __data(const valarray<Ipp16u>& va) {
+     return &(const_cast<valarray<Ipp16u>& >(va)[0]);
+}
+
+inline static Ipp32u* __data(const valarray<Ipp32u>& va) {
+     return &(const_cast<valarray<Ipp32u>& >(va)[0]);
+}
+
+inline static Ipp16s* __data(const valarray<Ipp16s>& va) {
+     return &(const_cast<valarray<Ipp16s>& >(va)[0]);
+}
+
+inline static Ipp32s* __data(const valarray<Ipp32s>& va) {
+     return &(const_cast<valarray<Ipp32s>& >(va)[0]);
+}
+
+#define __IPPF1ARG(type,funcname,ippfuncname) \
+inline valarray<Ipp##type> funcname (const valarray<Ipp##type>& va ) {\
+        valarray<Ipp##type> v(static_cast<int>(va.size()));\
+        ipps##ippfuncname##_##type (__data(va),&v[0],static_cast<int>(va.size()));\
+        return v;\
+}
+
+#define __IPPF1ARG_ACC(type,funcname,ippfuncname,accuracy) \
+inline valarray<Ipp##type> funcname (const valarray<Ipp##type>& va ) {\
+        valarray<Ipp##type> v(static_cast<int>(va.size()));\
+        ipps##ippfuncname##_##type##_##accuracy (__data(va),&v[0],static_cast<int>(va.size()));\
+        return v;\
+}
+
+#define __IPPF1ARG_ACC_CR(type,funcname,ippfuncname,accuracy) \
+inline valarray<Ipp##type> funcname (const valarray<Ipp##type##c>& va ) {\
+        valarray<Ipp##type> v(static_cast<int>(va.size()));\
+        ipps##ippfuncname##_##type##c_##accuracy (__data(va),&v[0],static_cast<int>(va.size()));\
+        return v;\
+}
+
+#define __IPPF1ARG_ACC_RC(type,funcname,ippfuncname,accuracy) \
+inline valarray<Ipp##type##c> funcname (const valarray<Ipp##type>& va ) {\
+        valarray<Ipp##type##c> v(static_cast<int>(va.size()));\
+        ipps##ippfuncname##_##type##c_##accuracy (__data(va),&v[0],static_cast<int>(va.size()));\
+        return v;\
+}
+
+#define __IPPF1ARG_ACC_CC(type,funcname,ippfuncname,accuracy) \
+inline valarray<Ipp##type##c> funcname (const valarray<Ipp##type##c>& va ) {\
+        valarray<Ipp##type##c> v(static_cast<int>(va.size()));\
+        ipps##ippfuncname##_##type##c_##accuracy (__data(va),&v[0],static_cast<int>(va.size()));\
+        return v;\
+}
+
+#define __IPPOP1ARG_ACC(type,opname,ippfuncname,accuracy) \
+inline valarray<Ipp##type>& valarray<Ipp##type>::operator opname (const valarray<Ipp##type>&va) {\
+        size_t minlen = va.size()<this->size()?va.size():this->size();\
+        ipps##ippfuncname##_##type##_##accuracy (__data(va),__data(*this),__data(*this),static_cast<int>(minlen));\
+        return *this;\
+}
+
+#define __IPPF2ARG_ACC(type,funcname,ippfuncname,accuracy) \
+inline valarray<Ipp##type> funcname(const valarray<Ipp##type>& va ,const valarray<Ipp##type>& vb) {\
+        valarray<Ipp##type> v(static_cast<int>(va.size()));\
+        ipps##ippfuncname##_##type##_##accuracy (__data(va),__data(vb),&v[0],static_cast<int>(va.size()));\
+        return v;\
+}
+
+#define __IPPF2ARG_ACC_CC(type,funcname,ippfuncname,accuracy) \
+inline valarray<Ipp##type##c> funcname(const valarray<Ipp##type##c>& va ,const valarray<Ipp##type##c>& vb) {\
+        valarray<Ipp##type##c> v(static_cast<int>(va.size()));\
+        ipps##ippfuncname##_##type##c##_##accuracy (__data(va),__data(vb),&v[0],static_cast<int>(va.size()));\
+        return v;\
+}
+
+#define __IPPF11ARG_ACC(type,funcname,ippfuncname,accuracy) \
+inline valarray<Ipp##type> funcname(const valarray<Ipp##type>& va ,const Ipp##type & vb) {\
+        valarray<Ipp##type> v(static_cast<int>(va.size()));\
+        ipps##ippfuncname##_##type##_##accuracy (__data(va),vb,&v[0],static_cast<int>(va.size()));\
+        return v;\
+}
+
+#define __IPPOP2ARG_ACC(type,opname,ippfuncname,accuracy) \
+inline valarray<Ipp##type> operator opname(const valarray<Ipp##type>&va,const valarray<Ipp##type>&vb) {\
+        size_t minlen = va.size()<vb.size()?va.size():vb.size();\
+        valarray<Ipp##type> v(minlen);\
+        ipps##ippfuncname##_##type##_##accuracy (__data(va),__data(vb),&v[0],static_cast<int>(minlen));\
+        return v;\
+}
+
+#define __IPPF1ARG_SPDP_NOACC(funcname,ippfuncname)\
+	__IPPF1ARG(32f,funcname,ippfuncname)\
+	__IPPF1ARG(64f,funcname,ippfuncname)
+#ifdef _USE_IPPVALARRAY_HA_
+// Real flavors
+#define __IPPF1ARG_SPDP(funcname,ippfuncname)\
+	__IPPF1ARG_ACC(32f,funcname,ippfuncname,A24)\
+	__IPPF1ARG_ACC(64f,funcname,ippfuncname,A53)
+#define __IPPOP1ARG_SPDP(opname,ippfuncname)\
+	__IPPOP1ARG_ACC(32f,opname,ippfuncname,A24)\
+	__IPPOP1ARG_ACC(64f,opname,ippfuncname,A53)
+#define __IPPF2ARG_SPDP(funcname,ippfuncname)\
+	__IPPF2ARG_ACC(32f,funcname,ippfuncname,A24)\
+	__IPPF2ARG_ACC(64f,funcname,ippfuncname,A53)
+#define __IPPF11ARG_SPDP(funcname,ippfuncname)\
+	__IPPF11ARG_ACC(32f,funcname,ippfuncname,A24)\
+	__IPPF11ARG_ACC(64f,funcname,ippfuncname,A53)
+#define __IPPOP2ARG_SPDP(opname,ippfuncname)\
+	__IPPOP2ARG_ACC(32f,opname,ippfuncname,A24)\
+	__IPPOP2ARG_ACC(64f,opname,ippfuncname,A53)
+// Complex flavors
+#define __IPPF1ARG_SPDP_CR(funcname,ippfuncname)\
+	__IPPF1ARG_ACC_CR(32f,funcname,ippfuncname,A24)\
+	__IPPF1ARG_ACC_CR(64f,funcname,ippfuncname,A53)
+#define __IPPF1ARG_SPDP_RC(funcname,ippfuncname)\
+	__IPPF1ARG_ACC_RC(32f,funcname,ippfuncname,A24)\
+	__IPPF1ARG_ACC_RC(64f,funcname,ippfuncname,A53)
+#define __IPPF1ARG_SPDP_CC(funcname,ippfuncname)\
+	__IPPF1ARG_ACC_CC(32f,funcname,ippfuncname,A24)\
+	__IPPF1ARG_ACC_CC(64f,funcname,ippfuncname,A53)
+#define __IPPF2ARG_SPDP_CC(funcname,ippfuncname)\
+	__IPPF2ARG_ACC(32fc,funcname,ippfuncname,A24)\
+	__IPPF2ARG_ACC(64fc,funcname,ippfuncname,A53)
+#define __IPPF11ARG_SPDP_CC(funcname,ippfuncname)\
+	__IPPF11ARG_ACC(32fc,funcname,ippfuncname,A24)\
+	__IPPF11ARG_ACC(64fc,funcname,ippfuncname,A53)
+#else /* _USE_IPPVALARRAY_HA_ */
+// Real flavors
+#define __IPPF1ARG_SPDP(funcname,ippfuncname)\
+	__IPPF1ARG_ACC(32f,funcname,ippfuncname,A21)\
+	__IPPF1ARG_ACC(64f,funcname,ippfuncname,A50)
+#define __IPPOP1ARG_SPDP(opname,ippfuncname)\
+	__IPPOP1ARG_ACC(32f,opname,ippfuncname,A21)\
+	__IPPOP1ARG_ACC(64f,opname,ippfuncname,A50)
+#define __IPPF2ARG_SPDP(funcname,ippfuncname)\
+	__IPPF2ARG_ACC(32f,funcname,ippfuncname,A21)\
+	__IPPF2ARG_ACC(64f,funcname,ippfuncname,A50)
+#define __IPPF11ARG_SPDP(funcname,ippfuncname)\
+	__IPPF11ARG_ACC(32f,funcname,ippfuncname,A21)\
+	__IPPF11ARG_ACC(64f,funcname,ippfuncname,A50)
+#define __IPPOP2ARG_SPDP(opname,ippfuncname)\
+	__IPPOP2ARG_ACC(32f,opname,ippfuncname,A21)\
+	__IPPOP2ARG_ACC(64f,opname,ippfuncname,A50)
+// Complex flavors
+#define __IPPF1ARG_SPDP_CR(funcname,ippfuncname)\
+	__IPPF1ARG_ACC_CR(32f,funcname,ippfuncname,A21)\
+	__IPPF1ARG_ACC_CR(64f,funcname,ippfuncname,A50)
+#define __IPPF1ARG_SPDP_RC(funcname,ippfuncname)\
+	__IPPF1ARG_ACC_RC(32f,funcname,ippfuncname,A21)\
+	__IPPF1ARG_ACC_RC(64f,funcname,ippfuncname,A50)
+#define __IPPF1ARG_SPDP_CC(funcname,ippfuncname)\
+	__IPPF1ARG_ACC_CC(32f,funcname,ippfuncname,A21)\
+	__IPPF1ARG_ACC_CC(64f,funcname,ippfuncname,A50)
+#define __IPPF2ARG_SPDP_CC(funcname,ippfuncname)\
+	__IPPF2ARG_ACC(32fc,funcname,ippfuncname,A21)\
+	__IPPF2ARG_ACC(64fc,funcname,ippfuncname,A50)
+#define __IPPF11ARG_SPDP_CC(funcname,ippfuncname)\
+	__IPPF11ARG_ACC(32fc,funcname,ippfuncname,A21)\
+	__IPPF11ARG_ACC(64fc,funcname,ippfuncname,A50)
+#endif /* _USE_IPPVALARRAY_HA_ */
+
+__IPPF1ARG_ACC(32f,abs,Abs,A24)
+__IPPF1ARG_ACC(64f,abs,Abs,A53)
+
+__IPPOP2ARG_ACC(32f,+,Add,A24)
+__IPPOP2ARG_ACC(64f,+,Add,A53)
+
+__IPPOP1ARG_ACC(32f,+=,Add,A24)
+__IPPOP1ARG_ACC(64f,+=,Add,A53)
+
+__IPPOP2ARG_ACC(32f,-,Sub,A24)
+__IPPOP2ARG_ACC(64f,-,Sub,A53)
+
+__IPPOP1ARG_ACC(32f,-=,Sub,A24)
+__IPPOP1ARG_ACC(64f,-=,Sub,A53)
+
+__IPPOP2ARG_ACC(32f,*,Mul,A24)
+__IPPOP2ARG_ACC(64f,*,Mul,A53)
+
+__IPPOP1ARG_ACC(32f,*=,Mul,A24)
+__IPPOP1ARG_ACC(64f,*=,Mul,A53)
+
+__IPPOP2ARG_ACC(32f,/,Div,A24)
+__IPPOP2ARG_ACC(64f,/,Div,A53)
+
+__IPPOP1ARG_ACC(32f,/=,Div,A24)
+__IPPOP1ARG_ACC(64f,/=,Div,A53)
+
+__IPPF1ARG_ACC(32f,sqr,Sqr,A24)
+__IPPF1ARG_ACC(64f,sqr,Sqr,A53)
+
+__IPPF1ARG_SPDP(inv,Inv)
+__IPPF1ARG_SPDP(sqrt,Sqrt)
+__IPPF1ARG_SPDP(invsqrt,InvSqrt)
+__IPPF1ARG_SPDP(cbrt,Cbrt)
+__IPPF1ARG_SPDP(invcbrt,InvCbrt)
+__IPPF2ARG_SPDP(pow,Pow)
+__IPPF1ARG_SPDP(pow2o3,Pow2o3)
+__IPPF1ARG_SPDP(pow3o2,Pow3o2)
+__IPPF11ARG_SPDP(powx,Powx)
+__IPPF1ARG_SPDP(exp,Exp)
+__IPPF1ARG_SPDP(expm1,Expm1)
+__IPPF1ARG_SPDP(ln,Ln)
+__IPPF1ARG_SPDP(log10,Log10)
+__IPPF1ARG_SPDP(log1p,Log1p)
+__IPPF1ARG_SPDP(cos,Cos)
+__IPPF1ARG_SPDP(sin,Sin)
+__IPPF1ARG_SPDP(tan,Tan)
+__IPPF1ARG_SPDP(acos,Acos)
+__IPPF1ARG_SPDP(asin,Asin)
+__IPPF1ARG_SPDP(atan,Atan)
+__IPPF2ARG_SPDP(atan2,Atan2)
+__IPPF1ARG_SPDP(cosh,Cosh)
+__IPPF1ARG_SPDP(sinh,Sinh)
+__IPPF1ARG_SPDP(tanh,Tanh)
+__IPPF1ARG_SPDP(acosh,Acosh)
+__IPPF1ARG_SPDP(asinh,Asinh)
+__IPPF1ARG_SPDP(atanh,Atanh)
+__IPPF1ARG_SPDP(erf,Erf)
+__IPPF1ARG_SPDP(erfinv,ErfInv)
+__IPPF1ARG_SPDP(erfc,Erfc)
+__IPPF1ARG_SPDP(cdfnorm,CdfNorm)
+__IPPF2ARG_SPDP(hypot,Hypot)
+
+__IPPF1ARG_SPDP_NOACC(floor,Floor)
+__IPPF1ARG_SPDP_NOACC(ceil,Ceil)
+__IPPF1ARG_SPDP_NOACC(trunc,Trunc)
+__IPPF1ARG_SPDP_NOACC(round,Round)
+__IPPF1ARG_SPDP_NOACC(rint,Rint)
+__IPPF1ARG_SPDP_NOACC(nearbyint,NearbyInt)
+
+__IPPF1ARG_SPDP_CR(abs,Abs)
+__IPPF1ARG_SPDP_CR(arg,Arg)
+__IPPF2ARG_SPDP_CC(mul,Mul)
+
+__IPPF2ARG_ACC_CC(32f,add,Add,A24)
+__IPPF2ARG_ACC_CC(64f,add,Add,A53)
+
+__IPPF2ARG_ACC_CC(32f,sub,Sub,A24)
+__IPPF2ARG_ACC_CC(64f,sub,Sub,A53)
+
+__IPPF2ARG_SPDP_CC(div,Div)
+__IPPF1ARG_SPDP_RC(CIS,CIS)
+
+__IPPF1ARG_ACC_CC(32f,conj,Conj,A24)
+__IPPF1ARG_ACC_CC(64f,conj,Conj,A53)
+
+__IPPF2ARG_SPDP_CC(mulbyconj,MulByConj)
+__IPPF1ARG_SPDP_CC(cos,Cos)
+__IPPF1ARG_SPDP_CC(sin,Sin)
+__IPPF1ARG_SPDP_CC(tan,Tan)
+__IPPF1ARG_SPDP_CC(cosh,Cosh)
+__IPPF1ARG_SPDP_CC(sinh,Sinh)
+__IPPF1ARG_SPDP_CC(tanh,Tanh)
+__IPPF1ARG_SPDP_CC(acos,Acos)
+__IPPF1ARG_SPDP_CC(asin,Asin)
+__IPPF1ARG_SPDP_CC(atan,Atan)
+__IPPF1ARG_SPDP_CC(acosh,Acosh)
+__IPPF1ARG_SPDP_CC(asinh,Asinh)
+__IPPF1ARG_SPDP_CC(atanh,Atanh)
+__IPPF1ARG_SPDP_CC(exp,Exp)
+__IPPF1ARG_SPDP_CC(ln,Ln)
+__IPPF1ARG_SPDP_CC(log10,Log10)
+__IPPF1ARG_SPDP_CC(sqrt,Sqrt)
+__IPPF2ARG_SPDP_CC(pow,Pow)
+__IPPF11ARG_SPDP_CC(powx,Powx)
+
+#undef __IPPF1ARG
+#undef __IPPF1ARG_ACC
+#undef __IPPF1ARG_ACC_CR
+#undef __IPPF1ARG_ACC_RC
+#undef __IPPF1ARG_ACC_CC
+#undef __IPPOP1ARG_ACC
+#undef __IPPF2ARG_ACC
+#undef __IPPF2ARG_ACC_CC
+#undef __IPPF11ARG_ACC
+#undef __IPPOP2ARG_ACC
+#undef __IPPF1ARG_SPDP_NOACC
+#undef __IPPF1ARG_SPDP
+#undef __IPPOP1ARG_SPDP
+#undef __IPPF2ARG_SPDP
+#undef __IPPF11ARG_SPDP
+#undef __IPPOP2ARG_SPDP
+#undef __IPPF1ARG_SPDP_CR
+#undef __IPPF1ARG_SPDP_RC
+#undef __IPPF1ARG_SPDP_CC
+#undef __IPPF2ARG_SPDP_CC
+#undef __IPPF11ARG_SPDP_CC
+#undef __IPPF1ARG_SPDP
+#undef __IPPOP1ARG_SPDP
+#undef __IPPF2ARG_SPDP
+#undef __IPPF11ARG_SPDP
+#undef __IPPOP2ARG_SPDP
+#undef __IPPF1ARG_SPDP_CR
+#undef __IPPF1ARG_SPDP_RC
+#undef __IPPF1ARG_SPDP_CC
+#undef __IPPF2ARG_SPDP_CC
+#undef __IPPF11ARG_SPDP_CC
+
+inline valarray<Ipp8u> operator|(const valarray<Ipp8u>&va,const valarray<Ipp8u>&vb) {
+        size_t minlen = va.size()<vb.size()?va.size():vb.size();
+        valarray<Ipp8u> v(minlen);
+        ippsOr_8u(__data(vb),__data(va),&v[0],static_cast<int>(minlen));
+        return v;
+}
+inline valarray<Ipp8u>& valarray<Ipp8u>::operator|=(const valarray<Ipp8u>&va) {
+        size_t minlen = va.size()<this->size()?va.size():this->size();
+        ippsOr_8u_I(__data(va),__data(*this),static_cast<int>(minlen));
+        return *this;
+}
+inline valarray<Ipp16u> operator|(const valarray<Ipp16u>&va,const valarray<Ipp16u>&vb) {
+        size_t minlen = va.size()<vb.size()?va.size():vb.size();
+        valarray<Ipp16u> v(minlen);
+        ippsOr_16u(__data(vb),__data(va),&v[0],static_cast<int>(minlen));
+        return v;
+}
+inline valarray<Ipp16u>& valarray<Ipp16u>::operator|=(const valarray<Ipp16u>&va) {
+        size_t minlen = va.size()<this->size()?va.size():this->size();
+        ippsOr_16u_I(__data(va),__data(*this),static_cast<int>(minlen));
+        return *this;
+}
+inline valarray<Ipp32u> operator|(const valarray<Ipp32u>&va,const valarray<Ipp32u>&vb) {
+        size_t minlen = va.size()<vb.size()?va.size():vb.size();
+        valarray<Ipp32u> v(minlen);
+        ippsOr_32u(__data(vb),__data(va),&v[0],static_cast<int>(minlen));
+        return v;
+}
+inline valarray<Ipp32u>& valarray<Ipp32u>::operator|=(const valarray<Ipp32u>&va) {
+        size_t minlen = va.size()<this->size()?va.size():this->size();
+        ippsOr_32u_I(__data(va),__data(*this),static_cast<int>(minlen));
+        return *this;
+}
+inline valarray<Ipp8u> operator&(const valarray<Ipp8u>&va,const valarray<Ipp8u>&vb) {
+        size_t minlen = va.size()<vb.size()?va.size():vb.size();
+        valarray<Ipp8u> v(minlen);
+        ippsAnd_8u(__data(vb),__data(va),&v[0],static_cast<int>(minlen));
+        return v;
+}
+inline valarray<Ipp8u>& valarray<Ipp8u>::operator&=(const valarray<Ipp8u>&va) {
+        size_t minlen = va.size()<this->size()?va.size():this->size();
+        ippsAnd_8u_I(__data(va),__data(*this),static_cast<int>(minlen));
+        return *this;
+}
+inline valarray<Ipp16u> operator&(const valarray<Ipp16u>&va,const valarray<Ipp16u>&vb) {
+        size_t minlen = va.size()<vb.size()?va.size():vb.size();
+        valarray<Ipp16u> v(minlen);
+        ippsAnd_16u(__data(vb),__data(va),&v[0],static_cast<int>(minlen));
+        return v;
+}
+inline valarray<Ipp16u>& valarray<Ipp16u>::operator&=(const valarray<Ipp16u>&va) {
+        size_t minlen = va.size()<this->size()?va.size():this->size();
+        ippsAnd_16u_I(__data(va),__data(*this),static_cast<int>(minlen));
+        return *this;
+}
+inline valarray<Ipp32u> operator&(const valarray<Ipp32u>&va,const valarray<Ipp32u>&vb) {
+        size_t minlen = va.size()<vb.size()?va.size():vb.size();
+        valarray<Ipp32u> v(minlen);
+        ippsAnd_32u(__data(vb),__data(va),&v[0],static_cast<int>(minlen));
+        return v;
+}
+inline valarray<Ipp32u>& valarray<Ipp32u>::operator&=(const valarray<Ipp32u>&va) {
+        size_t minlen = va.size()<this->size()?va.size():this->size();
+        ippsAnd_32u_I(__data(va),__data(*this),static_cast<int>(minlen));
+        return *this;
+}
+inline valarray<Ipp8u> operator^(const valarray<Ipp8u>&va,const valarray<Ipp8u>&vb) {
+        size_t minlen = va.size()<vb.size()?va.size():vb.size();
+        valarray<Ipp8u> v(minlen);
+        ippsXor_8u(__data(vb),__data(va),&v[0],static_cast<int>(minlen));
+        return v;
+}
+inline valarray<Ipp8u>& valarray<Ipp8u>::operator^=(const valarray<Ipp8u>&va) {
+        size_t minlen = va.size()<this->size()?va.size():this->size();
+        ippsXor_8u_I(__data(va),__data(*this),static_cast<int>(minlen));
+        return *this;
+}
+inline valarray<Ipp16u> operator^(const valarray<Ipp16u>&va,const valarray<Ipp16u>&vb) {
+        size_t minlen = va.size()<vb.size()?va.size():vb.size();
+        valarray<Ipp16u> v(minlen);
+        ippsXor_16u(__data(vb),__data(va),&v[0],static_cast<int>(minlen));
+        return v;
+}
+inline valarray<Ipp16u>& valarray<Ipp16u>::operator^=(const valarray<Ipp16u>&va) {
+        size_t minlen = va.size()<this->size()?va.size():this->size();
+        ippsXor_16u_I(__data(va),__data(*this),static_cast<int>(minlen));
+        return *this;
+}
+inline valarray<Ipp32u> operator^(const valarray<Ipp32u>&va,const valarray<Ipp32u>&vb) {
+        size_t minlen = va.size()<vb.size()?va.size():vb.size();
+        valarray<Ipp32u> v(minlen);
+        ippsXor_32u(__data(vb),__data(va),&v[0],static_cast<int>(minlen));
+        return v;
+}
+inline valarray<Ipp32u>& valarray<Ipp32u>::operator^=(const valarray<Ipp32u>&va) {
+        size_t minlen = va.size()<this->size()?va.size():this->size();
+        ippsXor_32u_I(__data(va),__data(*this),static_cast<int>(minlen));
+        return *this;
+}
+inline Ipp16s valarray<Ipp16s>::min() const {
+        Ipp16s mm;
+        ippsMin_16s(__data(*this),static_cast<int>(this->size()),&mm);
+        return mm;
+}
+inline Ipp16s valarray<Ipp16s>::max() const {
+        Ipp16s mm;
+        ippsMax_16s(__data(*this),static_cast<int>(this->size()),&mm);
+        return mm;
+}
+inline Ipp32s valarray<Ipp32s>::min() const {
+        Ipp32s mm;
+        ippsMin_32s(__data(*this),static_cast<int>(this->size()),&mm);
+        return mm;
+}
+inline Ipp32s valarray<Ipp32s>::max() const {
+        Ipp32s mm;
+        ippsMax_32s(__data(*this),static_cast<int>(this->size()),&mm);
+        return mm;
+}
+inline Ipp32f valarray<Ipp32f>::min() const {
+        Ipp32f mm;
+        ippsMin_32f(__data(*this),static_cast<int>(this->size()),&mm);
+        return mm;
+}
+inline Ipp32f valarray<Ipp32f>::max() const {
+        Ipp32f mm;
+        ippsMax_32f(__data(*this),static_cast<int>(this->size()),&mm);
+        return mm;
+}
+inline Ipp64f valarray<Ipp64f>::min() const {
+        Ipp64f mm;
+        ippsMin_64f(__data(*this),static_cast<int>(this->size()),&mm);
+        return mm;
+}
+inline Ipp64f valarray<Ipp64f>::max() const {
+        Ipp64f mm;
+        ippsMax_64f(__data(*this),static_cast<int>(this->size()),&mm);
+        return mm;
+}
+inline Ipp16s valarray<Ipp16s>::sum() const {
+        Ipp16s sm;
+        ippsSum_16s_Sfs(__data(*this),static_cast<int>(size()),&sm,0);
+        return sm;
+}
+inline Ipp32s valarray<Ipp32s>::sum() const {
+        Ipp32s sm;
+        ippsSum_32s_Sfs(__data(*this),static_cast<int>(size()),&sm,0);
+        return sm;
+}
+inline Ipp32f valarray<Ipp32f>::sum() const {
+        Ipp32f sm;
+        ippsSum_32f(__data(*this),static_cast<int>(size()),&sm,ippAlgHintNone);
+        return sm;
+}
+inline Ipp64f valarray<Ipp64f>::sum() const {
+        Ipp64f sm;
+        ippsSum_64f(__data(*this),static_cast<int>(size()),&sm);
+        return sm;
+}
+
+} /* End namespace std */
+
+#ifdef _MSC_VER
+#ifdef _POP_MIN
+#pragma pop_macro("min")
+#endif
+#ifdef _POP_MAX
+#pragma pop_macro("max")
+#endif
+
+#pragma warning(pop)
+#pragma pack(pop)
+#endif
+
+
+#endif /* _INC_IPPVALARRAY */

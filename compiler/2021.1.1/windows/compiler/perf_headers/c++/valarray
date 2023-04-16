@@ -1,0 +1,50 @@
+/**
+*** Copyright (C) 2008-2013 Intel Corporation.  All rights reserved.
+***
+*** The information and source code contained herein is the exclusive
+*** property of Intel Corporation and may not be disclosed, examined
+*** or reproduced in whole or in part without explicit written authorization
+*** from the company.
+***
+**/
+
+/**
+*** valarray
+***
+*** Replacement header for C++ standard valarray
+***
+*** This replacement is necessary to support IPP specialization of several
+*** valarray operators for several data types, in particular float and double
+***
+*** The replacement header will include whatever std valarray is in
+*** the include search path so it is under the control of the user.
+*** 
+*** 28 March 2008 [kjk]
+**/
+
+#ifndef _INC_VALARRAY_
+#define _INC_VALARRAY_
+
+#include_next <valarray>
+
+/**
+*** Specialization is not supported for the LLVM valarray header
+*** - It will require specialization of the entire class as current 
+***   specialization is done outside the scope of the class template
+*** - LLVM version of valarray uses current instantiation instead of 
+***   explicit instantiation causing a difference in the argument list (i.e. no
+***   template arguments)
+**/
+
+/**
+*** Including valarray replacement will activate IPP specialization by default
+**/
+#if !defined(_OVERRIDE_USE_IPPVALARRAY_) && !defined(__NetBSD__) && !defined(_LIBCPP_VALARRAY)
+#define _USE_IPPVALARRAY_
+#endif /* !_OVERRIDE_USE_IPPVALARRAY && !__NetBSD__ && !_LIBCPP_VALARRAY */
+
+#if defined _USE_IPPVALARRAY_
+#include <ippvalarray>
+#endif /* _USE_IPPVALARRAY_ */
+
+#endif /* _INC_VALARRAY_ */
