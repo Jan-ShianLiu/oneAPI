@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Get Started with Intel® Integrated Performance Primitives for Intel® oneAPI Base Toolkit - Windows* OS"/>
+<meta name="DC.Coverage" content=""/>
+<meta name="prodname" content=""/>
+<meta name="version" content="2020"/>
+<meta name="series" content=""/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="get_started_win"/>
+<meta name="DC.Language" content="en-US"/>
+<link rel="stylesheet" type="text/css" href="resources/intel_gsp_styles.css"/>
+<title>Get Started with Intel® Integrated Performance Primitives for Intel® oneAPI Base Toolkit - Windows* OS</title>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1"/>
+
+</head>
+<body class="titlepage" id="get_started_win"><a name="get_started_win"><!-- --></a>
+
+
+<div id="banner">
+<div id="bannerblock">
+<img src="resources/intel_logo.png" class="intellogo" alt="Intel logo"/>
+<!--No product image to be included-->
+<h1 class="title">Get Started with Intel® Integrated Performance Primitives for 
+	 Intel® oneAPI Base Toolkit - 
+	 Windows* OS</h1>
+</div>
+</div>
+<div id="contentblock">
+<div id="mainmenu"><h3>Contents</h3><p><a class="mainmenulinks" href="#GUID-6EB09930-66E9-406E-BC40-54AEDE6D91DD"/></p>
+<p><a class="mainmenulinks" href="#GUID-79D30F60-1CD6-4A33-8BF6-02279C193904">Prerequisites</a></p>
+<p><a class="mainmenulinks" href="#GUID-E8A6135D-0B07-442D-8665-1C882210C764">Build and Run Your First Intel® IPP Application</a></p>
+<p><a class="mainmenulinks" href="#GUID-7005AD3E-EC26-4977-BC79-2D017C5B0B8F">Training and Documentation</a></p>
+<p><a class="mainmenulinks" href="#GUID-A85CE82A-A7D9-4BAB-B88E-A9F89FE3E984">Notices and Disclaimers</a></p>
+</div>
+<div id="GUID-6EB09930-66E9-406E-BC40-54AEDE6D91DD"><p>Intel® Integrated Performance Primitives (Intel® IPP) is a software library that provides a broad range of functionality, including general signal and image processing, computer vision, data compression, and string manipulation. 
+		</p>
+</div>
+<div id="GUID-79D30F60-1CD6-4A33-8BF6-02279C193904">
+<h2><a name="GUID-79D30F60-1CD6-4A33-8BF6-02279C193904"><!-- --></a>Prerequisites</h2>
+<div>
+<h3><a name="PREREQ"><!-- --></a>Set Environment Variables 
+		</h3>
+<p>After installing Intel IPP, set the 
+		  <span class="keyword">PATH</span>, 
+		  <span class="keyword">LIB</span><span>, and 
+		  </span><span class="keyword">INCLUDE</span> environment variables by running the script appropriate to your target platform architecture. The scripts are available in 
+		  <span class="filepath"><var>&lt;install dir&gt;</var></span><span class="filepath">\</span><span class="filepath">env</span>. 
+		</p>
+<p>By default, the 
+		  <span class="filepath"><var>&lt;install dir&gt;</var></span> is 
+		  <span class="filepath">C:\Program files (x86)\Intel\oneapi</span></p>
+</div><div>
+<h3><a name="CONFIGURE"><!-- --></a>Configure Your IDE Environment to Link with Intel IPP 
+		</h3>
+<p>To configure your Microsoft* Visual Studio* development system for linking with the Intel IPP library, follow the steps below. Though some versions of the Visual Studio* IDE may vary slightly in the menu items mentioned below, the fundamental configuring steps are applicable to all these versions. 
+		</p>
+<p><a name="GUID-6B8B9C55-A635-4A6F-A2E5-760C4CACB4E0"><!-- --></a>
+<ol id="GUID-6B8B9C55-A635-4A6F-A2E5-760C4CACB4E0"><li id="LI_C3088C2E0A7445CD9051433A9AE68469">In Solution Explorer, right-click your project and click 
+			 <strong>Properties</strong>. 
+		  </li>
+<li id="LI_84BCA01E818E4114BD83BD9180881FF6">Select 
+			 <strong>Configuration Properties</strong> &gt; 
+			 <strong>VC++ Directories</strong> and set the following from the 
+			 <strong>Select directories for</strong> drop down menu: 
+			 <ul id="GUID-C537795C-42E3-4653-BC2B-893C594B39AB"><li id="LI_7CC1F47B773349CDA97670DF0E0EB769"><strong>Include Files</strong> menu item, and then type in the directory for the Intel IPP include files (default is 
+				  <span class="filepath"><var>&lt;install_dir&gt;</var></span><span class="filepath">\include</span>) 
+				</li>
+<li id="LI_CE90DB56E0D24906ADD994026E3B28F0"><strong>Library Files</strong> menu item, and then type in the directory for the Intel IPP library files (default is 
+				  <span class="filepath"><var>&lt;install_dir&gt;</var></span><span class="filepath">\lib\&lt;arch&gt;</span>) 
+				</li>
+<li id="LI_79D44BE2C2CA44A9970DDCCA523F3685"><strong>Executable Files</strong> menu item, and then type in the directory for the Intel IPP executable files (default is 
+				  <span class="filepath"><var>&lt;install_dir&gt;</var>\redist\&lt;arch&gt;</span>) 
+				</li>
+</ul>
+</li>
+</ol>
+</p>
+</div><p/>
+</div>
+<div id="GUID-E8A6135D-0B07-442D-8665-1C882210C764">
+<h2><a name="GUID-E8A6135D-0B07-442D-8665-1C882210C764"><!-- --></a>Build and Run Your First Intel® IPP Application</h2>
+<p>The code example below represents a short application to help you get started with Intel IPP: 
+		  <pre><code class="language-clike">#include &lt;stdio.h&gt;
+#include "ipp.h"
+
+#define PRINT_INFO(feature, text) printf("  %-30s= ", #feature); \
+    printf("%c\t%c\t", (cpuFeatures &amp; feature) ? 'Y' : 'N', (enabledFeatures &amp; feature) ? 'Y' : 'N'); \
+    printf( #text "\n")
+
+int main(int argc, char* argv[])
+{
+    const       IppLibraryVersion *libVersion;
+    IppStatus   status;
+    Ipp64u      cpuFeatures, enabledFeatures;
+
+    ippInit();                      /* Initialize Intel(R) IPP library */
+    libVersion = ippGetLibVersion();/* Get Intel(R) IPP library version info */
+    printf("%s %s\n", libVersion-&gt;Name, libVersion-&gt;Version);
+
+    status = ippGetCpuFeatures(&amp;cpuFeatures, 0);/* Get CPU features and features enabled with selected library level */
+    if (ippStsNoErr != status) return status;
+    enabledFeatures = ippGetEnabledCpuFeatures();
+    printf("Features supported: by CPU\tby Intel(R) IPP\n");
+    printf("------------------------------------------------\n");
+    PRINT_INFO(ippCPUID_MMX,        Intel(R) Architecture MMX technology supported);
+    PRINT_INFO(ippCPUID_SSE,        Intel(R) Streaming SIMD Extensions);
+    PRINT_INFO(ippCPUID_SSE2,       Intel(R) Streaming SIMD Extensions 2);
+    PRINT_INFO(ippCPUID_SSE3,       Intel(R) Streaming SIMD Extensions 3);
+    PRINT_INFO(ippCPUID_SSSE3,      Supplemental Streaming SIMD Extensions 3);
+    PRINT_INFO(ippCPUID_MOVBE,      Intel(R) MOVBE instruction);
+    PRINT_INFO(ippCPUID_SSE41,      Intel(R) Streaming SIMD Extensions 4.1);
+    PRINT_INFO(ippCPUID_SSE42,      Intel(R) Streaming SIMD Extensions 4.2);
+    PRINT_INFO(ippCPUID_AVX,        Intel(R) Advanced Vector Extensions instruction set);
+    PRINT_INFO(ippAVX_ENABLEDBYOS,  Intel(R) Advanced Vector Extensions instruction set is supported by OS);
+    PRINT_INFO(ippCPUID_AES,        Intel(R) AES New Instructions);
+    PRINT_INFO(ippCPUID_CLMUL,      Intel(R) CLMUL instruction);
+    PRINT_INFO(ippCPUID_RDRAND,     Intel(R) RDRAND instruction);
+    PRINT_INFO(ippCPUID_F16C,       Intel(R) F16C new instructions);
+    PRINT_INFO(ippCPUID_AVX2,       Intel(R) Advanced Vector Extensions 2 instruction set);
+    PRINT_INFO(ippCPUID_ADCOX,      Intel(R) ADOX/ADCX new instructions);
+    PRINT_INFO(ippCPUID_RDSEED,     Intel(R) RDSEED instruction);
+    PRINT_INFO(ippCPUID_PREFETCHW,  Intel(R) PREFETCHW instruction);
+    PRINT_INFO(ippCPUID_SHA,        Intel(R) SHA new instructions);
+    PRINT_INFO(ippCPUID_AVX512F,    Intel(R) Advanced Vector Extensions 512 Foundation instruction set);
+    PRINT_INFO(ippCPUID_AVX512CD,   Intel(R) Advanced Vector Extensions 512 CD instruction set);
+    PRINT_INFO(ippCPUID_AVX512ER,   Intel(R) Advanced Vector Extensions 512 ER instruction set);
+    PRINT_INFO(ippCPUID_AVX512PF,   Intel(R) Advanced Vector Extensions 512 PF instruction set);
+    PRINT_INFO(ippCPUID_AVX512BW,   Intel(R) Advanced Vector Extensions 512 BW instruction set);
+    PRINT_INFO(ippCPUID_AVX512VL,   Intel(R) Advanced Vector Extensions 512 VL instruction set);
+    PRINT_INFO(ippCPUID_AVX512VBMI, Intel(R) Advanced Vector Extensions 512 Bit Manipulation instructions);
+    PRINT_INFO(ippCPUID_MPX,        Intel(R) Memory Protection Extensions);
+    PRINT_INFO(ippCPUID_AVX512_4FMADDPS,    Intel(R) Advanced Vector Extensions 512 DL floating-point single precision);
+    PRINT_INFO(ippCPUID_AVX512_4VNNIW,      Intel(R) Advanced Vector Extensions 512 DL enhanced word variable precision);
+    PRINT_INFO(ippCPUID_KNC,        Intel(R) Xeon Phi(TM) Coprocessor);
+    PRINT_INFO(ippCPUID_AVX512IFMA, Intel(R) Advanced Vector Extensions 512 IFMA (PMADD52) instruction set);
+    PRINT_INFO(ippAVX512_ENABLEDBYOS,       Intel(R) Advanced Vector Extensions 512 is supported by OS);
+    return 0;
+}</code></pre></p>
+<p>This application consists of three sections: 
+		</p>
+<p><a name="GUID-DC63C33C-264D-4191-8758-5729DA301095"><!-- --></a>
+<ol id="GUID-DC63C33C-264D-4191-8758-5729DA301095"><li id="LI_EDE664E588CF40168B3B5E87EEB83638">Initialize the Intel IPP library. This stage is required to take advantage of full Intel IPP optimization. With 
+		<span class="option">ippInit()</span>, the best implementation layer is dispatched at runtime; otherwise, the least optimized implementation is chosen. If the Intel IPP application runs without 
+		<span class="option">ippInit()</span>, the Intel IPP library is auto-initialized with the first call of the Intel IPP function from any domain that is different from 
+		<span class="filepath">ippCore</span>. In certain debugging scenarios, it is helpful to force a specific implementation layer using 
+		<span class="option">ippSetCpuFeatures()</span>, instead of the best as chosen by the dispatcher. 
+		</li>
+<li id="LI_CD617443AF494D989555494E5A85BC5E">Get the library layer name and version. You can also get the version information using the 
+		  <span class="filepath">ippversion.h</span> file located in the 
+		  <span class="filepath"><var>&lt;install_dir&gt;</var></span><span class="filepath">\include</span> directory. 
+		</li>
+<li id="LI_EDF99C8B35E14941B1DAAB345FCC8BC5">Show the hardware optimizations used by the selected library layer and supported by CPU. 
+		</li>
+</ol>
+</p>
+<p>On Windows* OS, Intel IPP applications are significantly easier to build with Microsoft* Visual Studio*. To build the code example above, follow the steps: 
+		</p>
+<p><a name="GUID-E5A31511-802A-4264-88F8-0D974B0A0170"><!-- --></a>
+<ol id="GUID-E5A31511-802A-4264-88F8-0D974B0A0170"><li id="LI_D1AF29F369B441C3A89ABAF6F035EC8B">Start Microsoft* Visual Studio* and create an empty C++ project. 
+		  </li>
+<li id="LI_54D435F507D84891A7BF26783DF57109">Add a new c file and paste the code into it. 
+		  </li>
+<li id="LI_F8ACA26F44434C069085C15A006001CF">Set the include directories and the linking model as described in 
+			 <a href="#CONFIGURE">Configure Your IDE Environment to Link with Intel IPP</a>. 
+		  </li>
+<li id="LI_CE59B65113F346A88AC788451D638F15">Compile and run the application. 
+		  </li>
+</ol>
+</p>
+</div>
+<div id="GUID-7005AD3E-EC26-4977-BC79-2D017C5B0B8F">
+<h2><a name="GUID-7005AD3E-EC26-4977-BC79-2D017C5B0B8F"><!-- --></a>Training and Documentation</h2>
+
+<div class="tablenoborder"><a name="GUID-3C984316-837E-4B09-94E1-174CBF42446F"><!-- --></a>
+<table cellpadding="4" summary="" id="GUID-3C984316-837E-4B09-94E1-174CBF42446F" frame="border" border="1" cellspacing="0" rules="all"><thead align="left"><tr><th class="cellrowborder" valign="top" width="33.78378378378378%" id="d29e199"><p>Document 
+					 </p>
+</th>
+<th class="cellrowborder" valign="top" width="66.21621621621621%" id="d29e202"><p>Description 
+					 </p>
+</th>
+</tr>
+</thead>
+<tbody><tr><td class="cellrowborder" valign="top" width="33.78378378378378%" headers="d29e199 "><p><a href="https://software.intel.com/content/www/us/en/develop/tools/integrated-performance-primitives/documentation.html" target="_blank">Online Training</a></p>
+</td>
+<td class="cellrowborder" valign="top" width="66.21621621621621%" headers="d29e202 ">Intel® IPP training resources. 
+				  </td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="33.78378378378378%" headers="d29e199 "><p><a href="https://software.intel.com/content/www/us/en/develop/documentation/ipp-dev-reference/top.html" target="_blank">Intel® IPP Developer Reference</a></p>
+</td>
+<td class="cellrowborder" valign="top" width="66.21621621621621%" headers="d29e202 "><p>Contains detailed descriptions of the Intel IPP functions and interfaces for signal, image processing, and computer vision. 
+					 </p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="33.78378378378378%" headers="d29e199 "><p><a href="https://software.intel.com/content/www/us/en/develop/documentation/dev-guide-ipp-for-oneapi/top.html" target="_blank">Intel® IPP Developer Guide for Intel® oneAPI Base Toolkit</a></p>
+</td>
+<td class="cellrowborder" valign="top" width="66.21621621621621%" headers="d29e202 "><p>Provides detailed guidance on Intel IPP library configuration, development environment, linkage modes, and Custom Library Tool use. 
+					 </p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="33.78378378378378%" headers="d29e199 "><a href="https://software.intel.com/content/www/us/en/develop/documentation/ipp-tutorial/top.html" target="_blank">Tutorial: Image Blurring and Rotation with Intel® IPP</a></td>
+<td class="cellrowborder" valign="top" width="66.21621621621621%" headers="d29e202 "><p>Demonstrates how to implement box blurring of an image using Intel IPP image processing functions. 
+					 </p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="33.78378378378378%" headers="d29e199 "><a href="https://software.intel.com/content/www/us/en/develop/documentation/ippiw-dev-guide-and-reference/top/c-reference/image-processing/arithmetic-operations.html" target="_blank">Integration Wrappers for Intel® IPP Developer Guide and Reference</a></td>
+<td class="cellrowborder" valign="top" width="66.21621621621621%" headers="d29e202 "><p>Contains detailed descriptions of the Intel IPP Integration Wrappers C and C++ application programming interfaces and provides guidance on how to use them in your code. 
+					 </p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="33.78378378378378%" headers="d29e199 "><p>Intel® IPP Examples 
+					 </p>
+</td>
+<td class="cellrowborder" valign="top" width="66.21621621621621%" headers="d29e202 "><p>Include a collection of example programs that demonstrate the various features of the Intel IPP library. These programs are located in the 
+						<span class="filepath">components_and_examples_&lt;<var>os</var>&gt;_&lt;<var>target</var>&gt;.zip</span> archive at the 
+						<span class="filepath">&lt;install_dir&gt;/components</span> subdirectory. The archive also includes the 
+						<span class="filepath">ipp-examples.html</span> documentation file at the 
+						<span class="filepath">documentation</span> subdirectory. 
+					 </p>
+</td>
+</tr>
+<tr><td class="cellrowborder" valign="top" width="33.78378378378378%" headers="d29e199 "><p><a href="https://software.intel.com/content/www/us/en/develop/tools/integrated-performance-primitives.html" target="_blank">Intel® Integrated Performance Primitives</a></p>
+</td>
+<td class="cellrowborder" valign="top" width="66.21621621621621%" headers="d29e202 "><p>Intel® IPP product page. See this page for support and online documentation. 
+					 </p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="GUID-A85CE82A-A7D9-4BAB-B88E-A9F89FE3E984">
+<h2><a name="GUID-A85CE82A-A7D9-4BAB-B88E-A9F89FE3E984"><!-- --></a>Notices and Disclaimers</h2>
+<p>Intel, the Intel logo, Intel Atom, Intel Core, Intel Xeon Phi, VTune and Xeon are trademarks of Intel Corporation in the U.S. and/or other countries. 
+    </p>
+<p>*Other names and brands may be claimed as the property of others. 
+    </p>
+<p class="tenpt">© Intel Corporation. 
+    </p>
+<p> This software and the related documents are Intel copyrighted materials, and your use of them is governed by the express license under which they were provided to you (<strong>License</strong>). Unless the License provides otherwise, you may not use, modify, copy, publish, distribute, disclose or transmit this software or the related documents without Intel's prior written permission. 
+    </p>
+<p> This software and the related documents are provided as is, with no express or implied warranties, other than those that are expressly stated in the License. 
+    </p>
+</div>
+<p>
+<div class="tablenoborder"><a name="d106e46"><!-- --></a>
+<table cellpadding="4" summary="" id="d106e46" frame="border" border="1" cellspacing="0" rules="all"><thead align="left"><tr><th class="cellrowborder" align="left" valign="top" width="100%" id="d29e304"><p id="d106e52">Optimization Notice 
+              </p>
+</th>
+</tr>
+</thead>
+<tbody><tr><td class="bgcolor(#f5f5f5)" bgcolor="#f5f5f5" valign="top" width="100%" headers="d29e304 "><p>Intel's compilers may or may not optimize to the same degree for non-Intel microprocessors for optimizations that are not unique to Intel microprocessors. These optimizations include SSE2, SSE3, and SSSE3 instruction sets and other optimizations. Intel does not guarantee the availability, functionality, or effectiveness of any optimization on microprocessors not manufactured by Intel. Microprocessor-dependent optimizations in this product are intended for use with Intel microprocessors. Certain optimizations not specific to Intel microarchitecture are reserved for Intel microprocessors. Please refer to the applicable product User and Reference Guides for more information regarding the specific instruction sets covered by this notice. 
+              </p>
+<p> Notice revision #20110804 
+              </p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</p>
+</div>
+
+</body>
+</html>

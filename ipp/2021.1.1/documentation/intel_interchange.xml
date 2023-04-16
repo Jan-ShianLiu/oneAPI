@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HelpIndex xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
+     <metadata productid="ipp" locale="en-US" rootpage="" />
+     <internal>
+           <keyword term="intel.cpp.ipp_get_start" target="get_started.htm" index="false" />
+     </internal>
+</HelpIndex>

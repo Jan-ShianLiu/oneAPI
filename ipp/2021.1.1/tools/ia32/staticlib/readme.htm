@@ -1,0 +1,222 @@
+<html>
+
+<head>
+<title>Intel&#174; Integrated Performance Primitives: Creating Single-Processor Executables</title>
+</head>
+<body>
+<h1 align="center"><font face="Verdana" color="#006699" size="4"><i>Intel® 
+Integrated Performance Primitives</i><br>
+<i>Creating Single-Processor Executables</i></font></h1>
+
+<h2><font face="Verdana" size="3" color="#006699">Introduction</font></h2>
+
+<p><font face="Verdana" size="2" color="#333333">The Intel&#174; Integrated Performance Primitives&nbsp;(Intel&#174; IPP) Merged Static
+Libraries are provided for applications that require the small footprint advantages of static linking.
+The static libraries contain versions of 
+each function for each optimization level.&nbsp; In the unusual case when an 
+    application or driver needs to be tied to a particular processor, it is also 
+    possible to  link to one implementation layer of
+Intel&#174; IPP only to save space. </font></p>
+
+<h2><font face="Verdana" size="3" color="#006699">Static linking to Intel<sup>&#174; </sup>IPP Functions for One Processor</font></h2>
+
+<ol>
+  <li><font face="Verdana" size="2" color="#333333">Add the  <b>ipp*mt.lib 
+	</b> files to your project and its source
+    tree. Note: internal threading is deprecated in Intel IPP 8.0 and the multi-threaded 
+      static libraries are not installed by default.</font></li>
+  <li><font face="Verdana" size="2" color="#333333">Include  one of the following files located in the</font><font face="Courier New" size="2" color="#333333"> include</font><font face="Verdana" size="2" color="#333333"> directory:
+        <b>ipp_w7.h, ipp_s8.h, ipp_p8.h, ipp_g9.h, or ipp_h9.h</b>.
+	
+	See the table below to choose the appropriate header. Include one of the specified header files before other Intel IPP headers.</font></li>
+  <li><font face="Verdana" size="2" color="#333333">Add the <b> ippcoremt.lib</b> file to your project and its source
+    tree. </font></li>
+  <li><font face="Verdana" size="2" color="#333333">Include Intel<sup> </sup>IPP header file(s) as normal, after the above conversion header.</font></li>
+  <li><font face="Verdana" size="2" color="#333333">Call Intel<sup> </sup>IPP functions normally from your application.</font></li>
+</ol>
+<p><font face="Verdana" size="2" color="#333333">Now the  processor-specific version of each function you specify will
+be called from the static libraries. It is important to ensure that both processor and operating system
+supports the full capabilities of the target processor.</font></p>
+
+<h2><font face="Verdana" size="3" color="#006699">Processor codes</font></h2>
+
+<font face="Verdana" size="2" color="#333333">Include one of the following files, according to 
+    the optimization level available on the target processor:
+</font>
+<table border="1" cellspacing="0" height="202" width="770" cellpadding="4">
+    <tr>
+        <td width="105" height="19" bgcolor="#000000">
+		<font color="#FFFFFF" face="Verdana" size="2"><b>Header</b></font></td>
+        <td width="643" height="19" bgcolor="#000000">
+		<font color="#FFFFFF" face="Verdana" size="2"><b>Optimization Level</b></font></td>
+	</tr>
+    <tr>
+        <td width="105" height="19">
+            <font face="Verdana" size="2" color="#333333">ipp_w7.h</font>
+        </td>
+        <td width="643" height="19">
+            <font face="Verdana" size="2" color="#333333">Optimized for processors with Intel SSE2 </font>
+        </td>
+    </tr>
+        <tr>
+            <td width="105" height="19">
+                <font face="Verdana" size="2" color="#333333">ipp_s8.h</font>
+            </td>
+            <td width="643" height="19">
+                <font face="Verdana" size="2" color="#333333">Optimized for Intel&reg; Atom&trade; processor with SSSE3</font>
+            </td>
+        </tr>
+        <tr>
+            <td width="105" height="19">
+                <font face="Verdana" size="2" color="#333333">ipp_p8.h</font>
+            </td>
+            <td width="643" height="19">
+                <font face="Verdana" size="2" color="#333333">Optimized for processors with Intel SSE4.2 and Intel&reg; Advanced Encryption Standard New Instructions (Intel&reg; AES-NI)</font>
+            </td>
+        </tr>
+        <tr>
+            <td width="105" height="19">
+                <font face="Verdana" size="2" color="#333333">ipp_g9.h</font>
+            </td>
+            <td width="643" height="19">
+                <font face="Verdana" size="2" color="#333333">Optimized for processors with Intel&reg; Advanced Vector Extensions
+                    (Intel&reg; AVX) and Intel AES-NI</font>
+            </td>
+        </tr>
+        <tr>
+            <td width="105" height="19">
+                <font face="Verdana" size="2" color="#333333">ipp_h9.h</font>
+            </td>
+            <td width="643" height="19">
+                <font face="Verdana" size="2" color="#333333">Optimized for processors with Intel&reg; Advanced Vector Extensions 2
+                     (Intel&reg; AVX2) and Intel AES-NI </font>
+            </td>
+        </tr>
+    </table>
+    <h2>
+        <font face="Verdana" size="3" color="#006699">Directory Contents</font></h2>
+    <table border="1" cellspacing="0" height="82" width="767" cellpadding="4">
+        <tr>
+            <td width="111" height="26" bgcolor="#000000">
+                <font color="#FFFFFF" face="Verdana" size="2"><b>File</b></font>
+            </td>
+            <td width="634" height="26" bgcolor="#000000">
+                <font color="#FFFFFF" face="Verdana" size="2"><b>Description</b></font>
+            </td>
+        </tr>
+        <tr>
+            <td width="111" height="26">
+                <font face="Verdana" size="2" color="#333333">readme.htm </font>
+            </td>
+            <td width="634" height="26">
+                <font face="Verdana" size="2" color="#333333">This file, Creating Single-Processor Executables&nbsp;</font>
+            </td>
+        </tr>
+        <tr>
+            <td width="111" height="28">
+                <font face="Verdana" size="2" color="#333333">ipp_*.h </font>
+            </td>
+            <td width="634" height="28">
+                <font face="Verdana" size="2" color="#333333">Files that redefine each Intel&#174;
+                    IPP symbol to the processor-specific counterpart</font>
+            </td>
+        </tr>
+</table>
+
+<p id="IPP_SAMPLES__OptNotice">
+
+<table cellpadding="4"  frame="border" border="1" cellspacing="0" > 
+	 <tr><th  bgcolor="#555555" align=left><p>
+		<font color="#FFFFFF">Optimization Notice</font></p></th></tr>
+ 	 <tr><td bgcolor="#f5f5f5" valign="top" width="100%" >
+				  Intel's compilers may or may not optimize to the same degree for non-Intel
+				  microprocessors for optimizations that are not unique to Intel microprocessors.
+				  These optimizations include SSE2, SSE3, and SSSE3 instruction sets and other
+				  optimizations. Intel does not guarantee the availability, functionality, or
+				  effectiveness of any optimization on microprocessors not manufactured by Intel.
+				  Microprocessor-dependent optimizations in this product are intended for use
+				  with Intel microprocessors. Certain optimizations not specific to Intel
+				  microarchitecture are reserved for Intel microprocessors. Please refer to the
+				  applicable product User and Reference Guides for more information regarding the
+				  specific instruction sets covered by this notice. 
+				  <p>Notice revision #20110804 
+				  </p></td></tr>		   
+  </table>
+
+
+
+<h2>
+<a name="IPP__Disclaimer"></a>
+Legal Information</h2>
+
+<p>
+INFORMATION IN THIS DOCUMENT IS PROVIDED IN CONNECTION WITH INTEL&reg;
+PRODUCTS.  NO LICENSE, EXPRESS OR IMPLIED, BY ESTOPPEL OR OTHERWISE, TO
+ANY INTELLECTUAL PROPERTY RIGHTS IS GRANTED BY THIS DOCUMENT.  EXCEPT AS
+PROVIDED IN INTEL'S TERMS AND CONDITIONS OF SALE FOR SUCH PRODUCTS,
+INTEL ASSUMES NO LIABILITY WHATSOEVER, AND INTEL DISCLAIMS ANY EXPRESS
+OR IMPLIED WARRANTY, RELATING TO SALE AND/OR USE OF INTEL PRODUCTS
+INCLUDING LIABILITY OR WARRANTIES RELATING TO FITNESS FOR A PARTICULAR
+PURPOSE, MERCHANTABILITY, OR INFRINGEMENT OF ANY PATENT, COPYRIGHT OR
+OTHER INTELLECTUAL PROPERTY RIGHT.
+</p><p>
+
+A &quot;Mission Critical Application&quot; is any application in which failure of the 
+Intel Product could result, directly or indirectly, in personal injury or 
+death.&nbsp; SHOULD YOU PURCHASE OR USE INTEL&#39;S PRODUCTS FOR ANY SUCH MISSION 
+CRITICAL APPLICATION, YOU SHALL INDEMNIFY AND HOLD INTEL AND ITS SUBSIDIARIES, 
+SUBCONTRACTORS AND AFFILIATES, AND THE DIRECTORS, OFFICERS, AND EMPLOYEES OF 
+EACH, HARMLESS AGAINST ALL CLAIMS COSTS, DAMAGES, AND EXPENSES AND REASONABLE 
+ATTORNEYS&#39; FEES ARISING OUT OF, DIRECTLY OR INDIRECTLY, ANY CLAIM OF PRODUCT 
+LIABILITY, PERSONAL INJURY, OR DEATH ARISING IN ANY WAY OUT OF SUCH MISSION 
+CRITICAL APPLICATION, WHETHER OR NOT INTEL OR ITS SUBCONTRACTOR WAS NEGLIGENT IN 
+THE DESIGN, MANUFACTURE, OR WARNING OF THE INTEL PRODUCT OR ANY OF ITS PARTS.</p><p>
+Intel may make changes to specifications and product descriptions at any time, 
+without notice.&nbsp; Designers must not rely on the absence or characteristics of 
+any features or instructions marked &quot;reserved&quot; or &quot;undefined&quot;.&nbsp; Intel reserves 
+these for future definition and shall have no responsibility whatsoever for 
+conflicts or incompatibilities arising from future changes to them.&nbsp; The 
+information here is subject to change without notice.&nbsp; Do not finalize a design 
+with this information.</p>
+<p>
+The products described in this document may contain design defects or
+errors known as errata which may cause the product to deviate from
+published specifications.  Current characterized errata are available on
+request.
+</p>
+<p>
+Contact your local Intel sales office or your distributor to obtain the
+latest specifications and before placing your product order.  Copies of
+documents which have an order number and are referenced in this
+document, or other Intel literature, may be obtained by calling
+1-800-548-4725, or by visiting Intel's Web Site.
+</p><p>
+Intel processor numbers are not a measure of performance.  Processor
+numbers differentiate features within each processor family, not across
+different processor families.  See
+http://www.intel.com/products/processor_number for details.
+</p><p>
+
+BlueMoon, BunnyPeople, Celeron, Celeron Inside, Centrino, Centrino Inside, Cilk, 
+Core Inside, E-GOLD, Flexpipe, i960, Intel, the Intel logo, Intel AppUp, Intel 
+Atom, Intel Atom Inside, Intel Core, Intel Inside, Intel Insider, the Intel 
+Inside logo, Intel NetBurst, Intel NetMerge, Intel NetStructure, Intel 
+SingleDriver, Intel SpeedStep, Intel Sponsors of Tomorrow., the Intel Sponsors 
+of Tomorrow. logo, Intel StrataFlash, Intel vPro, Intel XScale, InTru, the InTru 
+logo, the InTru Inside logo, InTru soundmark, Itanium, Itanium Inside, MCS, MMX, 
+Moblin, Pentium, Pentium Inside, Puma, skoool, the skoool logo, SMARTi, Sound 
+Mark, Stay With It, The Creators Project, The Journey Inside, Thunderbolt, 
+Ultrabook, vPro Inside, VTune, Xeon, Xeon Inside, X-GOLD, XMM, X-PMU and XPOSYS 
+are trademarks of Intel Corporation in the U.S. and/or other countries.
+</p><p>
+* Other names and brands may be claimed as the property of others.
+</p>
+	<p>
+Microsoft, Windows, and the 
+Windows logo are trademarks, or registered trademarks of Microsoft Corporation 
+in the United States and/or other countries.</p>
+<p>
+Copyright &copy; 2012-2020, Intel Corporation.  All rights reserved.
+</p>
+</body>
+</html>
