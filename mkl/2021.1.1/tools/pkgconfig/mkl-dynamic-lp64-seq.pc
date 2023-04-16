@@ -1,0 +1,53 @@
+#===============================================================================
+# Copyright 2017-2020 Intel Corporation.
+#
+# This software and the related documents are Intel copyrighted  materials,  and
+# your use of  them is  governed by the  express license  under which  they were
+# provided to you (License).  Unless the License provides otherwise, you may not
+# use, modify, copy, publish, distribute,  disclose or transmit this software or
+# the related documents without Intel's prior written permission.
+#
+# This software and the related documents  are provided as  is,  with no express
+# or implied  warranties,  other  than those  that are  expressly stated  in the
+# License.
+#===============================================================================
+
+prefix=D:/Intel/oneAPI/mkl/2021.1
+
+exec_prefix=${prefix}
+
+libdir=${exec_prefix}/lib/intel64
+
+includedir=${prefix}/include
+
+
+
+#info
+
+Name: mkl
+
+Description: Intel(R) Math Kernel Library
+
+Version: 2021.1
+
+URL: https://software.intel.com/en-us/mkl
+
+#Link line
+
+Libs: "${libdir}"/mkl_intel_lp64_dll.lib "${libdir}"/mkl_sequential_dll.lib "${libdir}"/mkl_core_dll.lib
+
+#Compiler line
+
+Cflags: -I"${includedir}"
+
+
+
+#Use Intel(R) MKL Link Line Advisor to get Libs and Cflags for other Intel(R) MKL configurations:
+
+#https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
+
+#
+
+#Or Intel(R) MKL Link Line Tool: ${exec_prefix}/tools/mkl_link_tool
+
+

@@ -1,0 +1,43 @@
+;===============================================================================
+; Copyright 2006-2020 Intel Corporation.
+;
+; This software and the related documents are Intel copyrighted  materials,  and
+; your use of  them is  governed by the  express license  under which  they were
+; provided to you (License).  Unless the License provides otherwise, you may not
+; use, modify, copy, publish, distribute,  disclose or transmit this software or
+; the related documents without Intel's prior written permission.
+;
+; This software and the related documents  are provided as  is,  with no express
+; or implied  warranties,  other  than those  that are  expressly stated  in the
+; License.
+;===============================================================================
+
+MKL_DDIAMV
+MKL_DDIAMM
+MKL_DDIASV
+MKL_DDIASM
+MKL_DSKYMM
+MKL_DSKYSV
+MKL_DSKYMV
+MKL_DSKYSM
+MKL_DCOOMM
+MKL_DCOOMV
+MKL_DCOOSM
+MKL_DCOOSV
+MKL_DCSCMM
+MKL_DCSCMV
+MKL_DCSCSM
+MKL_DCSCSV
+MKL_DCSRMM
+MKL_DCSRMV
+MKL_DCSRSM
+MKL_DCSRSV
+MKL_DCSRGEMV
+MKL_DCSRSYMV
+MKL_DCSRTRSV
+MKL_DCOOSYMV
+MKL_DCOOGEMV
+MKL_DCOOTRSV
+MKL_DDIASYMV
+MKL_DDIAGEMV
+MKL_DDIATRSV

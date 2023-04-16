@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<HTML>
+<HEAD>
+    <TITLE>Intel&reg; oneAPI Math Kernel Library (Intel&reg; MKL) Link Line Advisor</TITLE>
+    <STYLE>
+    BODY {
+        FONT-SIZE: 10pt;
+        MARGIN-LEFT: 30px;
+        COLOR: #333333;
+        FONT-FAMILY: Verdana, Arial, sans-serif;
+        BACKGROUND-COLOR: #ffffff;
+    }
+    TABLE {
+        MARGIN-TOP: 0.3em;
+        FONT-SIZE: 10pt;
+        MARGIN-BOTTOM: 5pt;
+        BORDER-COLLAPSE: collapse;
+    }
+    TD {
+        BORDER-RIGHT: #bababa 1px solid;
+        BORDER-TOP: #bababa 1px solid;
+        BORDER-LEFT: #bababa 1px solid;
+        BORDER-BOTTOM: #bababa 1px solid;
+        MARGIN-BOTTOM: 0px;
+        VERTICAL-ALIGN: top;
+        PADDING-RIGHT: 5px;
+        PADDING-LEFT: 5px;
+        PADDING-BOTTOM: 5px;
+        PADDING-TOP: 5px;
+        MARGIN-TOP: 0px;
+        MARGIN-LEFT: 0px;
+        LINE-HEIGHT: 120%;
+        TEXT-ALIGN: left;
+    }
+    TD.title {
+        BORDER-RIGHT: #FFFFFF 1px solid;
+        BORDER-TOP: #FFFFFF 1px solid;
+        BORDER-LEFT: #FFFFFF 1px solid;
+        BORDER-BOTTOM: #bababa 1px solid;
+        MARGIN-BOTTOM: 0px;
+        VERTICAL-ALIGN: top;
+        PADDING-RIGHT: 5px;
+        PADDING-LEFT: 5px;
+        PADDING-BOTTOM: 5px;
+        PADDING-TOP: 5px;
+        MARGIN-TOP: 0px;
+        MARGIN-LEFT: 0px;
+        LINE-HEIGHT: 120%;
+        TEXT-ALIGN: left;
+        FONT-SIZE: 12pt;
+    }
+    TD.button {
+        BORDER-RIGHT: #FFFFFF 1px solid;
+        BORDER-TOP: #FFFFFF 1px solid;
+        BORDER-LEFT: #FFFFFF 1px solid;
+        BORDER-BOTTOM: #bababa 1px solid;
+        MARGIN-BOTTOM: 0px;
+        VERTICAL-ALIGN: top;
+        PADDING-RIGHT: 5px;
+        PADDING-LEFT: 5px;
+        PADDING-BOTTOM: 5px;
+        PADDING-TOP: 5px;
+        MARGIN-TOP: 0px;
+        MARGIN-LEFT: 0px;
+        LINE-HEIGHT: 120%;
+        TEXT-ALIGN: right;
+    }
+    TR {
+        VERTICAL-ALIGN: top;
+    }
+    #linking_line {
+        width: 100%;
+        height: 6em;
+    }
+    #compiler_line {
+        width: 100%;
+        height: 7em;
+    }
+    #outputcell div {
+        text-align: justify;
+        PADDING-TOP: 5px;
+    }
+    </STYLE>
+</HEAD>
+
+<SCRIPT language="JavaScript">
+//
+// Default options
+//
+
+var product = {
+    defaults: {
+        composer:   	false,
+        sdl: {
+            cpu:		true,
+            mic:		false
+        },
+        dynamic:		true,
+        compilers: {
+            gcc:      	true,
+            gfortran: 	true,
+            icc:      	true,
+            ifort:		true,
+            pgf:      	true,
+            pgcc:     	true,
+            clang:    	false,
+            cl:       	true,
+            dpcpp:      false,
+            icx:        true
+        },
+        os: {
+            win:		true,
+            lnx:		true,
+            mac:		true
+        },
+        platforms: {
+            ia32: true,
+            intel64: true
+        },
+        cluster: {
+            cpardiso:       false,
+            cpardiso_lib:   false,
+            cdft:           true,
+            scalapack:      true,
+            blacs:          true
+        },
+        ifaces: {
+            lp64:   true,
+            ilp64:  true,
+            dpcpp:  false
+        },
+        threadings: {
+            omp:        true,
+            sequential: true,
+            tbb:        true
+        },
+        mpi: {
+            sgimpt:     true,
+            mpich:      true,
+            mpich2:     true,
+            openmpi:    true,
+            msmpi:      true,
+            intelmpi:   true
+        },
+        mic: {
+            lnx: {
+                ao:     true,
+                cao:    true,
+                native: true
+            },
+            win: {
+                ao:     true,
+                cao:    true,
+                native: true
+            }
+        },
+        ver:  	2021
+    },
+    options: [
+        [
+            'oneMKL 2021.1-beta',
+            {
+                compilers: {
+                    dpcpp:  true,
+                    icx:    false    // TODO: set true when ready to introduce icx 
+                },
+                cluster: {
+                    cpardiso: true
+                },
+                ver: 2021
+            }
+        ],
+        [
+            'Intel(R) MKL 2020.0',
+            {
+                platforms: {
+                    ia32: false,
+                },
+                cluster: {
+                    cpardiso: true
+                },
+                ver: 2020
+            }
+        ],
+        [
+            'Intel(R) MKL 2019.0',
+            {
+                platforms: {
+                    ia32: false,
+                },
+                cluster: {
+                    cpardiso: true
+                },
+                ver: 2019
+            }
+        ],
+        [
+            'Intel(R) MKL 2018.0',
+            {
+                sdl: {
+                    mic: true
+                },
+                mic: {
+                    lnx: {
+                        native: false
+                    }
+                },
+                cluster: {
+                    cpardiso: true
+                },
+                ver: 2018
+            }
+        ],
+        [
+            'Intel(R) MKL 2017.0',
+            {
+                sdl: {
+                    mic: true
+                },
+                cluster: {
+                    cpardiso: true
+                },
+                ver: 2017
+            }
+        ],
+        [
+            'Intel(R) Parallel Studio XE 2020',
+            {
+                composer: true,
+                sdl: {
+                    mic: true
+                },
+                cluster: {
+                    cpardiso: true
+                },
+                ver: 2020
+            }
+        ],
+        [
+            'Intel(R) Parallel Studio XE 2019',
+            {
+                composer: true,
+                sdl: {
+                    mic: true
+                },
+                cluster: {
+                    cpardiso: true
+                },
+                ver: 2019
+            }
+        ],
+        [
+            'Intel(R) Parallel Studio XE 2018',
+            {
+                composer: true,
+                sdl: {
+                    mic: true
+                },
+                cluster: {
+                    cpardiso: true
+                },
+                ver: 2018
+            }
+        ],
+        [
+            'Intel(R) Parallel Studio XE 2017',
+            {
+                composer: true,
+                sdl: {
+                    mic: true
+                },
+                cluster: {
+                    cpardiso: true
+                },
+                ver: 2017
+            }
+        ]
+    ]
+}
+
+var os = {
+    defaults: {
+        selected: {
+            os: false,
+            target: null
+        }
+    },
+    options: [
+        [ '<Select operating system>' ],
+        [ 
+            'macOS*',
+            function (f) {
+                return f.os && f.os.mac
+            },
+            {
+                selected: { os: "mac" },
+                compilers: {
+                    cl:         false,
+                    gfortran:   false,
+                    clang:      true
+                },
+                platforms: {
+                    ia32: false,
+                },
+                mpi: {
+                    sgimpt:     false,
+                    mpich:      true,
+                    mpich2:     false,
+                    openmpi:    false,
+                    msmpi:      false,
+                    intelmpi:   false
+                }
+            }
+        ],
+        [
+            'Windows*',
+            function(f){
+                return f.os && f.os.win
+            },
+            {
+                selected: {
+                    os: "win"
+                },
+                platforms: {
+                    ia32: true,
+                },
+                compilers: {
+                    gcc: false,
+                    gfortran: false
+                },
+                mpi: {
+                    sgimpt: false,
+                    mpich2: false
+                }
+            }
+        ],
+        [
+            'Linux*',
+            function(f) {
+                return f.os && f.os.lnx
+            },
+            {
+                selected: {
+                    os: "lnx"
+                },
+                platforms: {
+                    ia32: true,
+                },
+                compilers: {
+                    cl: false
+                },
+                mpi: {
+                    msmpi: false
+                }
+            }
+        ]
+    ]
+};
+var phi = {
+    defaults: {
+        selected: {
+            phi: null
+        }
+    },
+    enabled: function(f) {
+        return f.selected.os && ((f.selected.os == "win" && f.mic.win) || (f.selected.os == "lnx" && f.mic)) && f.ver < 2018
+    },
+    options: [
+        [ '<Select usage model>' ],
+        [ 'None',
+            { 
+                selected: {
+                    target: "none"
+                }
+            }
+        ],
+        [ 'Native', function(f) { return f.ver < 2018; },
+            {
+                selected: {
+                    target: "mic_native"
+                },
+                compilers: {
+                    cl:         false,
+                    pgf:        false,
+                    pgcc:       false,
+                    gfortran:   false,
+                    gcc:        false
+                },
+                mpi: {
+                    openmpi:    false,
+                    msmpi:      false,
+                    mpich:      false,
+                    mpich2:     false,
+                    sgimpt:     false
+                },
+                platforms: {
+                    ia32: false
+                },
+                sdl: {
+                    cpu: false
+                },
+                cluster: {
+                    cpardiso: false
+                }
+            }
+        ],
+        [ 'Automatic Offload',
+            {
+                selected: {
+                    target: "mic_ao"
+                },
+                compilers: {
+                    cl:         false,
+                    pgf:        false,
+                    pgcc:       false,
+                    gfortran:   false,
+                    gcc:        false
+                },
+                mpi: {
+                    openmpi:    false,
+                    msmpi:      false,
+                    mpich:      false,
+                    mpich2:     false,
+                    sgimpt:     false
+                },
+                platforms: {
+                    ia32: false
+                },
+                sdl: false,
+                threadings: {
+                    tbb:false,
+                    sequential:false
+                }
+            }
+        ],
+        [ 'Compiler Assisted Offload',
+            {
+                selected: {
+                    target: "mic_cao"
+                },
+                compilers: {
+                    cl:         false,
+                    pgf:        false,
+                    pgcc:       false,
+                    gfortran:   false,
+                    gcc:        false
+                },
+                mpi: {
+                    intelmpi:   false,
+                    openmpi:    false,
+                    msmpi:      false,
+                    mpich:      false,
+                    mpich2:     false,
+                    sgimpt:     false
+                },
+                platforms: {
+                    ia32: false
+                },
+                sdl: false,
+                cluster: false
+            }
+        ]
+    ]
+};
+
+var compilers = {
+    defaults: {
+        selected: {
+            compiler: null,
+            vendor:false
+        }
+    },
+    enabled: function(f) {
+        return f.selected.os && ( !phi.enabled(f) || f.selected.target )
+    },
+    options: [
+        [ '<Select compiler>' ],
+        [ 'Intel(R) Fortran Classic',
+            function(f) {
+                return f.compilers && f.compilers.ifort
+            },
+            {
+                selected: {
+                    compiler:"ifort",
+                    vendor:"intel"
+                }
+            }
+        ],
+        [ 'Intel(R) C/C++ Classic',
+            function(f) {
+                return f.compilers && f.compilers.icc
+            },
+            {
+                selected: {
+                    compiler:"icc",
+                    vendor:"intel"
+                }
+            }
+        ],
+        [ 'GNU Fortran',
+            function(f) {
+                return f.compilers && f.compilers.gfortran
+            },
+            {
+                selected: {
+                    compiler:"gfortran", vendor:"gnu"
+                },
+                ___:function(f) {
+                    explicit_linkline.options[0][0].checked = true
+                }
+            }
+        ],
+        [ 'GNU C/C++',
+            function(f) {
+                return f.compilers && f.compilers.gcc
+            },
+            {
+                selected: {
+                    compiler: "gcc",
+                    vendor:"gnu"
+                },
+                ___:function(f) {
+                    explicit_linkline.options[0][0].checked = true
+                }
+            }
+        ],
+        [ 'PGI Fortran',
+            function(f) {
+                return f.compilers && f.compilers.pgf && (f.ver < 2021 || f.selected.os != "mac")
+            },
+            {
+                selected: {
+                    compiler:"pgf",
+                    vendor:"pgi"
+                },
+                threadings: {
+                    tbb:false
+                },
+                platforms: {
+                    ia32:false
+                },
+                ___:function(f) {
+                    explicit_linkline.options[0][0].checked = true
+                }
+            }
+        ],
+        [ 'PGI C/C++',
+            function(f) {
+                return f.compilers && f.compilers.pgcc && (f.ver < 2021 || f.selected.os != "mac")
+            },
+            {
+                selected: {
+                    compiler:"pgcc",
+                    vendor:"pgi"
+                },
+                threadings: {
+                    tbb:false
+                },
+                platforms: {
+                    ia32:false
+                },
+                ___:function(f) {
+                    explicit_linkline.options[0][0].checked = true
+                }
+            }
+        ],
+        [ 'Clang',
+            function(f) {
+                return f.compilers && f.compilers.clang
+            },
+            {
+                selected: {
+                    compiler:"clang",
+                    vendor:"gnu"
+                },
+                ifaces: {
+                    f95:false
+                },
+                threadings: {
+                    tbb:false
+                },
+                ___:function(f) {
+                    explicit_linkline.options[0][0].checked = true
+                }
+            }
+        ],
+        [ 'MS C/C++',
+            function(f) {
+                return f.compilers && f.compilers.cl
+            },
+            {
+                selected: {
+                    compiler:"cl",
+                    vendor:"ms"
+                },
+                ___:function(f) {
+                    explicit_linkline.options[0][0].checked = true
+                }
+            }
+        ],
+        [ 'oneAPI DPC++/C++',
+            function(f) {
+                return f.compilers && f.compilers.dpcpp && (f.ver < 2021 || f.selected.os != "mac")
+            },
+            {
+                selected: {
+                    compiler:"dpcpp",
+                    vendor:"intel"
+                },
+                ifaces: {
+                    dpcpp:true
+                },
+                ___:function(f) {
+                    explicit_linkline.options[0][0].checked = true
+                }
+            }
+        ]
+    ]
+}
+
+var arch = {
+    defaults: {
+        selected: {
+            arch: null
+        }
+    },
+    enabled: function(f) {
+        var enabled = f.selected.compiler;
+        if (!enabled) {
+            cleanHelpRow(5)
+        };
+        return enabled;
+    },
+    select: function(option) {
+        switch (option) {
+            case "intel64":
+                arch.element.selectedIndex = 1;
+                break;
+            case "ia32":
+                arch.element.selectedIndex = 2;
+                break;
+        }
+        update()
+    },
+    options: [
+        [ '<Select architecture>',
+            function(f) {
+                return f.platforms.intel64 && (f.platforms.ia32 || f.selected.os != "mac")
+            }
+        ],
+        [ 'Intel(R) 64',
+            function(f) {
+                return f.platforms.intel64
+            },
+            {
+                selected: {
+                    arch: "intel64"
+                }
+            }
+        ],
+        [ 'IA-32',
+            function(f) {
+                return f.platforms.ia32
+            },
+            {
+                selected: {
+                    arch: "ia32"
+                },
+                mpi: {
+                    msmpi: false,
+                    sgimpt: false
+                },
+                ifaces: {
+                    ilp64: false
+                },
+                ___: function (f) {
+                    (f.cluster = false) || (f.cluster.cpardiso = false)
+                }
+            }
+        ],
+        [ 'Help me',
+            function(f) {
+                return (f.platforms.intel64 && f.platforms.ia32)
+            },
+            {
+                ___: function(f) {
+                    var archHelp = cloneObject(help.archDef);
+                    switch (f.selected.compiler) {
+                        case "ifort":
+                            archHelp.text = archHelp.text.replace(/-command-/, "ifort -V");
+                            archHelp.text = archHelp.text.replace(/-string-/, "for applications running on");
+                            break;
+                        case "icc":
+                            archHelp.text = archHelp.text.replace(/-command-/, (f.selected.os == "win") ? "icl -V" : "icc -V")
+                            archHelp.text = archHelp.text.replace(/-string-/,"for applications running on");
+                            break;
+                        case "gfortran":
+                        case "gcc":
+                        case "clang":
+                            archHelp = help.archGNU;
+                            break;
+                        case "pgf":
+                            archHelp.text = archHelp.text.replace(/-command-/, "pgf -V");
+                            archHelp.text = archHelp.text.replace(/-string-/, "target on");
+                            break;
+                        case "pgcc":
+                            archHelp.text = archHelp.text.replace(/-command-/,"pgcc -V");
+                            archHelp.text = archHelp.text.replace(/-string-/,"target on");
+                            break;
+                        case "ifort":
+                            archHelp.text = archHelp.text.replace(/-command-/, "cl");
+                            archHelp.text = archHelp.text.replace(/-string-/, "for");
+                            break;
+                    }
+                    if (f.selected.os == "win") {
+                        archHelp.text = archHelp.text.replace(/terminal/,"comand prompt");
+                    }
+                    createHelp(5, "row_arch", "arch", archHelp, arch, f);
+                }
+            }
+        ]
+    ]
+}
+
+var linktype = {
+    defaults: {
+        selected: {
+            linktype: null
+        }
+    },
+    enabled: function (f) {
+        return f.selected.arch
+    },
+    options: [
+        [ '<Select linking>'],
+        [ 'Static',
+            {
+                selected: {
+                    linktype: "static"
+                },
+                ___:function(f) {
+                    explicit_linkline.options[0][0].checked = true
+                }
+            }
+        ],
+        ['Dynamic',
+            {
+                selected: {
+                    linktype: "dynamic"
+                },
+                ___: function (f) {
+                    if ( f.selected.os == 'mac' ) {
+                        f.mpi.mpich = true;
+                    } else {
+                        f.mpi.mpich = false;
+                    }
+                    if ( f.selected.os == 'lnx' && f.selected.target == 'none') {
+                        f.mpi.openmpi   = true;
+                        f.mpi.sgimpt    = true;
+                        f.mpi.mpich     = true;
+                    } else {
+                        f.mpi.openmpi   = false;
+                        f.mpi.sgimpt    = false;
+                    }
+                }
+            }
+        ],
+        [ 'Single Dynamic Library',
+            function (f) {
+                return f.sdl && (f.sdl.cpu || f.sdl.mic) && (f.selected.compiler != "icx")
+            },
+            {
+                selected: {
+                    linktype: "sdl"
+                },
+                mpi: {
+                    mpich: false,
+                    openmpi: false
+                },
+                cluster: false,
+                ifaces: {
+                    f95:false
+                },
+                ___:function(f) {
+                    explicit_linkline.options[0][0].checked = true
+                }
+            }
+        ]
+    ]
+}
+
+var iface = {
+    defaults: {
+        selected: {
+            iface:null
+        }
+    },
+    enabled: function(f) {
+        var enabled = (f.selected.linktype && f.selected.linktype != "sdl" && f.selected.arch != "ia32");
+        if (!enabled) {
+            cleanHelpRow(7)
+        };
+        return enabled;
+    },
+    select: function(option){
+        switch (option) {
+            case "lp64":
+                iface.element.selectedIndex = 1;
+                break;
+            case "ilp64":
+                iface.element.selectedIndex = 2;
+                break;
+            case "dpcpp":
+                iface.element.selectedIndex = 3;
+                break;
+        }
+        update()
+    },
+    options: [
+        [ '<Select interface>',
+            function(f) {
+                return f.selected.linktype != "sdl" && f.selected.arch != "ia32"
+            }
+        ],
+        [ 'C/Fortran API with 32-bit integer',
+            function(f) {
+                return f.selected.linktype != "sdl" && f.ifaces.lp64
+            },
+            {
+                selected: {
+                    iface:"lp64"
+                }
+            }
+        ],
+        [ 'C/Fortran API with 64-bit integer',
+            function(f) {
+                return f.selected.linktype != "sdl" && f.selected.arch != "ia32" && f.ifaces.ilp64
+            },
+            {
+                selected: {
+                    iface:"ilp64"
+                }
+            }
+        ],
+        [ 'DPC++ API',
+            function(f) {
+                return f.selected.compiler == "dpcpp"
+            },
+            {
+                selected: {
+                    iface:"dpcpp_api"
+                }
+            }
+        ],
+        [ 'Help me',
+            function(f) {
+                return f.selected.linktype != "sdl" && f.selected.arch != "ia32" && f.ifaces.ilp64 && f.ifaces.lp64& f.selected.compiler != "dpcpp"
+            },
+            {
+                ___:function(f) {
+                    var ifaceHelp;
+                    switch (f.selected.compiler) {
+                        case "ifort":
+                            ifaceHelp = cloneObject(help.ifaceF);
+                            ifaceHelp.text = (f.selected.os == "win") ? ifaceHelp.text.replace(/-option-/, "/4I8") : ifaceHelp.text.replace(/-option-/, "-i8");
+                            break;
+                        case "icc":
+                            ifaceHelp = cloneObject(help.ifaceC);
+                            break;
+                        case "gfortran":
+                            ifaceHelp = cloneObject(help.ifaceF);
+                            ifaceHelp.text = ifaceHelp.text.replace(/-option-/, "-fdefault-integer-8");
+                            break;
+                        case "gcc":
+                        case "clang":
+                            ifaceHelp = cloneObject(help.ifaceC);
+                            break;
+                        case "pgf":
+                            ifaceHelp = cloneObject(help.ifaceF);
+                            ifaceHelp.text = ifaceHelp.text.replace(/-option-/, "-i8");
+                            break;
+                        case "pgcc":
+                            ifaceHelp = cloneObject(help.ifaceC);
+                            break;
+                        case "ifort":
+                            ifaceHelp = cloneObject(help.ifaceF);
+                            break;
+                        case "icx":
+                            ifaceHelp = cloneObject(help.ifaceC);
+                            break;
+                    }
+                    if ( f.selected.os == "win" ) {
+						ifaceHelp.text = ifaceHelp.text.replace(/-ILP64_HELP_URL-/,"https://software.intel.com/content/www/us/en/develop/documentation/mkl-windows-developer-guide/top/linking-your-application-with-the-intel-math-kernel-library/linking-in-detail/linking-with-interface-libraries/using-the-ilp64-interface-vs-lp64-interface.html");
+                    } else if ( f.selected.os == "lnx" ) {
+                        ifaceHelp.text = ifaceHelp.text.replace(/-ILP64_HELP_URL-/,"https://software.intel.com/content/www/us/en/develop/documentation/mkl-linux-developer-guide/top/linking-your-application-with-the-intel-math-kernel-library/linking-in-detail/linking-with-interface-libraries/using-the-ilp64-interface-vs-lp64-interface.html");
+                    } else {
+                        ifaceHelp.text = ifaceHelp.text.replace(/-ILP64_HELP_URL-/,"https://software.intel.com/content/www/us/en/develop/documentation/mkl-macos-developer-guide/top/linking-your-application-with-the-intel-math-kernel-library/linking-in-detail/linking-with-interface-libraries/using-the-ilp64-interface-vs-lp64-interface.html");
+                    }
+                    createHelp(7, "row_ilp64", "arch", ifaceHelp, iface, f);
+                }
+            }
+        ],
+        [ '[Selected at runtime]',
+            function(f) {
+                return f.selected.linktype == "sdl"
+            },
+            {
+                selected: {
+                    iface:"runtime"
+                }
+            }
+        ]
+    ]
+}
+
+var threading = {
+    defaults: {
+        selected: { threading:null }
+    },
+    enabled: function(f) {
+        var enabled = ((f.selected.iface || (f.selected.linktype && f.selected.arch == "ia32")) && f.selected.linktype != "sdl");
+        return enabled;
+    },
+    options: [
+        [ '<Select threading>',
+            function(f) {
+                return f.selected.linktype != "sdl"
+            }
+        ],
+        [ 'OpenMP threading',
+            function(f) {
+                return (f.selected.linktype != "sdl") &&
+                       (f.threadings && f.threadings.omp) &&
+                       ((f.selected.compiler != "dpcpp") ||
+                        (f.selected.compiler == "dpcpp" && f.selected.iface != "dpcpp_api"))
+            },
+            {
+                selected: {
+                    threading:"omp"
+                }
+            }
+        ],
+        [ 'Sequential',
+            function(f) {
+                return f.selected.linktype != "sdl" && f.threadings && f.threadings.sequential
+            },
+            {
+                selected: {
+                    threading:"sequential"
+                },
+            }
+        ],
+        ['TBB threading',
+            function (f) {
+                return (f.selected.linktype != "sdl" && f.threadings && f.threadings.tbb) ||
+                       (f.selected.compiler == "dpcpp" && f.selected.iface == "dpcpp_api")
+            },
+            {
+                selected: {
+                    threading: "tbb"
+                }
+            }
+        ],
+        ['[Selected at runtime]',
+            function(f) {
+                return f.selected.linktype == "sdl"
+            },
+            {
+                selected: {
+                    threading:"runtime"
+                }
+            }
+        ]
+    ]
+}
+
+var omp = {
+    defaults: {
+        selected: { omp:null }
+    },
+    enabled: function(f) {
+        return f.selected.threading == "omp" && f.selected.linktype != "sdl"
+    },
+    options: [
+        [ '<Select OpenMP>',
+            function(f) {
+                return f.selected.linktype != "sdl"
+            }
+        ],
+        [ 'Intel(R) (libiomp5)',
+            function(f) {
+                return f.selected.linktype != "sdl"
+            },
+            {
+                selected: {
+                    omp:"intel"
+                }
+            }
+        ],
+        [ 'GNU (libgomp)',
+            function(f) {
+                return f.selected.linktype != "sdl" && f.selected.vendor == "gnu" && f.selected.os != "mac" && f.selected.target != "mic_ao"
+            },
+            {
+                selected: {
+                    omp:"gnu"
+                }
+            }
+        ],
+        [ 'PGI (libpgmp)',
+            function(f) {
+                return f.selected.linktype != "sdl" && (f.selected.os != "mac" || f.selected.linktype == "static") && f.selected.vendor == "pgi" && f.selected.target != "mic_ao"
+            },
+            {
+                selected: {
+                    omp:"pgi"
+                }
+            }
+        ],
+        ['[Selected at runtime]',
+            function(f) {
+                return f.selected.linktype == "sdl"
+            },
+            {
+                selected: {
+                    omp:"runtime"
+                }
+            }
+        ]
+    ]
+}
+
+var cluster = {
+    defaults: {
+        selected: { cluster:{} }
+    },
+    enabled: function(f) {
+        return f.cluster && f.selected.compiler != "dpcpp" && f.selected.compiler != "icx"
+    },
+    options: [
+        [ 'cpardiso',
+            function(f) {
+                return f.cluster && f.cluster.cpardiso
+            },
+            {
+                selected: {
+                    cluster: {
+                        cpardiso:true,
+                        blacs:true
+                    }
+                },
+                ___:function(f) {
+                    cluster.options[3][0].checked = true
+                }
+            }
+        ],
+        [ 'cdft',
+            function(f) {
+                return f.cluster && f.cluster.cdft
+            },
+            {
+                selected: {
+                    cluster: {
+                        cdft:true,
+                        blacs:true
+                    }
+                },
+                ___:function(f) {
+                    cluster.options[3][0].checked = true
+                }
+            }
+        ],
+        [ 'scalapack',
+            function(f) {
+                return f.cluster && f.cluster.scalapack
+            },
+            {
+                selected: {
+                    cluster: {
+                        scalapack:true,
+                        blacs:true
+                    }
+                },
+                ___:function(f) {
+                    cluster.options[3][0].checked = true
+                }
+            }
+        ],
+        [ 'blacs',
+            function(f) {
+                return f.cluster && f.cluster.blacs
+            },
+            {
+                selected: {
+                    cluster: {
+                        blacs:true
+                    }
+                }
+            }
+        ]
+    ]
+}
+
+var mpi = {
+    defaults: {
+        selected: { mpi:null }
+    },
+    enabled: function(f) {
+        return f.cluster && f.selected.cluster.blacs
+    },
+    options: [
+        [ '<Select MPI>' ],
+        [ 'Intel(R) MPI',
+            function(f) {
+                return f.mpi && f.mpi.intelmpi
+            },
+            {
+                selected: {
+                    mpi: 'intelmpi'
+                }
+            }
+        ],
+        [ 'MPICH',
+            function(f) {
+                return f.mpi && f.mpi.mpich && ( f.selected.os == "mac" || ( f.selected.os == "lnx" && f.ver < 2017 ) )
+            },
+            {
+                selected: {
+                    mpi: 'mpich'
+                }
+            }
+        ],
+        [ 'MPICH2',
+            function(f) {
+                return f.mpi && f.mpi.mpich2
+            },
+            {
+                selected: {
+                    mpi: 'mpich2'
+                }
+            }
+        ],
+        [ 'Open MPI',
+            function(f) {
+                return f.mpi && f.mpi.openmpi && f.selected.os != "win"
+            },
+            {
+                selected: {
+                    mpi: 'openmpi'
+                }
+            }
+        ],
+        [ 'SGIMPT',
+            function(f) {
+                return f.mpi && f.mpi.sgimpt
+            },
+            {
+                selected: {
+                    mpi: 'sgimpt'
+                }
+            }
+        ],
+        [ 'MS MPI',
+            function(f) {
+                return f.mpi && f.mpi.msmpi && f.selected.os == "win"
+            },
+            {
+                selected: {
+                    mpi: 'msmpi'
+                }
+            }
+        ]
+    ]
+}
+
+var f95 = {
+    defaults: {
+        selected: { f95:null }
+    },
+    enabled: function(f) {
+        return f.ifaces.f95
+    },
+    options: [
+        [ 'blas95',
+            {
+                selected: {
+                    f95: {
+                        blas95:"blas95"
+                    }
+                }
+            }
+        ],
+        [ 'lapack95',
+            {
+                selected: {
+                    f95: {
+                        lapack95:"lapack95"
+                    }
+                }
+            }
+        ]
+    ]
+}
+
+var explicit_linkline = {
+    defaults: {
+        selected: { explicit_linkline: false }
+    },
+    options: [
+        [ 'link_MKL',
+            {
+                selected: {
+                    explicit_linkline: true
+                }
+            }
+        ]
+    ]
+}
+
+var omp_offload_enabled = {
+    enabled: function(f) {
+        return ((f.selected.compiler == "dpcpp") &&
+                (f.selected.iface == "lp64" || f.selected.iface == "ilp64") &&
+                (f.selected.threading == "sequential" || f.selected.threading == "omp")
+               )
+    },
+    defaults: {
+        selected: { omp_offload_enabled: false }
+    },
+    options: [
+        [ 'omp_offload',
+            {
+                selected: {
+                    omp_offload_enabled: true
+                }
+            }
+        ]
+    ]
+}
+
+//
+// Help dialogs
+//
+
+var iface_help = "Please choose statement which describes the use of integers in your code (see also the Intel MKL User's Guide: <a href=\"-ILP64_HELP_URL-\" target=\"_blank\">\"Using the ILP64 Interface vs. LP64 Interface\"<\a>):<br/><br/>";
+var help = {
+    archDef: {
+        text: "Open a terminal, type `-command-` and note the value returned at the end of the string </br>'-string- &#60;arch&#62;'",
+        options: {
+            intel64: {
+                select: "x64/AMD64/Intel64/EM64T/x86_64/x86-64",
+                enabled: function(f) {
+                    return f.platforms.intel64
+                }
+            },
+            ia32:    {
+                select: "x86/IA-32",
+                enabled: function(f) {
+                    return f.platforms.ia32
+                }
+            },
+            archUnknown: {
+                route: "System responds that command is not recognized",
+                enabled: function(f) {
+                    return f.selected.os != "win"
+                }
+            },
+            archUnknown_win: {
+                route: "System responds that command is not recognized",
+                enabled: function(f) {
+                    return f.selected.os == "win"
+                }
+            },
+            cl: {
+                route: "I use Microsoft Visual Studio project",
+                enabled: function(f) {
+                    return f.selected.os == "win"
+                }
+            }
+        }
+    },
+    archGNU: {
+        text: "Choose what compilation flag do you use",
+        options: {
+            intel64: {
+                select: "-m64",
+                enabled: function(f) {
+                    return f.platforms.intel64
+                }
+            },
+            ia32:    {
+                select: "-m32",
+                enabled: function(f) {
+                    return f.platforms.ia32
+                }
+            },
+            archUnknown: {
+                route: "I don't use any flag"
+            }
+        }
+    },
+    cl: {
+        text: "Select project->Properties: Configuration Properties. See Platform",
+        options: {
+            intel64:  {
+                select: 'x64',
+                enabled: function(f) {
+                    return f.platforms.intel64
+                }
+            },
+            ia32:     {
+                select: 'Win32',
+                enabled: function(f) {
+                    return f.platforms.ia32
+                }
+            },
+        }
+    },
+    archUnknown: {
+        text: "Open a terminal and type</br>\"getconf LONG_BIT\"</br>Note the value returned",
+        options: {
+            intel64:  {
+                select: "64"
+            },
+            ia32:     {
+                select: "32"
+            }
+        }
+    },
+    archUnknown_win: {
+        text: "Open a command prompt and type \"echo %processor_architecture%\" Note the value returned",
+        options: {
+            intel64:  {
+                select: "x64/AMD64/Intel64/EM64T/x86_64/x86-64"
+            },
+            ia32:     {
+                select: "x86/IA-32"
+            },
+        }
+    },
+    ifaceC: {
+        text: iface_help+"Passing MKL_INT arguments to Intel(R) MKL functions according to Intel(R) MKL documentation, where integers are",
+        options: {
+            lp64:   {
+                select: "32-bit integers which have values not greater than 2^31"
+            },
+            ilp64:  {
+                select: "64-bit integers from compiling with -DMKL_ILP64 option"
+            },
+            ifaceCUnknown: {
+                route: "Other"
+            }
+        }
+    },
+    ifaceCUnknown: {
+        text: iface_help+"Directly using integers arguments for Intel(R) MKL functions when MKL_INT was correctly redefined (<a href=\"http://software.intel.com/en-us/articles/use-of-intel-mkl-data-types-in-cc-applications\" target=\"_blank\">see Intel(R) MKL KB-article</a>)and MKL_INT is a",
+        options: {
+            lp64:   {
+                select: "32-bit integer (int, __int32, etc.)"
+            },
+            ilp64:  {
+                select: "64-bit integer (long long int, __int64, etc.)"
+            }
+        }
+    },
+    ifaceF: {
+        text: iface_help+"Passing integer arguments using defaults INTEGER type to Intel(R) MKL functions according to Intel(R) MKL documentation (or Intel(R) MKL FORTRAN headers or modules), where integers are",
+        options: {
+            lp64:   {
+                select: "32-bit integers which have values not greater than 2^31"
+            },
+            ilp64:  {
+                select: "64-bit integers from compiling with -option- option"
+            },
+            ifaceFUnknown: {
+                route: "Other"
+            }
+        }
+    },
+    ifaceFUnknown: {
+        text: iface_help+"Directly using integers arguments for Intel(R) MKL functions via types",
+        options: {
+            lp64:   {
+                select: "INTEGER*4 or INTEGER(KIND=4)"
+            },
+            ilp64:  {
+                select: "INTEGER*8 or INTEGER(KIND=8)"
+            }
+        }
+    }
+};
+
+function deleteHelp(rowNumber,table,element,select,menu,rowName,elementName,features) {
+    var selected;
+    for (var i=0; i<element.length; i++) {
+        if (element[i].checked) {
+            selected = element[i].value;
+            break;
+        }
+    }
+    cleanHelpRow(rowNumber)
+    select ? menu.select(selected) : createHelp(rowNumber,rowName,elementName,help[selected],menu,features)
+}
+
+var helpShown = {};
+function cleanHelpRow(rowNumber) {
+    var table = document.getElementById("MainTable")
+    if (helpShown[rowNumber]) {
+        table.deleteRow(rowNumber);
+        delete helpShown[rowNumber]
+    }
+}
+
+function createHelp(rowNumber, rowName, elementName, helpLocal, menu, features) {
+    var table = document.getElementById("MainTable")
+    cleanHelpRow(rowNumber);
+    helpShown[rowNumber] = true;
+    var row = table.insertRow(rowNumber);
+    row.id = rowName;
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    cell1.innerHTML=helpLocal.text;
+    var element=[];
+    var i=0;
+    for (var key in helpLocal.options) {
+        var opt = helpLocal.options[key];
+        var nextAction = opt.select ? "select" : "route";
+        if ( typeof opt.enabled == "undefined" || opt.enabled(features) ) {
+            element[i] = document.createElement("input");
+            element[i].type = "radio";
+            element[i].name = elementName;
+            element[i].value = key;
+            element[i].onclick = (function(features, select) {
+                return function() {
+                    deleteHelp(rowNumber,table,element,select,menu,rowName,elementName,features);
+                };
+            })(features, nextAction == "select")
+            cell2.appendChild(element[i]);
+            cell2.appendChild(document.createTextNode(opt[nextAction]));
+            cell2.appendChild(document.createElement("br"));
+            cell2.appendChild(document.createElement("br"));
+            i++;
+        }
+    }
+}
+
+//
+// LLA widget
+//
+
+var menu;
+
+function init() {
+    menu = [
+        init_select("version", product),
+        init_select("OS", os),
+        init_select("MIC", phi),
+        init_select("compiler", compilers),
+        init_select("arch", arch),
+        init_select("dynstat", linktype),
+        init_select("iface", iface),
+        init_select("threading", threading),
+        init_select("omp", omp),
+        init_checkboxes("cluster", cluster),
+        init_select("mpi", mpi),
+        init_checkboxes("fortran95", f95),
+        init_checkboxes("link", explicit_linkline),
+        init_checkboxes("omp_offload_checkbox", omp_offload_enabled)
+    ];
+    update();
+}
+
+function reset_all() {
+    for (var i=0; i<menu.length; i++) {
+        if (menu[i].kind == "select") {
+            menu[i].options.selectedIndex = 0
+        } else if (menu[i].kind == "checkboxes") {
+            for (var j=0; j<menu[i].data.options.length; j++) {
+                menu[i].data.options[j][0].checked = false
+            }
+        }
+    }
+    update();
+}
+
+function update() {
+    var choosen_features = { incomplete:false };
+    for ( var idx=0; idx<menu.length; idx++ ) {
+        var select = menu[idx];
+        if (!select) continue
+        if (select.kind == "select") {
+            update_select(select, choosen_features)
+        } else if (select.kind == "checkboxes") {
+            update_checkboxes(select, choosen_features)
+        } else {
+            alert("Unknown option element type: '"+select.kind+"'")
+        }
+    }
+    if (!choosen_features.cluster) choosen_features.selected.cluster = false;
+    update_hints(choosen_features);
+}
+
+function update_checkboxes(checkboxes, choosen_features) {
+    var is_disabled = typeof checkboxes.data.enabled == 'function' && !checkboxes.data.enabled(choosen_features);
+    update_choosen_features_for(checkboxes.data.defaults, {}, choosen_features);
+    for (var i=0; i<checkboxes.data.options.length; i++) {
+        var checkbox = checkboxes.data.options[i][0];
+        checkbox.disabled = is_disabled || !checkbox.should_appear_for(choosen_features);
+        checkbox.checked && (
+            checkbox.disabled && ( checkbox.checked = false ) || (
+                update_choosen_features_for({}, checkbox.features, choosen_features)
+            )
+        )
+    }
+}
+
+function update_select(select, choosen_features) {
+    if ( select.is_dynamic || !select.options.length ) {
+        var index = 0;
+        var selected = select.options.length ? select.options[select.selectedIndex] : null;
+        while ( select.length > 0 )
+            select.remove(0);
+        for ( var i=0; i<select.data.options.length; i++ ) {
+            var option = select.data.options[i][0]
+            if ( option.should_appear_for(choosen_features) ) {
+                if ( selected == option ) {
+                    index = select.length;
+                }
+                select.options[select.length] = option
+            }
+        }
+        select.selectedIndex = index;
+    }
+    select.disabled = ( typeof select.data.enabled === 'function' ) ? !select.data.enabled(choosen_features) : false;
+    select.disabled && (select.selectedIndex = 0);
+    select.disabled || select.selectedIndex != 0 || select.options[0].text.charAt(0) != '<' || (choosen_features.incomplete = true)
+    select.disabled || update_choosen_features_for(select.data.defaults, select.options[select.selectedIndex].features, choosen_features)
+}
+
+function init_checkboxes(name, data) {
+    var menu =  document.linking_widget.elements[name];
+    if (typeof menu.length == 'undefined') {
+        menu = [ menu ]
+    }
+    menu.kind = "checkboxes"
+    menu.data = data
+    for (var i=0; i<menu.length; i++) {
+        for (var j=0; j<data.options.length; j++) {
+            if (typeof data.options[j][0] == 'string' && data.options[j][0] == menu[i].getAttribute('value')) {
+                data.options[j][0] = menu[i]
+                var idx = 1;
+                if ( 'function' === typeof data.options[j][idx] ) {
+                    menu[i].should_appear_for = data.options[j][idx++];
+                } else {
+                    menu[i].should_appear_for = function(){ return true };
+                }
+                menu[i].features = data.options[j][idx]
+            }
+        }
+    }
+    return menu;
+}
+
+function init_select(elemName, data) {
+    var menu = document.linking_widget.elements[elemName];
+    menu.kind = "select"
+    menu.data = data
+    data.element = menu
+    menu.options.length = 0;
+    for (var i=0; i<data.options.length; i++) {
+        var option_data = data.options[i]
+        var option = data.options[i][0] = new Option(option_data[0], i);
+        var idx = 1;
+        if ( 'function' === typeof option_data[idx] ) {
+            option.should_appear_for = option_data[idx++];
+            menu.is_dynamic = true;
+        } else {
+            option.should_appear_for = function(){ return true };
+        }
+        option.features = option_data[idx]
+    }
+    menu.style.width = "350";
+    return menu;
+}
+
+function copy_object(src, dest) {
+    if (!src) return dest;
+    if (src['___'] && typeof src['___'] === 'function') {
+        src.___(dest)
+    }
+    for (var key in src) {
+        if (key === '___' && typeof src[key] === 'function') {
+            continue;
+        }
+        if (src[key] != null && typeof src[key] === 'object') {
+            if (typeof dest[key] !== 'object' || dest[key] == null) {
+                dest[key] = {}
+            }
+            copy_object(src[key], dest[key])
+        } else {
+            dest[key] = src[key];
+        }
+    }
+    return dest;
+}
+
+function update_choosen_features_for(defaults, option_features, choosen_features) {
+    copy_object(defaults, choosen_features);
+    copy_object(option_features, choosen_features);
+}
+
+function makeCommandLine(features, win_host) {
+    var conf_mkl_version = features.ver;
+    var conf_os = features.selected.os;
+    var conf_arch = features.selected.arch;
+    var conf_iface = features.selected.iface;
+    var conf_compiler = features.selected.compiler;
+    var conf_thread = (features.selected.threading == "omp" ? features.selected.omp : features.selected.threading);
+    var conf_linking = features.selected.linktype;
+    var conf_mpi = features.selected.mpi;
+    var conf_cdft = features.selected.cluster.cdft;
+    var conf_scalapack = features.selected.cluster.scalapack;
+    var conf_blacs = features.selected.cluster.blacs;
+    var conf_blas95 = (features.selected.f95 ? features.selected.f95.blas95 : false);
+    var conf_lapack95 = (features.selected.f95 ? features.selected.f95.lapack95 : false);
+    var conf_enable_omp_offload = (conf_compiler == "dpcpp" && conf_iface != "dpcpp_api" && features.selected.omp_offload_enabled);
+    var conf_explicit_linkline = features.selected.explicit_linkline;
+
+// output from rules.i
+    var mklroot = "";
+    var f95root = "";
+    var tbbroot = "";
+    var mkl_compiler_option = "";
+    var mkl_iface_lib = "";
+    var mkl_thread_lib = "";
+    var mkl_core_lib = "";
+    var mkl_sycl_lib = "";
+    var mkl_sycl_options = "";
+    var mkl_rt_lib = "";
+    var mkl_blacs_lib = "";
+    var mkl_cdft_lib = "";
+    var mkl_scalapack_lib = "";
+    var mkl_f95_libs = "";
+    var mkl_addon_lib = "";
+    var mkl_lib_path = "";
+    var tbb_lib_path = "";
+    var before_lib_part = "";
+    var after_lib_part = "";
+    var before_part = "";
+    var add_thread_lib = "";
+    var addon_libs = "";
+    var lib_prefix = "";
+    var lib_suffix = "";
+    var lib_ext = "";
+    var compiler_line = "";
+    var f95_prefix = "";
+    var f95_suffix = "";
+    var mkl_iface_name = "";
+    var omp_offload_options = "";
+    var omp_offload_lib = "";
+    var mkl_compile_line = "";
+    var mkl_link_line = "";
+
+// ============= insert code from src/tools/mkl_link_tool/rules.i =================================
+conf_iface = (conf_arch == "intel64" ? conf_iface : "");
+if (conf_iface == "dpcpp_api")
+    mkl_iface_name = "_ilp64";
+else if (conf_arch == "intel64")
+    mkl_iface_name = "_"+conf_iface;
+
+if (mklroot == "")
+    mklroot = (conf_os != "win") ? "${MKLROOT}" : "%MKLROOT%";
+f95root = (conf_os != "win") ? "${F95ROOT}" : "\"%F95ROOT%\"";
+tbbroot = (conf_os != "win") ? "${TBBROOT}" : "\"%TBBROOT%\"";
+
+if (conf_explicit_linkline)
+    compiler_line = " -I\"" + mklroot + (conf_os == "win" ? "\\" : "/") + "include\"";
+
+if (conf_os == "lnx" || conf_os == "mac") {
+    mkl_lib_path = mklroot + "/lib/" + ((conf_os == "lnx") ? conf_arch + "/" : "");
+    tbb_lib_path = tbbroot + "/lib" + ((conf_os == "lnx") ? "/" + conf_arch + "/gcc4.8" : "");
+    addon_libs  = " -lpthread -lm -ldl";
+
+    if (conf_thread == "intel")
+        add_thread_lib = " -liomp5";
+    else if (conf_thread == "pgi")
+        add_thread_lib = " -pgf90libs -mp";
+    else if (conf_thread == "gnu")
+        add_thread_lib = " -lgomp";
+    else if (conf_thread == "tbb") {
+        if (conf_mkl_version >= 2021) {
+            if (conf_linking == "static") {
+                add_thread_lib = " -L" + tbb_lib_path + " -ltbb";
+                if (conf_os == "mac")
+                    add_thread_lib += " -lc++";
+                else if (conf_compiler != "dpcpp")
+                    add_thread_lib += " -lstdc++";
+            }
+        }
+        else {
+            add_thread_lib = " -ltbb";
+            if (conf_os == "mac")
+                add_thread_lib += " -lc++";
+            else
+                add_thread_lib += " -lstdc++";
+        }
+    }
+
+    if (conf_compiler == "gfortran" || conf_compiler == "gnu_f" ||
+        conf_compiler == "gcc" || conf_compiler == "gnu_c" || conf_compiler == "clang") {
+        compiler_line = (conf_arch == "ia32" ? " -m32 " : " -m64 ") + compiler_line;
+        if (conf_linking != "static" && conf_os == "lnx")
+            before_lib_part = " -Wl,--no-as-needed";
+    }
+
+    if (conf_iface == "ilp64" || conf_iface == "dpcpp_api") {
+        if (conf_compiler == "ifort" || conf_compiler == "pgf")
+            compiler_line = " -i8 " + compiler_line;
+        if (conf_compiler == "icc" || conf_compiler == "pgcc" || conf_compiler == "dpcpp" || conf_compiler == "gcc" || conf_compiler == "clang")
+            compiler_line = " -DMKL_ILP64 " + compiler_line;
+        if (conf_compiler == "gfortran")
+            compiler_line = " -fdefault-integer-8 " + compiler_line;
+    }
+
+    if (conf_linking == "static") {
+        if (conf_os == "lnx") {
+            if (conf_compiler == "dpcpp" && conf_iface == "dpcpp_api")
+                before_lib_part = " -Wl,-export-dynamic";
+            before_lib_part += " -Wl,--start-group";
+            after_lib_part = " -Wl,--end-group";
+        }
+        lib_prefix = mkl_lib_path + "lib";
+        lib_ext = ".a";
+    }
+    else if (conf_linking == "dynamic" || conf_linking == "sdl") {
+        lib_prefix = "-l";
+        before_part = " -L${MKLROOT}/lib" + (conf_os == "lnx" ? "/"+conf_arch : "");
+        if (conf_os == "mac")
+            before_part += " -Wl,-rpath,${MKLROOT}/lib";
+    }
+
+    if (conf_enable_omp_offload) {
+        compiler_line += " -m64";
+        omp_offload_options = "-fiopenmp -fopenmp-targets=spir64 ";
+        omp_offload_lib  = " " + lib_prefix + "mkl_sycl" + lib_suffix + lib_ext;
+        addon_libs = " -lsycl -lOpenCL -lstdc++" + addon_libs;
+        mkl_sycl_options = " -fsycl ";
+    }
+} // end of (conf_os == "lnx" || conf_os == "mac")
+else if (conf_os == "win") {
+    mkl_lib_path = mklroot + "\\lib\\" + conf_arch + "\\";
+
+    if (conf_arch == "ia32") {
+        if (conf_compiler == "pgi_c" || conf_compiler == "pgi_f")
+            mkl_iface_name = "_s";
+        else
+            mkl_iface_name = "_c";
+    }
+
+    if (conf_linking == "static" || conf_linking == "sdl") {
+        lib_ext = ".lib";
+    }
+    else if (conf_linking == "dynamic") {
+        lib_suffix = "_dll";
+        lib_ext = ".lib";
+    }
+
+    if (conf_thread == "intel")
+        add_thread_lib = " libiomp5md.lib";
+    else if (conf_thread == "pgi")
+        add_thread_lib = " -pgf90libs -mp";
+    else if (conf_thread == "tbb")
+        add_thread_lib = " tbb.lib";
+
+    if (conf_iface == "ilp64" || conf_iface == "dpcpp_api") {
+        if (conf_compiler == "ifort")
+            compiler_line = " /4I8 " + compiler_line;
+        else if (conf_compiler == "icc" || conf_compiler == "cl")
+            compiler_line = " /DMKL_ILP64 " + compiler_line;
+        if (conf_compiler == "pgf")
+            compiler_line = " -i8 " + compiler_line;
+        if (conf_compiler == "pgcc" || conf_compiler == "dpcpp")
+            compiler_line = " -DMKL_ILP64 " + compiler_line;
+    }
+    if (conf_enable_omp_offload) {
+        omp_offload_options = "/Qiopenmp /Qopenmp-targets=spir64 ";
+        compiler_line += " /MD ";
+        if (conf_linking == "static")
+            mkl_sycl_lib  = " \"" + mkl_lib_path + "mkl_sycl" + lib_suffix + lib_ext + "\"";
+        else
+            mkl_sycl_lib  = "mkl_sycl" + lib_suffix + lib_ext;
+        addon_libs = " OpenCL.lib sycl.lib" + addon_libs;
+        mkl_sycl_options = " -fsycl ";
+    }
+} // end of (conf_os == "win")
+
+if (conf_enable_omp_offload && conf_linking == "static")
+    mkl_sycl_options += " -fsycl-device-code-split=per_kernel ";
+
+if (conf_linking != "sdl") {
+    // set mkl_f95_libs
+    if (conf_blas95 || conf_lapack95) {
+        if (conf_os == "lnx" || conf_os == "mac") {
+            compiler_line = " -I" + ((conf_compiler == "ifort") ? mklroot : f95root) + "/include/" + conf_arch + "/" + conf_iface + compiler_line;
+            f95_prefix = ((conf_compiler == "ifort") ? mklroot : f95root) + "/lib/" + 
+                         (conf_os == "lnx" ? conf_arch + "/" : "") + "lib";
+            f95_suffix = ".a";
+        }
+        else { // conf_os == "win"
+            compiler_line = " /module:\"" + ((conf_compiler == "ifort") ? mklroot : f95root) + "\\include\\" + conf_arch +
+                            ((conf_arch == "intel64") ? ("\\" + conf_iface) : "") + "\"" + compiler_line;
+            f95_suffix = ".lib";
+        }
+        if (conf_blas95)
+            mkl_f95_libs = " " + f95_prefix + "mkl_blas95" + mkl_iface_name + f95_suffix;
+        if (conf_lapack95)
+            mkl_f95_libs = mkl_f95_libs + " " + f95_prefix + "mkl_lapack95" + mkl_iface_name + f95_suffix;
+    }
+
+    // set mkl_sycl library
+    if (conf_arch == "intel64") {
+        if ((conf_compiler == "dpcpp") && (conf_iface == "dpcpp_api")) {
+            if (conf_os == "lnx") {
+                mkl_sycl_lib  = " " + lib_prefix + "mkl_sycl" + lib_suffix + lib_ext;
+                addon_libs = " -lsycl -lOpenCL" + addon_libs;
+            }
+            else {
+                if (conf_linking == "static")
+                    mkl_sycl_lib  = " \"" + mkl_lib_path + "mkl_sycl" + lib_suffix + lib_ext + "\"";
+                else
+                    mkl_sycl_lib  = "mkl_sycl" + lib_suffix + lib_ext;
+                addon_libs = " sycl.lib OpenCL.lib" + addon_libs;
+            }
+            if (conf_linking == "static")
+                mkl_sycl_options += " -fsycl-device-code-split=per_kernel ";
+        }
+
+        if (conf_blacs)
+            if (conf_os == "lnx" || conf_os == "mac" || conf_linking == "static")
+                mkl_blacs_lib = " " + lib_prefix + "mkl_blacs_" +
+                                ((conf_mpi == "intelmpi" || conf_mpi == "mpich2") ? "intelmpi" : conf_mpi) +
+                                mkl_iface_name + lib_suffix + lib_ext;
+            else
+                mkl_blacs_lib = " " + lib_prefix + "mkl_blacs" + mkl_iface_name + lib_suffix + lib_ext;
+        if (conf_cdft)
+            mkl_cdft_lib = " " + lib_prefix + "mkl_cdft_core"  + lib_suffix + lib_ext;
+        if (conf_scalapack)
+            mkl_scalapack_lib = " " + lib_prefix + "mkl_scalapack" + mkl_iface_name + lib_suffix + lib_ext;
+        if ((conf_os == "win") && (conf_blacs || conf_cdft || conf_scalapack))
+            if (conf_mpi == "intelmpi")
+                addon_libs = " impi.lib" + addon_libs;
+            else if (conf_mpi == "msmpi")
+                addon_libs = " msmpi.lib" + addon_libs;
+    }
+
+    if (!conf_explicit_linkline && conf_linking == "dynamic") {
+        mkl_compiler_option = ((conf_os == "win") ? " /Qmkl:" : " -mkl=");
+        mkl_compiler_option += ((conf_thread == "sequential") ? ((conf_cdft && conf_scalapack) ? "cluster" : "sequential") : ("parallel"));
+    }
+    else {
+        // set mkl_iface library
+        if (conf_compiler == "gfortran")
+            mkl_iface_lib = "mkl_gf" + mkl_iface_name;
+        else
+            mkl_iface_lib = "mkl_intel" + mkl_iface_name;
+        mkl_iface_lib = " " + lib_prefix + mkl_iface_lib + lib_suffix + lib_ext;
+        // set mkl_thread library
+        if (conf_thread == "sequential")
+            mkl_thread_lib = "mkl_sequential";
+        else if (conf_thread == "tbb")
+            mkl_thread_lib = "mkl_tbb_thread";
+        else if (conf_thread == "pgi")
+            mkl_thread_lib = "mkl_pgi_thread";
+        else if (conf_thread == "gnu")
+            mkl_thread_lib = "mkl_gnu_thread";
+        else if (conf_thread == "intel")
+            mkl_thread_lib = "mkl_intel_thread";
+
+        mkl_thread_lib = " " + lib_prefix + mkl_thread_lib + lib_suffix + lib_ext;
+
+        // set mkl_core library
+        mkl_core_lib = " " + lib_prefix + "mkl_core" + lib_suffix + lib_ext;
+    }
+} // end of (conf_linking != "sdl")
+else
+    mkl_rt_lib = " " + lib_prefix + "mkl_rt" + lib_suffix + lib_ext;
+
+mkl_compile_line = omp_offload_options + compiler_line + mkl_compiler_option;
+mkl_link_line = omp_offload_options + mkl_f95_libs + mkl_sycl_options + before_part + mkl_rt_lib +
+                mkl_sycl_lib + mkl_scalapack_lib +
+                before_lib_part + omp_offload_lib + mkl_cdft_lib + mkl_iface_lib + mkl_thread_lib + mkl_core_lib + mkl_blacs_lib + after_lib_part +
+                add_thread_lib + addon_libs;
+// ================================================================================================
+
+    var omp_flags = "";
+    return [mkl_link_line,mkl_compile_line,omp_flags];
+}
+
+function update_hints(features) {
+    hide_notes();
+    show_notes(features);
+    features_control(features);
+
+    if (features.incomplete) {
+        output_ctl_reset();
+        return
+    }
+
+    var output_ctl = getElement('linking_line');
+    var output_col = getElement('compiler_line');
+
+    var out = makeCommandLine(features);
+    output_ctl.value = out[0] + out[2];
+    output_col.value = out[1] + ( features.selected.target == "mic_native" ? ( features.selected.os == "win" ? ' /Qmic' : ' -mmic' ) : '' );
+    if ( features.selected.target == "mic_cao" ) {
+        var features_cao = (features.ver < 2018
+           ? copy_object({selected:{target:"mic_native", os:"lnx"}}, copy_object(features, {}))
+           : copy_object({selected:{target:"mic_cao", os:"lnx"}}, copy_object(features, {})) );
+        out = makeCommandLine(features_cao, features.selected.os == "win");
+        var dash = function (opt) { return (features.selected.os == "win" ? "/Q" : (features.ver < 2018 ? "-" : "-q")) + opt; }
+        var quoted = function (str) { return "\"" + str.replace(/["]/g,"\\\"") + "\""; }
+        output_col.value += " " + dash('offload-attribute-target=mic') + (features.ver >= 2018 ? " " + dash('offload-arch=mic-avx512') : '' );
+        if (out[0]) {
+            if (features.selected.os == "win") {
+                output_col.value += " " + dash("offload-option,mic,compiler,") + quoted(out[1]);
+                output_col.value += " " + dash("offload-option,mic,link,")     + quoted(out[0].replace(/-Wl,/g,""));
+            } else {
+                output_col.value += " " + dash("offload-option,mic,compiler,") + quoted(out[0]);
+            }
+        }
+    }
+    output_ctl.select();
+    output_col.select();
+}
+
+function features_control(features) {
+    XeonPhi.style.display = features.ver < 2018 ? 'table-row' : 'none';
+}
+
+function show_notes(features) {
+    var is_oneapi = features.ver == "2021";
+    var arch = features.selected.arch;
+    var is_win = features.selected.os == "win";
+    var is_lnx = features.selected.os == "lnx";
+    var is_mic_native = features.selected.target == "mic_native";
+
+    var compiler = features.selected.compiler;
+
+    if (is_oneapi) {
+        if (compiler == 'dpcpp'){
+            if (features.selected.omp_offload_enabled)
+                DPCPP_ompoffload_note.style.display = '';
+            else
+                DPCPP_note.style.display = '';
+            if (is_win)
+                DPCPP_win_sycl_note.style.display = '';
+        }
+        if(is_lnx)
+            oneMKL_lnx_note.style.display = '';
+        else if(is_win)
+            oneMKL_win_note.style.display = '';
+        else
+            oneMKL_lnx_note.style.display = '';
+    }
+    else{
+        if (!is_mic_native) {
+            if (is_win)
+                MKLENV_win_103_note.style.display = '';
+            else if (is_lnx)
+                MKLENV_lnx_103_note.style.display = '';
+            else
+                MKLENV_mac_103_note.style.display = '';
+        }
+
+        if ( features.selected.cluster.blacs )
+            MKLENV_blacs_note.style.display = '';
+
+        if ( features.selected.cluster.blacs && features.selected.mpi == 'mpich' && is_lnx )  {
+            // MPICH1 was used on Linux only:
+            // "mpich" on Linux means MPICH1 and it is deprecated
+            // "mpich" on Mac DOES NOT mean MPICH1 (it is some other mpich) => so we dont't need deprecation message on Mac
+            MKLENV_mpich1_note.style.display = '';
+        }
+
+        if ( features.selected.f95 )
+            F95_note.style.display = '';
+
+        if ( features.selected.linktype == "sdl" )
+            SingleDyn_note.style.display = '';
+
+        if ( arch != "ia32")
+            Warning_note.style.display = '';
+
+        if ( features.selected.target == "mic_cao" ) {
+            features.ver < 2018 ? MKLENV_mic_note.style.display = '' : MKLENV_phi_note.style.display = '';
+        }
+
+        if ( features.selected.target == "mic_ao" && features.selected.vendor && features.selected.vendor != "intel" ) {
+            MKLENV_mic_ao_nonintel_note.style.display = '';
+        }
+
+        if ( features.selected.target == "mic_ao" ) {
+            MKLENV_mic_ao_note.style.display = '';
+        }
+    }
+}
+
+
+function hide_note(noteText){
+    var note = getElement(noteText);
+    note.style.display = 'none';
+    note.style.width = '100%';
+}
+
+function hide_notes(){
+    hide_note('oneMKL_lnx_note');
+    hide_note('oneMKL_win_note');
+    hide_note('MKLENV_lnx_102_note');
+    hide_note('MKLENV_mic_note');
+    hide_note('MKLENV_phi_note');
+    hide_note('MKLENV_mic_ao_note');
+    hide_note('MKLENV_mic_ao_nonintel_note');
+    hide_note('MKLENV_mac_102_note');
+    hide_note('MKLENV_win_102_note');
+    hide_note('MKLENV_lnx_103_note');
+    hide_note('MKLENV_mac_103_note');
+    hide_note('MKLENV_win_103_note');
+    hide_note('Solver_note');
+    hide_note('Warning_note');
+    hide_note('SingleDyn_note');
+    hide_note('F95_note');
+    hide_note('MKLENV_blacs_note');
+    hide_note('MKLENV_mpich1_note');
+    hide_note('DPCPP_note');
+    hide_note('DPCPP_win_sycl_note');
+    hide_note('DPCPP_ompoffload_note');
+}
+
+function getElement(id) {
+    if (document.getElementById)
+        return document.getElementById(id);
+    else
+        return document.all[id];
+}
+
+function output_ctl_reset() {
+    var elem = getElement('linking_line');
+    elem.value = "<Please select all required parameters above>";
+    var elem = getElement('compiler_line');
+    elem.value = " ";
+}
+
+function cloneObject(obj) {
+    var clone = {};
+    for(var i in obj) {
+        if(typeof(obj[i])=="object")
+            clone[i] = cloneObject(obj[i]);
+        else
+            clone[i] = obj[i];
+    }
+    return clone;
+}
+</SCRIPT>
+
+<BODY>
+<form name="linking_widget">
+    <TABLE id="MainTable" cellspacing="5" cellpadding="0"  width="600">
+      <col width="250">
+        <TR>
+            <TD class="title" colspan="2">Intel&reg; Math Kernel Library
+            (Intel&reg; MKL) Link Line Advisor v6.13&nbsp;&nbsp;&nbsp;
+                                          <button type="button" onclick="reset_all();" >Reset</button></TD>
+        </TR>
+        <TR>
+            <TD  >Select Intel&reg; product:</TD>
+            <TD id="firstcell"><select name="version" onchange="update();"></select></TD>
+        </TR>
+        <TR>
+            <TD>Select OS:                       </TD>
+            <TD><select name="OS"         onchange="update();"></select></TD>
+        </TR>
+        <TR id="XeonPhi">
+            <TD>Select usage model of Intel&reg; Xeon Phi&#8482; Coprocessor:
+                </TD>
+            <TD><select name="MIC"         onchange="update();"></select></TD>
+        </TR>
+        <TR>
+            <TD>Select compiler:                 </TD>
+            <TD><select name="compiler"   onchange="update();"></select></TD>
+        </TR>
+        <TR>
+            <TD>Select architecture:</TD>
+            <TD><select name="arch"       onchange="update();"></select></TD>
+        </TR>
+        <TR>
+            <TD>Select dynamic or static linking:</TD>
+            <TD><select name="dynstat"    onchange="update();"></select></TD>
+        </TR>
+        <TR>
+            <TD>Select interface layer:</TD>
+            <TD><select name="iface" onchange="update();"></select></TD>
+        </TR>
+        <TR>
+            <TD id="fixed_length">Select threading  layer:</TD>
+            <TD><select name="threading" onchange="update();"></select></TD>
+        </TR>
+        <TR>
+            <TD>Select OpenMP library:</TD>
+            <TD><select name="omp"        onchange="update();"></select></TD>
+        </TR>
+        <TR>
+            <TD>Enable OpenMP offload feature to GPU:</TD>
+            <TD><input type="checkbox" name="omp_offload_checkbox" value="omp_offload" disabled="true" onClick="update();"></TD>
+            </TR>
+        <TR>
+            <TD>Select cluster library:</TD>
+            <TD>
+                <input type="checkbox" name="cluster" value="cpardiso" onClick="update();"> Parallel Direct Sparse Solver for Clusters (BLACS required)<BR>
+                <input type="checkbox" name="cluster" value="cdft" onClick="update();"> CDFT (BLACS required)<BR>
+                <input type="checkbox" name="cluster" value="scalapack" onClick="update();"> ScaLAPACK (BLACS required)<BR>
+                <input type="checkbox" name="cluster" value="blacs" onClick="update();"> BLACS<BR>
+            </TD>
+        </TR>
+        <TR>
+            <TD>Select MPI library:</TD>
+            <TD><select name="mpi"        onchange="update();"></select></TD>
+        </TR>
+        <TR>
+            <TD>Select the Fortran 95 interfaces:              </TD>
+            <TD>
+                <input type="checkbox" name="fortran95" value="blas95"
+                onClick="update();"> BLAS95 <BR>
+                <input type="checkbox" name="fortran95" value="lapack95"
+                onClick="update();"> LAPACK95 <BR>
+            </TD>
+        </TR>
+        <TR>
+            <TD>Link with Intel&reg; MKL libraries explicitly:</TD>
+            <TD>
+                <input type="checkbox" name="link" value="link_MKL" disabled="false" onClick="update();">
+            </TD>
+        </TR>
+        <TR>
+            <TD colspan="2" id="outputcell"><BR>
+                Use this link line: <textarea id="linking_line" readonly="yes"></textarea><BR>
+                <BR>
+                Compiler options: <textarea id="compiler_line" readonly="yes"></textarea> <BR>
+                <BR>
+                Notes: <BR>
+                <TABLE width="600">
+                    <TR>
+                        <TD>
+                            <div id="oneMKL_lnx_note">
+                                o Set INCLUDE, MKLROOT, TBBROOT, LD_LIBRARY_PATH, LIBRARY_PATH, CPATH and
+                                NLSPATH environment variables in the command shell using the Intel(R) oneAPI
+                                setvars script in Intel(R) oneAPI root directory.
+                                Please also see the Intel(R) oneMKL User Guide.
+                            </div>
+                            <div id="oneMKL_win_note">
+                                o Set PATH, LIB, INCLUDE, MKLROOT and TBBROOT
+                                environment variables in the command shell using the
+                                Intel(R) oneAPI setvars script in Intel(R) oneAPI root directory.
+                                Please also see the Intel(R) oneMKL User Guide.
+                            </div>
+                            <div id="MKLENV_lnx_103_note">
+                                o Set the INCLUDE, MKLROOT, LD_LIBRARY_PATH, LIBRARY_PATH, CPATH and
+                                NLSPATH environment variables in the command shell using one of mklvars script
+                                files in the 'bin' subdirectory of the Intel(R) MKL installation directory.
+                                Please see also the Intel(R) MKL User Guide.
+                            </div>
+                            <div id="MKLENV_mic_note">
+                                o Set the MIC_LD_LIBRARY_PATH environment
+                                variable using one of mklvars script files in
+                                the 'bin' subdirectory of the Intel(R) MKL
+                                installation directory. Please see also the
+                                Intel(R) MKL User Guide.
+                            </div>
+                            <div id="MKLENV_phi_note">
+                                o Set the LD_LIBRARY_PATH environment
+                                variable using one of mklvars script files in
+                                the 'bin' subdirectory of the Intel(R) MKL
+                                installation directory. Please see also the
+                                Intel(R) MKL User Guide.
+                            </div>
+                            <div id="MKLENV_mic_ao_note">
+                                o Set the environment variable: MKL_MIC_ENABLE=1
+                            </div>
+                            <div id="MKLENV_mic_ao_nonintel_note">
+                                o Using non-Intel compiler in Automatic Offload mode is possible
+                                only when there are no OMP directives in application's code
+                            </div>
+                            <div id="MKLENV_mac_103_note">
+                                o Set the INCLUDE, MKLROOT, DYLD_LIBRARY_PATH, LIBRARY_PATH, CPATH and
+                                NLSPATH environment variables in the command shell using one of mklvars script
+                                files in the 'bin' subdirectory of the Intel(R) MKL installation directory.
+                                Please see also the Intel(R) MKL User Guide.
+                            </div>
+                            <div id="MKLENV_win_103_note">
+                                o Set the PATH, LIB and INCLUDE environment variables in the command shell using
+                                one of mklvars script files  in the 'bin' subdirectory of the Intel(R) MKL
+                                installation directory. Please see also the
+                                Intel(R) MKL User Guide.
+                            </div>
+                            <div id="MKLENV_lnx_102_note">
+                                o Set the INCLUDE, MKLROOT, LD_LIBRARY_PATH, LIBRARY_PATH, CPATH and
+                                NLSPATH environment variables in the command shell using one of mklvars script
+                                files in the 'tools/environment' subdirectory of the Intel(R) MKL installation
+                                directory. Please see also the Intel(R) MKL User
+                                Guide.
+                            </div>
+                            <div id="MKLENV_mac_102_note">
+                                o Set the INCLUDE, MKLROOT, DYLD_LIBRARY_PATH, LIBRARY_PATH, CPATH and
+                                NLSPATH environment variables in the command shell using one of mklvars script
+                                files in the 'tools/environment' subdirectory of the Intel(R) MKL installation
+                                directory. Please see also the Intel(R) MKL User
+                                Guide.
+                            </div>
+                            <div id="MKLENV_win_102_note">
+                                o Set the PATH, LIB and INCLUDE environment variables in the command shell using
+                                one of mklvars script files  in the 'tools/environment' subdirectory of the
+                                Intel(R) MKL installation directory. Please see
+                                also the Intel(R) MKL User Guide.
+                            </div>
+                            <div id="Solver_note">
+                                o You may remove libraries with 'solver' in the name from the link line if you
+                                do not use the iterative solver or GMP domain.
+                            </div>
+                            <div id="SingleDyn_note">
+                                o To set the threading layer at run time, use the mkl_set_threading_layer
+                                function or set MKL_THREADING_LAYER variable to one of the following values:INTEL, TBB,
+                                SEQUENTIAL, PGI. To set interface layer at run time, use the
+                                mkl_set_interface_layer function or set the MKL_INTERFACE_LAYER variable to LP64
+                                or ILP64. Please see also the Intel(R) MKL User
+                                Guide.
+                            </div>
+                            <div id="Warning_note">
+                                o Please be sure that you have used the recommended compiler options for the
+                                selected interface layer. Caution: linking
+                                Intel(R) MKL libraries with your objects
+                                compiled for different interface layer may lead
+                                to run-time errors.
+                            </div>
+                            <div id="F95_note">
+                                o Set the F95ROOT variable. Fortran 95 interfaces are compiler-dependent. The
+                                Fortran 95 interfaces and wrappers are delivered as sources, build the
+                                appropriate library and modules with your
+                                compiler. Please see also the Intel(R) MKL User
+                                Guide.
+                            </div>
+                            <div id="MKLENV_blacs_note">
+                                o If you are using a non-default MPI, assign the same appropriate value to
+                                MKL_BLACS_MPI on all nodes. Set MKL_BLACS_MPI variable to one of the following
+                                values: INTELMPI, MPICH2 or MSMPI.
+                            </div>
+                            <div id="MKLENV_mpich1_note">
+                                o Support of MPICH1 is deprecated and will be removed starting from Intel(R) MKL 2017.
+                            </div>
+                            <div id="DPCPP_note">
+                                o This compiler/link line options are provided for dpcpp driver.
+                                You may need to add other options if you choose to use another driver.
+                            </div>
+                            <div id="DPCPP_ompoffload_note">
+                                o Check <a href="https://software.intel.com/content/www/us/en/develop/articles/oneapi-math-kernel-library-release-notes.html" target="_blank">release notes</a> for current openMP offload feature limitations.
+                                This compiler/link line options are provided for icx driver.
+                            </div>
+                            <div id="DPCPP_win_sycl_note">
+                                o mkl_sycl dynamic library on Windows currently supports only blas and lapack domains.
+                            </div>
+                        </TD>
+                    </TR>
+                </TABLE>
+            </TD>
+        </TR>
+    </TABLE>
+</form>
+<SCRIPT language="JavaScript">
+init();
+</SCRIPT>
+</BODY>
+</HTML>
